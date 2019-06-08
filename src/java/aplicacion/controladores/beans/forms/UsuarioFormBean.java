@@ -12,7 +12,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 /**
  * este managed bean permite trabajar con la pagina web Sesion y CrearNuevoUsuario
@@ -40,7 +42,39 @@ private String contraseña;
         usuario.setEstado(true);
         usuario.setTipoUsuario("normal");
         usuarioBean.crearUsuario(usuario);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Se agregó un nuevo Usuario","Bienvenido"));
         
+    }
+    /**
+     *  es un validador de contraseña
+     * @param fc para añadir mensajes
+     * @param uic clase base para todos los componentes de la interfaz de usuario en JavaServer Faces
+     * @param o el objeto con que trabajamos (string)
+     * @throws ValidatorException añade un mensaje en caso de error
+     */
+    public void validarContraseña(FacesContext fc,UIComponent uic, Object o) throws ValidatorException{
+        boolean passCorrecta = usuarioBean.validarContraseña((String)o);
+        if (passCorrecta == false){
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_WARN,"Error contraseña","La contraseña no esta conforme los requerimientos"));
+        }
+    }
+    
+    /**
+     * es un validador para el email
+     * @param fc para añadir mensajes
+     * @param uic clase base para todos los componentes de la interfaz de usuario en JavaServer Faces
+     * @param o es el objeto con que trabajamos (string)
+     * @throws ValidatorException añane un mensaje en caso de error
+     */
+    public void validarEmail(FacesContext fc,UIComponent uic, Object o) throws ValidatorException{
+        boolean emailValido=false;
+        Usuario usu = usuarioBean.validarEmailExsitente((String)o);
+        emailValido=usuarioBean.validarEmail((String)o);
+        if (usu != null || emailValido==false){
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error email","el correo ingresado ya existe o el dominio es incorrecto"));
+        }
+    
     }
     /**
      * este metodo permite verificar las credenciales del usuario para poder ingresar (nombreUsuario
@@ -56,8 +90,8 @@ private String contraseña;
            redireccion="index?faces-redirect=true";
         }
         else{
-            FacesContext fc= FacesContext.getCurrentInstance();
-            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"No permitido","error credenciales"));
+            FacesContext facesContext= FacesContext.getCurrentInstance();
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"No permitido","error credenciales"));
         }  
         return redireccion; 
     }

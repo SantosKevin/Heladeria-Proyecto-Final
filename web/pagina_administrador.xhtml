@@ -12,60 +12,6 @@
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding:0!important;position:relative;">
                     <ui:composition template="./resources/templates/template.xhtml">
-                        <ui:define name="top">
-                            <div style="
-                            display: inline-block;
-                            position: absolute;
-                            top: 27%;
-                            font-size: smaller;
-                            left: 50%;
-                            color: #fff;
-                            font-size: 29px;
-                            text-shadow: 1px 3px 2px #000;
-                            vertical-align: middle;
-                            margin-left: -295px;
-                           ">
-                                <h1>Heladeria F.I. U.N.Ju</h1>
-                            </div>
-                        </ui:define>
-                        <ui:define name="menu">
-                            <div style="
-                                width: 100%;
-                                opacity: 0.9;">
-                               <p:megaMenu orientation="#{megaMenuView.orientation}" style="margin: 0 auto;">
-                                   <p:menuitem value="UBICACION" url="https://www.google.com.ar/maps/place/Facultad+de+Ingeniería+-+Universidad+Nacional+de+Jujuy/@-24.1892981,-65.2924749,19.04z/data=!4m5!3m4!1s0x941b0f5bca584281:0xb1d519d50cac526d!8m2!3d-24.1888837!4d-65.292998" icon="pi pi-ubicacion" />
-                                   <p:submenu icon="pi pi-file" label="Productos" >
-                                       <p:column>
-                                           <p:menubar>
-                                               <p:menuitem value="HELADOS" url="#" />
-                                               <p:submenu label="Pack Familiar">
-                                                   <p:submenu label="TENTACIONES">
-                                                       <p:menuitem value="Sabores" url="#" />
-                                                   </p:submenu>
-                                                   <p:menuitem value="ALFAJORES" url="#" />
-                                               </p:submenu>
-                                           </p:menubar>
-                                       </p:column>
-                                   </p:submenu>
-                                    <p:submenu label="ADMINISTRACION">
-                                       <p:column>
-                                           <p:menubar>
-                                               <p:menuitem value="Crear Admin" url="#"/>                       
-
-                                           </p:menubar>                      
-                                       </p:column>
-                                    </p:submenu>
-
-                                   <p:submenu label="CARRITO" icon="pi pi-pencil">
-                                   </p:submenu>
-
-                                   <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
-                                   <f:facet name="options">
-                                       <p:commandButton type="button" value="Desconectar" icon="pi pi-home" />
-                                   </f:facet>
-                               </p:megaMenu>
-                           </div>
-                        </ui:define>
                         <ui:define name="admin">
                             <p:megaMenu style="margin-top:20px">
                                 <p:submenu label="AGREGAR USER" icon="pi pi-check"/>

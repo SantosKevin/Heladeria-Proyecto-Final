@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Heladeria F.I.</title>
+    </h:head>
+    <h:body>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding:0!important;position:relative;">
+                    <ui:composition template="./resources/templates/template_principal.xhtml">
+                        <ui:define name="top">
+                            <div style="
+                            display: inline-block;
+                            position: absolute;
+                            top: 27%;
+                            font-size: smaller;
+                            left: 50%;
+                            color: #fff;
+                            font-size: 29px;
+                            text-shadow: 1px 3px 2px #000;
+                            vertical-align: middle;
+                            margin-left: -295px;
+                           ">
+                                <h1>Heladeria F.I. U.N.Ju</h1>
+                            </div>
+                        </ui:define>
+                        <ui:define name="menu">
+                            <div style="
+                                width: 100%;
+                                opacity: 0.9;">
+                               <p:megaMenu orientation="#{megaMenuView.orientation}" style="margin: 0 auto;">
+                                   <p:menuitem value="UBICACION" url="https://www.google.com.ar/maps/place/Facultad+de+Ingeniería+-+Universidad+Nacional+de+Jujuy/@-24.1892981,-65.2924749,19.04z/data=!4m5!3m4!1s0x941b0f5bca584281:0xb1d519d50cac526d!8m2!3d-24.1888837!4d-65.292998" icon="pi pi-ubicacion" />
+                                   <p:submenu icon="pi pi-file" label="Productos" >
+                                       <p:column>
+                                           <p:menubar>
+                                               <p:menuitem value="HELADOS" url="#" />
+                                               <p:submenu label="Pack Familiar">
+                                                   <p:submenu label="TENTACIONES">
+                                                       <p:menuitem value="Sabores" url="#" />
+                                                   </p:submenu>
+                                                   <p:menuitem value="ALFAJORES" url="#" />
+                                               </p:submenu>
+                                           </p:menubar>
+                                       </p:column>
+                                   </p:submenu>
+                                    <p:submenu label="ADMINISTRACION">
+                                       <p:column>
+                                           <p:menubar>
+                                               <p:menuitem value="Crear Admin" url="#"/>                       
+
+                                           </p:menubar>                      
+                                       </p:column>
+                                    </p:submenu>
+
+                                   <p:submenu label="CARRITO" icon="pi pi-pencil">
+                                   </p:submenu>
+
+                                   <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
+                                   <f:facet name="options">
+                                       <p:commandButton type="button" value="Desconectar" icon="pi pi-home" />
+                                   </f:facet>
+                               </p:megaMenu>
+                           </div>
+                        </ui:define>
+                        <ui:define name="content">
+                            <!--Esto seria para ver la imagen conrriendoce-->
+                            <div style="margin: 0 auto; 
+                                 margin-top: 50px;
+                                 width: 800px; 
+                                 height: 500px;
+                                 border: 1em solid transparent;
+                                 background: linear-gradient(white,white), url(https://www.fonditos3d.com/1920x1080/fondo-3d-colorido.jpg);
+                                 background-clip: padding-box, border-box;
+                                 background-size: cover;
+                                 background-origin: border-box;">
+
+                                <p:imageSwitch effect="fade" id="fadeEffect">
+                                    <p:graphicImage name="img/helado1.jpg" id="image" />
+                                    <p:graphicImage name="img/helado2.jpg" id="image" />
+                                    <p:graphicImage name="img/helado3.jpg" id="image" />
+                                    <p:graphicImage name="img/helado4.jpg" id="image" />
+                                    <p:graphicImage name="img/helado5.jpg" id="image" />
+                                </p:imageSwitch>
+                            </div>
+                        </ui:define>
+                    </ui:composition>
+                </div>
+            </div>
+    </h:body>
+
+
+</html>

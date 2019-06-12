@@ -11,7 +11,7 @@
     <h:body>
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding:0!important;position:relative;">
-                    <ui:composition template="./resources/templates/template_root.xhtml">
+                    <ui:composition template="./resources/templates/template.xhtml">
                         <ui:define name="top">
                             <div style="
                             display: inline-block;
@@ -88,6 +88,17 @@
                                 </p:imageSwitch>
                             </div>
                         </ui:define>
+                        <ui:define name="admin">
+                            <p:megaMenu style="margin-top:20px">
+                                <p:submenu label="AGREGAR USER" icon="pi pi-check"/>
+                                <p:submenu label="AGREGAR OFERTA" icon="pi pi-check"/>
+                                <p:submenu label="AGREGAR HELADO" icon="pi pi-pencil"/>
+                                <p:submenu label="ELIMINAR USER" icon="pi pi-file"/>
+                                <p:submenu label="QUITAR HELADO" icon="pi pi-pencil"/>
+                                
+                            <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
+                            </p:megaMenu>
+                        </ui:define> 
                         <ui:define name="root">
                             <p:megaMenu style="margin-top:25px">
                                 <p:submenu label="AGREGAR ADMIN" />

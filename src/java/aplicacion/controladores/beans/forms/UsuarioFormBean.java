@@ -87,7 +87,16 @@ private String contraseña;
         Usuario usu = usuarioBean.verificarUsuario(nombreUsu, contraseña);
         if(usu != null){
            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usu);
-           redireccion="index?faces-redirect=true";
+           if(usu.getTipoUsuario().equals("normal")){
+               redireccion="pagina_principal?faces-redirect=true";
+           }
+           if(usu.getTipoUsuario().equals("administrativo")){
+               redireccion="pagina_administrador?faces-redirect=true";
+           }
+           if(usu.getTipoUsuario().equals("administrador")){
+               redireccion="pagina_root?faces-redirect=true";
+           }
+           
         }
         else{
             FacesContext facesContext= FacesContext.getCurrentInstance();

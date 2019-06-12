@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Crear Cuenta Administrativa</title>
+    </h:head>
+    <h:body>
+        <h:form id="frmCrearCuentaAdmin" style="padding-left: 90px;padding-top: 50px;"> <!--aqui le damos estilo -->
+            <p:growl id="growlNuevaAdmin" showDetail="true"/>
+            <p:panel id="pnlNuevaAdmin" header="Crear nueva cuenta para usuarios administrativos"><!--todo lo de abajo seria el registro para un usuario nuevo -->
+                <p:panelGrid id="pnlGCrearSesionAdmin" columns="2"> 
+                    <p:outputLabel id="lblNombreAdmin" value="Ingrese Nombre de Usuario"/>
+                    <p:inputText id="txtNombreAdmin" value="#{usuarioFormBean.usuario.nombreUsuario}" required="true" placeholder="nombre usuario"/>
+                    <p:outputLabel id="lblApellidoAdmin" value="Ingrese Su Apellido"/>
+                    <p:inputText id="txtApellidoAdmin" value="#{usuarioFormBean.usuario.apellidoUsuario}" required="true" placeholder="apellido"/>                  
+                    <p:outputLabel id="lblDNIAdmin" value="Ingrese Su DNI"/>
+                    <p:inputNumber id="nbrDNIAdmin" value="#{usuarioFormBean.usuario.dniUsuario}" required="true" 
+                                   placeholder="N° DNI" minValue="0" maxValue="99999999" decimalPlaces="0"/>
+                    <p:outputLabel id="lblEmailAdmin" value="Ingrese email valido"/>
+                    <p:inputText id="txtEmailAdmin" value="#{usuarioFormBean.usuario.emailUsuario}" required="true" 
+                                 placeholder="administrador@heladeria.com"
+                                 validator="#{usuarioFormBean.validarEmail}"/>                     
+                    <p:outputLabel id="lblContraseñaAdmin" value="Ingrese su Contraseña"/>                    
+                    <p:password id="passContraseñaAdmin" value="#{usuarioFormBean.usuario.contraseña}" required="true" 
+                                placeholder="contraseña" title="debe tener al menos 1 Mayuscula, letras minusculas, numeros y 1 signo -,_" 
+                                feedback="true" inline="true" strongLabel="Fuerte" promptLabel="Por favor, ingresu su contraseña"
+                                weakLabel="Debil" goodLabel="Buena"
+                                validator="#{usuarioFormBean.validarContraseña}"/>
+                    <p:commandButton id="btnCrearAdmin" value="CREAR" update="growlNuevaAdmin frmCrearCuentaAdmin"
+                                     actionListener="#{usuarioFormBean.crearUsuarioAdministrativo()}"/>
+
+                </p:panelGrid>
+            </p:panel> <!--en este codigo de arriva llamamos a los respectivos validadores, y creamos un usuario -->
+
+        </h:form>
+        <h:form id="VolverSesionAdmin" style="padding-left: 40%;padding-bottom: 30%" >
+            <p:commandLink id="lnkVolverSesion" value="Volver atras"
+                           action="pagina_root.xhtml" update=":VolverSesionAdmin"/>
+        </h:form>
+    </h:body>
+</html>
+

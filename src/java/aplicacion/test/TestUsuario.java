@@ -17,7 +17,8 @@ public class TestUsuario {
     public static void main(String[] args) {
         IUsuarioDAO usuarioDAO = new UsuarioDAOImp();
         
-        Usuario u1 = new Usuario(1, "Lucas", "Choque", "lucas", 12345, "lucas@gmail", "NORMAL", true);
+        Usuario u1 = new Usuario(1, "root", "root", "root", 12345, "root@gmail", "administrador", true);
+        
         
         usuarioDAO.create(u1);
     }

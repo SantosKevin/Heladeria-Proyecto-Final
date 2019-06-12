@@ -11,17 +11,25 @@
                 font-style: italic;
                 font-weight: bold;
             }
+
+            .tr,.noBorder td { border: 0 !important; }
+
+            .transparentBackground tr,
+            .transparentBackground td { background: transparent !important; }
+
         </style>
     </h:head>
-    
+
     <h:body style="background-image:url(resources/imagenes/heladito.jpg);
             background-size: 1400px;
             width: 500px;"> <!--aqui le damos formato-->
         <h:form id="frmSesion" style="padding-left: 90px;padding-top: 50px;">
             <p:growl id="growlSesion" showDetail="true"/>
-            <p:panel id="pnlSesion" header="Iniciar Sesion en HeladeriaP.F." style="background-color: transparent;">
-                <p:panelGrid id="pnlGSesion" columns="2" styleClass="pnlG">
-                    <p:outputLabel id="lblNombreUsuario" value="Ingrese Nombre de Usuario" styleClass="letra"/>
+            <p:panel id="pnlSesion" header="Iniciar Sesion en HeladeriaP.F." style="background-color: transparent;padding-top: 15%">
+                <p:panelGrid id="pnlGSesion" columns="2"
+                             styleClass="noBorder td , transparentBackground td">
+                    <p:outputLabel id="lblNombreUsuario" value="Ingrese Nombre de Usuario" styleClass="letra"
+                                   />
                     <p:inputText id="txtNombreUsuario" value="#{usuarioFormBean.nombreUsu}" required="true" 
                                  placeholder="nombre usuario"/>
                     <p:outputLabel id="lblPass" value="Ingrese su Contraseña" styleClass="letra"/>
@@ -31,11 +39,11 @@
                 </p:panelGrid>
                 <p:separator id="separator"/>
             </p:panel>
-            
+
         </h:form>
         <h:form id="frmCrear" style="padding-left: 90px">
             <p:panel id="pnlNuevaCuenta">
-                 <p:commandLink id="lnkCrear" value="No tienes cuenta? Crea una aqui!" 
+                <p:commandLink id="lnkCrear" value="No tienes cuenta? Crea una aqui!" 
                                action="CrearNuevaCuenta.xhtml"/> <!--nos dirige a la pagina para crear una cuenta -->
             </p:panel>
         </h:form>

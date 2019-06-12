@@ -35,6 +35,14 @@ private String contraseña;
     public UsuarioFormBean() {
         usuario = new Usuario();
     }
+     public void crearUsuarioAdministrativo(){
+        usuario.setEstado(true);
+        usuario.setTipoUsuario("administrativo");
+        usuarioBean.crearUsuario(usuario);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Se agregó un nuevo Usuario Administrativo","A trabajar!"));
+        
+    }
     /**
      * con esto creamos un nuevo usuario y lo agregamos a la base de datos
      */

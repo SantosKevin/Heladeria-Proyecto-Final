@@ -31,9 +31,14 @@
                     <p:commandButton id="btnCrear" value="CREAR" update="growlCrearCuenta frmCrearCuenta"
                                      actionListener="#{usuarioFormBean.crearUsuario()}" 
                                      action="Sesion.xhtml"/>
+
                 </p:panelGrid>
             </p:panel> <!--en este codigo de arriva llamamos a los respectivos validadores, y creamos un usuario -->
-            
+
+        </h:form>
+        <h:form id="VolverSesion" style="padding-left: 40%;padding-bottom: 30%" >
+            <p:commandLink id="lnkVolverSesion" value="Volver al inicio de Sesion"
+                           action="Sesion.xhtml" update=":VolverSesion"/>
         </h:form>
     </h:body>
 </html>

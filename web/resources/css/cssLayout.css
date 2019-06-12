@@ -26,21 +26,16 @@
 }
 
 #root {
-    margin: 0;
-    margin-top: 20px;
-    background:url('https://i.pinimg.com/originals/52/52/2e/52522e0e0c4bc3d6df8f6524257b6f5a.jpg');
-    height: 100px;
-    background-position: center;
-    background-size: 100% 100%; 
-    background-attachment: fixed;
+    margin: 0 auto;
+    margin-top: 10px;
+    float: right;
+    background:url('https://i.pinimg.com/originals/23/16/61/2316610d9c8a3754299471e6ad8147d8.jpg');
+    background-size: cover;height: 300px;background-position: bottom;
+    padding: 5px;
+    width: 200px;
+    height: 400px;
 }
 
-#right {
-    float: right;
-    background-color: #ece3a5;
-    padding: 5px;
-    width: 150px;
-}
 
 .center_content {
     position: relative;

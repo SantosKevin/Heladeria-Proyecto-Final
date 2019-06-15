@@ -14,22 +14,13 @@
                     <ui:composition template="./resources/templates/template.xhtml">        
                         <ui:define name="content">
                             <!--Esto seria para ver la imagen conrriendoce-->
-                            <div style="margin: 0 auto; 
-                                 margin-top: 50px;
-                                 width: 800px; 
-                                 height: 500px;
-                                 border: 1em solid transparent;
-                                 background: linear-gradient(white,white), url(https://www.fonditos3d.com/1920x1080/fondo-3d-colorido.jpg);
-                                 background-clip: padding-box, border-box;
-                                 background-size: cover;
-                                 background-origin: border-box;">
-
+                            <div class="carrucel">
                                 <p:imageSwitch effect="fade" id="fadeEffect">
-                                    <p:graphicImage name="img/helado1.jpg" id="image" />
-                                    <p:graphicImage name="img/helado2.jpg" id="image" />
-                                    <p:graphicImage name="img/helado3.jpg" id="image" />
-                                    <p:graphicImage name="img/helado4.jpg" id="image" />
-                                    <p:graphicImage name="img/helado5.jpg" id="image" />
+                                    <p:graphicImage name="img/helado1.jpg" class="image" />
+                                    <p:graphicImage name="img/helado2.jpg" class="image" />
+                                    <p:graphicImage name="img/helado3.jpg" class="image" />
+                                    <p:graphicImage name="img/helado4.jpg" class="image" />
+                                    <p:graphicImage name="img/helado5.jpg" class="image" />
                                 </p:imageSwitch>
                             </div>
                         </ui:define>

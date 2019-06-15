@@ -1,20 +1,18 @@
 body {
     margin:0 auto!important;
-            background-image: url(https://images2.alphacoders.com/718/thumb-1920-718914.jpg); 
-            background-size: 100% 100%; 
-            background-attachment: fixed;
+    background: url(../img/img_body.jpg) no-repeat;
+    background-size: 100% 100%; 
+    background-attachment: fixed;
 }
 
-
-
 a:link, a:visited {
-  color: #045491;
-  font-weight : bold;
-  text-decoration: none;
+    color: #045491;
+    font-weight : bold;
+    text-decoration: none;
 }
 
 a:link:hover, a:visited:hover  {
-  color: #045491;
-  font-weight : bold;
-  text-decoration : underline;
+    color: #045491;
+    font-weight : bold;
+    text-decoration : underline;
 }

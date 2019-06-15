@@ -9,45 +9,35 @@
         <title>Heladeria F.I.</title>
     </h:head>
     <h:body>
-            <div class="ui-g">
-                <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding:0!important;position:relative;">
-                    <ui:composition template="./resources/templates/template.xhtml">
-                        <ui:define name="admin">
-                            <p:megaMenu style="margin-top:20px">
-                                <p:submenu label="AGREGAR USER" icon="pi pi-check"/>
-                                <p:submenu label="AGREGAR OFERTA" icon="pi pi-check"/>
-                                <p:submenu label="AGREGAR HELADO" icon="pi pi-pencil"/>
-                                <p:submenu label="ELIMINAR USER" icon="pi pi-file"/>
-                                <p:submenu label="QUITAR HELADO" icon="pi pi-pencil"/>
-                                
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding:0!important;position:relative;">
+                <ui:composition template="./resources/templates/template.xhtml">
+                    <ui:define name="admin">
+                        <p:menubar style="margin-top:20px">
+                            <p:submenu label="AGREGAR USER" icon="pi pi-check"/>
+                            <p:submenu label="AGREGAR OFERTA" icon="pi pi-check"/>
+                            <p:submenu label="AGREGAR HELADO" icon="pi pi-pencil"/>
+                            <p:submenu label="ELIMINAR USER" icon="pi pi-file"/>
+                            <p:submenu label="QUITAR HELADO" icon="pi pi-pencil"/>
                             <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
-                            </p:megaMenu>
-                        </ui:define>                       
-                        
-                        <ui:define name="content">
-                            <!--Esto seria para ver la imagen conrriendoce-->
-                            <div style="margin: 0 auto; 
-                                 margin-top: 50px;
-                                 width: 800px; 
-                                 height: 500px;
-                                 border: 1em solid transparent;
-                                 background: linear-gradient(white,white), url(https://www.fonditos3d.com/1920x1080/fondo-3d-colorido.jpg);
-                                 background-clip: padding-box, border-box;
-                                 background-size: cover;
-                                 background-origin: border-box;">
+                        </p:menubar>
+                    </ui:define>                       
+                    <ui:define name="content">
+                        <!--Esto seria para ver la imagen conrriendoce-->
+                        <div class="carrucel">
 
-                                <p:imageSwitch effect="fade" id="fadeEffect">
-                                    <p:graphicImage name="img/helado1.jpg" id="image" />
-                                    <p:graphicImage name="img/helado2.jpg" id="image" />
-                                    <p:graphicImage name="img/helado3.jpg" id="image" />
-                                    <p:graphicImage name="img/helado4.jpg" id="image" />
-                                    <p:graphicImage name="img/helado5.jpg" id="image" />
-                                </p:imageSwitch>
-                            </div>
-                        </ui:define>
-                    </ui:composition>
-                </div>
+                            <p:imageSwitch effect="fade" id="fadeEffect">
+                                <p:graphicImage name="img/helado1.jpg" class="image" />
+                                <p:graphicImage name="img/helado2.jpg" class="image" />
+                                <p:graphicImage name="img/helado3.jpg" class="image" />
+                                <p:graphicImage name="img/helado4.jpg" class="image" />
+                                <p:graphicImage name="img/helado5.jpg" class="image" />
+                            </p:imageSwitch>
+                        </div>
+                    </ui:define>
+                </ui:composition>
             </div>
+        </div>
     </h:body>
 
 

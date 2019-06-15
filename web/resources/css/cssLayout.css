@@ -1,39 +1,46 @@
+#titulo{ 
+    float: left;
+    width: 100%; /*largo*/
+    margin-top: 5%;/*posicion*/
+    color: #002eff;
+    font-size: 250%;
+}
 
 #top {
     padding:0!important;
     position: relative;
-    background: url('http://www.galdaretxe.com/wp-content/uploads/2016/10/02-heladeria.jpg');
+    background: url(../img/img_top.jpg) no-repeat;
     background-size: cover;height: 300px;background-position: bottom;
 }
 
 #bottom {
     margin: 0 auto!important;
-    background-color: #000;
-    height: 100px;
+    background-color: #f7f7f9;
+    height: 5%;
     width: 100%;
     position: relative;
     clear: both
 }
 
 #admin {
-    margin-top: 10px;
+    margin-top: 1%;
     float: left;
-    background:url('https://i.pinimg.com/originals/23/16/61/2316610d9c8a3754299471e6ad8147d8.jpg');
+    background: url(../img/img_rigth.jpg) no-repeat;
     background-size: cover;height: 300px;background-position: bottom;
-    padding: 5px;
-    width: 200px;
-    height: 400px;
+    padding: 1%;
+    width: 15%;
+    height: 500px;
 }
 
 #root {
     margin: 0 auto;
-    margin-top: 10px;
+    margin-top: 1%;
     float: right;
-    background:url('https://i.pinimg.com/originals/23/16/61/2316610d9c8a3754299471e6ad8147d8.jpg');
+    background: url(../img/img_rigth.jpg) no-repeat;
     background-size: cover;height: 300px;background-position: bottom;
-    padding: 5px;
-    width: 200px;
-    height: 400px;
+    padding: 1%;
+    width: 15%;
+    height: 500px;
 }
 
 
@@ -54,15 +61,15 @@
 }
 
 #top a:link, #top a:visited {
-  color: white;
-  font-weight : bold;
-  text-decoration: none;
+    color: white;
+    font-weight : bold;
+    text-decoration: none;
 }
 
 #top a:link:hover, #top a:visited:hover  {
-  color: black;
-  font-weight : bold;
-  text-decoration : underline;
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
 }
 
 .ui-menu {
@@ -71,6 +78,27 @@
 }
 
 .bg_red {
-    
+
     background :red;
+}
+
+.carrucel{
+    margin: 0 auto; 
+    margin-top: 2%;
+    width: 60%; 
+    height: 420px;
+    border: 1em solid transparent;
+    background: linear-gradient(white,white), url(../img/img_fondo_carrucel.jpg);
+    background-clip: padding-box, border-box;
+    background-size: cover;
+    background-origin: border-box;
+}
+
+.image{
+    width: 100%;
+    height: 84%;
+}
+
+.borde{
+    border: 3px blue dashed;
 }

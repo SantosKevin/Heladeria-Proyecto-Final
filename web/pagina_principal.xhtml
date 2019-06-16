@@ -13,6 +13,7 @@
                 <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding:0!important;position:relative;">
                     <ui:composition template="./resources/templates/template.xhtml">
                         <ui:define name="content">
+                            <h:form>
                             <!--Esto seria para ver la imagen conrriendoce-->
                             <div class="carrucel">
                                 <p:imageSwitch effect="fade" id="fadeEffect" style="width: 100%" >
@@ -23,11 +24,10 @@
                                     <p:graphicImage name="img/helado5.jpg" class="image" />
                                 </p:imageSwitch>
                             </div>
+                            </h:form>
                         </ui:define>
                     </ui:composition>
                 </div>
             </div>
     </h:body>
-
-
 </html>

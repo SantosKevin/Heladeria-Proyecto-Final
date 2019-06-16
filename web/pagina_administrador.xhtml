@@ -13,6 +13,7 @@
             <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding:0!important;position:relative;">
                 <ui:composition template="./resources/templates/template.xhtml">
                     <ui:define name="admin">
+                        <p:growl id="growlAdmin" showDetail="true"/>
                         <h:form id="formAdmin">
                             <p:menubar style="margin-top:20px">
                                 <p:menuitem value="Acceder a Base de datos Helados" onclick="PF('dlgVerificar').show()"  icon="pi pi-times" />
@@ -42,6 +43,7 @@
                                         
                                         <p:commandButton id="btnVerificar"
                                                          value="Autenticar"
+                                                         update="growlAdmin"
                                                          action="#{usuarioFormBean.verificarCredencialesBD()}"/>
                                     </p:panelGrid>
                                 </h:form>

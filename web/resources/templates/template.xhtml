@@ -22,17 +22,19 @@
         </div>
         <div id="menu">
             <ui:insert name="menu">
-                <p:menubar>
-                    <p:submenu icon="pi pi-file" label="Productos" >
-                        <p:menuitem value="HELADOS" url="#" />
-                    </p:submenu>
-                    
-                    <p:submenu label="CARRITO" icon="pi pi-pencil">
-                    </p:submenu>
-                    <f:facet name="options">
-                        <p:commandButton type="button" value="Desconectar" icon="pi pi-home" action="Sesion" />
-                    </f:facet>
-                </p:menubar>
+                <h:form>
+                    <p:menubar>
+                        <p:submenu icon="pi pi-file" label="Productos" >
+                            <p:menuitem value="HELADOS" url="#" />
+                        </p:submenu>
+
+                        <p:submenu label="CARRITO" icon="pi pi-pencil">
+                        </p:submenu>
+                        <f:facet name="options">
+                            <p:commandButton type="button" value="Desconectar" icon="pi pi-home" action="Sesion" />
+                        </f:facet>
+                    </p:menubar>
+                </h:form>
 
             </ui:insert>
         </div>

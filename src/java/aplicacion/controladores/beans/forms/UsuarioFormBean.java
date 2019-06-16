@@ -131,7 +131,7 @@ private String contraseña;
         }
         else{
             FacesContext facesContext= FacesContext.getCurrentInstance();
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"No permitido","error credenciales"));
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"No permitido","contraseña incorrecta"));
         }
         return redireccion;
     }

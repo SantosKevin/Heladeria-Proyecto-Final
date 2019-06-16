@@ -18,8 +18,12 @@ public class TestUsuario {
         IUsuarioDAO usuarioDAO = new UsuarioDAOImp();
         
         Usuario u1 = new Usuario(1, "root", "root", "root", 12345, "root@gmail", "administrador", true);
+        Usuario u2 = new Usuario(2, "admin", "admin", "admin", 12345, "admin@gmail", "administrativo", true);
+        Usuario u3 = new Usuario(3, "normal", "normal", "normal", 12345, "norma@gmail", "normal", true);
         
         
         usuarioDAO.create(u1);
+        usuarioDAO.create(u2);
+        usuarioDAO.create(u3);
     }
 }

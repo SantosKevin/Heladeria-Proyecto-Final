@@ -13,7 +13,7 @@
                 <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding:0!important;position:relative;">
                     <ui:composition template="./resources/templates/template.xhtml">        
                         <ui:define name="content">
-                            <!--Esto seria para ver la imagen conrriendoce-->
+                            <!--Esto seria para ver la imagen conrriendoce
                             <div class="carrucel">
                                 <p:imageSwitch effect="fade" id="fadeEffect">
                                     <p:graphicImage name="img/helado1.jpg" class="image" />
@@ -22,18 +22,42 @@
                                     <p:graphicImage name="img/helado4.jpg" class="image" />
                                     <p:graphicImage name="img/helado5.jpg" class="image" />
                                 </p:imageSwitch>
-                            </div>
+                            </div> -->
                         </ui:define>
                         <ui:define name="admin">
-                            <p:megaMenu style="margin-top:20px">
-                                <p:submenu label="AGREGAR USER" icon="pi pi-check"/>
-                                <p:submenu label="AGREGAR OFERTA" icon="pi pi-check"/>
-                                <p:submenu label="AGREGAR HELADO" icon="pi pi-pencil"/>
-                                <p:submenu label="ELIMINAR USER" icon="pi pi-file"/>
-                                <p:submenu label="QUITAR HELADO" icon="pi pi-pencil"/>
-                                
-                            <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
-                            </p:megaMenu>
+                            <h:form id="formAdmin">
+                            <p:menubar style="margin-top:20px">
+                                <p:menuitem value="Acceder a Base de datos Helados" onclick="PF('dlgVerificar').show()"  icon="pi pi-times" />
+                                <p:menuitem value="Acceder a Base de datos Ofertas"  icon="pi pi-times" />
+                            </p:menubar>
+                        </h:form>
+                        <p:dialog id="idDlgVerificarContrasena"
+                                  widgetVar="dlgVerificar"
+                                  header="Autenticar Identidad"
+                                  modal="true"
+                                  resizable="false">
+                            <h:form id="formVerificar">
+                                <p align="center">
+                                    <b>
+                                        ATENCION <br/>
+                                        Para poder acceder a esta seccion <br/>
+                                        debes verificar tus credenciales. <br/>
+                                        Por favor ingresa tu contraseña
+                                    </b>
+                                </p>
+                                <p:panelGrid id="pnlGridVerificar" style="width: 440px" columns="2" layout="grid" >
+                                        <p:outputLabel value="Nombre de usuario"/>
+                                        <p:outputLabel value="#{usuarioFormBean.usuarioConectado.nombreUsuario}"/>
+                                        
+                                        <p:outputLabel value="Contraseña"/>
+                                        <p:password value="#{usuarioFormBean.contraseña}"/>
+                                        
+                                        <p:commandButton id="btnVerificar"
+                                                         value="Autenticar"
+                                                         action="#{usuarioFormBean.verificarCredencialesBD()}"/>
+                                    </p:panelGrid>
+                                </h:form>
+                        </p:dialog>
                         </ui:define> 
                         <ui:define name="root">
                             <p:megaMenu style="margin-top:25px">

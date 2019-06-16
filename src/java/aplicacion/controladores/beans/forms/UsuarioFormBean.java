@@ -26,6 +26,7 @@ public class UsuarioFormBean implements Serializable{
 @ManagedProperty (value="#{usuarioBean}")
 private UsuarioBean usuarioBean;
 private Usuario usuario;
+private Usuario usuarioConectado;
 private String nombreUsu;
 private String contraseña;
 
@@ -92,26 +93,49 @@ private String contraseña;
      */
     public String verificarCredenciales(){
         String redireccion="";
-        Usuario usu = usuarioBean.verificarUsuario(nombreUsu, contraseña);
-        if(usu != null){
-           FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usu);
-           if(usu.getTipoUsuario().equals("normal")){
-               redireccion="pagina_principal?faces-redirect=true";
-           }
-           if(usu.getTipoUsuario().equals("administrativo")){
-               redireccion="pagina_administrador?faces-redirect=true";
-           }
-           if(usu.getTipoUsuario().equals("administrador")){
-               redireccion="pagina_root?faces-redirect=true";
-           }
-           
+        Usuario usuarioAuxiliar = usuarioBean.verificarUsuario(nombreUsu, contraseña);
+        if(usuarioAuxiliar != null){
+            if(usuarioAuxiliar.getEstado()){
+               FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuarioAuxiliar);
+               if(usuarioAuxiliar.getTipoUsuario().equals("normal"))
+                   redireccion="pagina_principal?faces-redirect=true";
+               else{
+                   if(usuarioAuxiliar.getTipoUsuario().equals("administrativo"))
+                        redireccion="pagina_administrador?faces-redirect=true";
+                    else
+                        redireccion="pagina_root?faces-redirect=true";
+               }
+               this.usuarioConectado = usuarioAuxiliar;
+            }else{
+                FacesContext facesContext= FacesContext.getCurrentInstance();
+                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"No permitido","su cuenta fue dada de baja"));
+            }
         }
         else{
             FacesContext facesContext= FacesContext.getCurrentInstance();
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"No permitido","error credenciales"));
-        }  
+        }
+        nombreUsu="";
+        contraseña="";
         return redireccion; 
     }
+    /**
+     * Metodo para validar la contraseña del usuario logeado que desee entrar a la base de datos Helado
+     * @return una cadena que contiene la redireccion a otra pagina web o un mensaje de error en caso
+     * de no ser validas las credenciales
+     */
+    public String verificarCredencialesBD(){
+        String redireccion="";
+        if(contraseña.equals(this.usuarioConectado.getContraseña())){
+            redireccion="baseDeDatosHelados?faces-redirect=true";
+        }
+        else{
+            FacesContext facesContext= FacesContext.getCurrentInstance();
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"No permitido","error credenciales"));
+        }
+        return redireccion;
+    }
+    
     
     //seccion de getters y setters
 
@@ -146,5 +170,12 @@ private String contraseña;
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
-    
+
+    public Usuario getUsuarioConectado() {
+        return usuarioConectado;
+    }
+
+    public void setUsuarioConectado(Usuario usuarioConectado) {
+        this.usuarioConectado = usuarioConectado;
+    }
 }

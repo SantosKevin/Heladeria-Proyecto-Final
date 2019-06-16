@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./resources/templates/templateBaseDeDatos.xhtml">
+
+            <ui:define name="content">
+                <p:growl id="growlGeneral" showDetail="true"/>
+                <h:form id="formTabla">
+                    <p:dataTable id="tblHelado"
+                                 widgetVar="wvHelado"
+                                 var="helado"
+                                 editable="true"
+                                 filterBy="#{helado.nombreHelado}"
+                                 value="#{heladoFormBean.listaHelados}">
+                        <f:facet name="header">
+                            Base de Datos Helados <br/>
+                            <p:outputLabel value="Filtrar"/>
+                            <p:inputText id="globalFilter" onkeyup="PF('wvHelado').filter()" placeholder="Ingrese un nombre"/>
+                        </f:facet>
+
+                        <p:ajax event="rowEdit" listener="#{heladoFormBean.onRowEdit}" update="growlGeneral" />
+                        <p:ajax event="rowEditCancel" listener="#{heladoFormBean.onRowEditCancel}" update="growlGeneral"/>
+
+                        <p:column headerText="Codigo">
+                            <p:outputLabel value="#{helado.codigoHelado}"/>
+                        </p:column>
+
+                        <p:column headerText="Nombre">
+                            <p:cellEditor>
+                                <f:facet name="output"><p:outputLabel value="#{helado.nombreHelado}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{helado.nombreHelado}"/></f:facet>
+                            </p:cellEditor>
+
+                        </p:column>
+
+                        <p:column headerText="Tipo">
+                            <p:cellEditor>
+                                <f:facet name="output"><p:outputLabel value="#{helado.tipoHelado}"/></f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu value="#{helado.tipoHelado}">
+                                        <f:selectItem itemLabel="POTE" itemValue="POTE"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+
+                        </p:column>
+
+                        <p:column headerText="Sabor">
+                            <p:cellEditor>
+                                <f:facet name="output"><p:outputLabel value="#{helado.saborHelado}"/></f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu value="#{helado.saborHelado}">
+                                        <f:selectItem itemLabel="Frutilla" itemValue="Frutilla"/>
+                                        <f:selectItem itemLabel="Vainilla" itemValue="Vainilla"/>
+                                        <f:selectItem itemLabel="Chocolate" itemValue="Chocolate"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+
+                        </p:column>
+
+                        <p:column headerText="Precio">
+                            <p:outputLabel value="$#{helado.precio}"/>
+
+                        </p:column>
+
+                        <p:column headerText="Stock">
+                            <p:outputLabel value="#{helado.cantidad}"/>
+                        </p:column>
+
+                        <p:column headerText="Estado">
+                            <p:outputLabel value="#{helado.estado}"/>
+                        </p:column>
+
+                        <p:column headerText="Vista">
+                            <p:cellEditor>
+                                <f:facet name="output"><p:outputLabel value="#{helado.imagen}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{helado.imagen}"/></f:facet>
+                            </p:cellEditor>
+                            <!--cuando se agrege las imagenes cambiar este componente por graphic image-->
+
+                        </p:column>
+
+                        <p:column headerText="Acciones">
+                            <p:rowEditor/>
+                            <p:commandButton id="btnEliminar"
+                                             icon="ui-icon-trash"
+                                             actionListener="#{heladoFormBean.eliminarHelado(helado)}"
+                                             update="formTabla growlGeneral">
+                                <p:confirm header="Confirmacion" message="¿Estas seguro de realizar la accion de ELIMINAR HELADO?"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton id="btnAgregar"
+                                     update="formAgregarHelado"
+                                     value="Agregar Helado"
+                                     onclick="PF('dlgAgregarHelado').show()"/>
+                </h:form>
+                <p:dialog id="idDlgAgregarHelado"
+                          widgetVar="dlgAgregarHelado"
+                          header="Agregar Nuevo Helado"
+                          resizable="false"
+                          modal="true">
+                    <h:form id="formAgregarHelado">
+                        <p:panelGrid id="pnlGridAgregarHelado"
+                                     columns="2">
+                            <p:outputLabel id="oplNombre" value="Ingrese el nombre"/>
+                            <p:inputText id="iptNombre"
+                                         required="true"
+                                         requiredMessage="Ingrese el nombre por favor"
+                                         validatorMessage="Exceso de caracteres al agregar el nombre"
+                                         value="#{heladoFormBean.helado.nombreHelado}">
+                                <f:validateLength minimum="1" maximum="30"/>
+                            </p:inputText>
+
+                            <p:outputLabel id="oplTipo" value="Ingrese el Tipo"/>
+                            <p:inputText id="iptTipo"
+                                         required="true"
+                                         requiredMessage="Ingrese el tipo por favor"
+                                         validatorMessage="Exceso de caracteres al agregar el tipo"
+                                         value="#{heladoFormBean.helado.tipoHelado}">
+                                <f:validateLength minimum="1" maximum="30"/>
+                            </p:inputText>
+
+                            <p:outputLabel id="oplSabor" value="Ingrese el Sabor"/>
+                            <p:inputText id="iptSabor"
+                                         required="true"
+                                         requiredMessage="Ingrese el sabor por favor"
+                                         validatorMessage="Exceso de caracteres al agregar el sabor"
+                                         value="#{heladoFormBean.helado.saborHelado}">
+                                <f:validateLength minimum="1" maximum="30"/>
+                            </p:inputText>
+
+                            <p:outputLabel id="oplPrecio" value="Ingrese el Precio"/>
+                            <p:inputNumber id="iptPrecio"
+                                           required="true"
+                                           requiredMessage="Ingrese el precio por favor"
+                                           validatorMessage="Valor fuera de rango al agregar el precio"
+                                           value="#{heladoFormBean.helado.precio}">
+                                <f:validateDoubleRange minimum="10" maximum="3000"/>
+                            </p:inputNumber>
+
+                            <p:outputLabel id="oplCantidad" value="Ingrese la Cantidad"/>
+                            <p:inputText id="iptCantidad"
+                                         required="true"
+                                         requiredMessage="Ingrese la cantidad por favor"
+                                         validatorMessage="Valor fuera de rango al agregar la cantidad"
+                                         value="#{heladoFormBean.helado.cantidad}">
+                                <f:validateDoubleRange minimum="3" maximum="15"/>
+                            </p:inputText>
+
+                            <p:outputLabel id="oplVista" value="Ingrese el directorio de imagen"/>
+                            <p:inputText id="iptImagen"
+                                         required="true"
+                                         requiredMessage="Ingrese la imagen porfavor"
+                                         validatorMessage="Exceso de caracteres al agregar la imagen"
+                                         value="#{heladoFormBean.helado.imagen}">
+                                <f:validateLength minimum="1" maximum="30"/>
+                            </p:inputText>
+
+                            <p:commandButton id="btnAgregarHelado"
+                                             value="Aceptar"
+                                             actionListener="#{heladoFormBean.crearHelado()}"
+                                             onclick="PF('dlgAgregarHelado').hide()"
+                                             update="formTabla growlGeneral">
+                                <p:confirm header="Confirmacion" message="¿Estas seguro de realizar la accion de AGREGAR HELADO?"/>
+                            </p:commandButton>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+                <h:form id="formConfirmar">
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                    </p:confirmDialog> 
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

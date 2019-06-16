@@ -68,6 +68,10 @@ Contributor(s):
           <column name="hel_cantidad_helado" not-null="true"/>
       </property>
       
+      <property name="imagen" type="string">
+          <column name="hel_imagen_helado" not-null="true"/>
+      </property>
+      
       <property name="estado" type="boolean">
           <column name="hel_estado_helado" not-null="true"/>
       </property>

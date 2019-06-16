@@ -23,25 +23,14 @@
         <div id="menu">
             <ui:insert name="menu">
                 <p:menubar>
-                    <p:menuitem value="UBICACION" url="https://www.google.com.ar/maps/place/Facultad+de+Ingeniería+-+Universidad+Nacional+de+Jujuy/@-24.1892981,-65.2924749,19.04z/data=!4m5!3m4!1s0x941b0f5bca584281:0xb1d519d50cac526d!8m2!3d-24.1888837!4d-65.292998" icon="pi pi-ubicacion" />
                     <p:submenu icon="pi pi-file" label="Productos" >
                         <p:menuitem value="HELADOS" url="#" />
-                        <p:submenu label="Pack Familiar">
-                            <p:submenu label="TENTACIONES">
-                                <p:menuitem value="Sabores" url="#" />
-                            </p:submenu>
-                            <p:menuitem value="ALFAJORES" url="#" />
-                        </p:submenu>
                     </p:submenu>
-                    <p:submenu label="ADMINISTRACION">
-                        <p:menuitem value="Crear Admin" url="#"/>                               
-                    </p:submenu>
+                    
                     <p:submenu label="CARRITO" icon="pi pi-pencil">
                     </p:submenu>
-
-                    <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
                     <f:facet name="options">
-                        <p:commandButton type="button" value="Desconectar" icon="pi pi-home" />
+                        <p:commandButton type="button" value="Desconectar" icon="pi pi-home" action="Sesion" />
                     </f:facet>
                 </p:menubar>
 

@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./resources/templates/template.xhtml">
+
+            <ui:define name="admin">
+
+            </ui:define>
+
+            <ui:define name="root">
+
+            </ui:define>
+
+            <ui:define name="content">
+                <p:growl id="growlAdmin" showDetail="true"></p:growl>
+                <h:form id="frmAdmins">
+                    <p:dataTable id="tblAdmins" var="admin" editable="true"
+                                 value="#{usuarioFormBean.obtenerAdministrativos()}">
+                         
+                        <p:column id="clmCodigo" headerText="Codigo Usuario" sortBy="#{admin.codigoUsuario}">
+                            <h:outputText id="txtCodigoAdmin" value="#{admin.codigoUsuario}"/>
+                        </p:column>
+                        <p:column headerText="Apellido" sortBy="#{admin.apellidoUsuario}">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText id="txtApellidoA" value="#{admin.apellidoUsuario}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="inpApellido" value="#{admin.apellidoUsuario}"/></f:facet>
+                            </p:cellEditor>   
+                        </p:column>
+                        <p:column id="clmNombre" headerText="Nombre">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText id="txtNombreA" value="#{admin.nombreUsuario}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="inpNombre" value="#{admin.nombreUsuario}"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column id="clmDni" headerText="DNI">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText id="txtDNIA" value="#{admin.dniUsuario}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="inpDNI" value="#{admin.dniUsuario}"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column id="clmEmail" headerText="Email">                           
+                            <h:outputText value="#{admin.emailUsuario}"/>
+                        </p:column>
+                        <p:column id="clmEstado" headerText="Estado">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText id="txtEstadoA" value="#{admin.estado}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="slcEstado" value="#{admin.estado}">
+                                        <f:selectItem itemLabel="true" itemValue="true"/>
+                                        <f:selectItem itemLabel="false" itemValue="false"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+
+                        </p:column>
+                        <p:column id="clmTipo" headerText="Tipo Usuario" sortBy="#{admin.tipoUsuario}">
+                            <h:outputText value="#{admin.tipoUsuario}"/>
+                        </p:column>
+                        <p:column id="clmOpc" headerText="Opciones">
+                            <p:rowEditor />
+                            <p:commandButton id="cmdBorrar" update="growlAdmin tblAdmins" icon="ui-icon-trash"
+                                             actionListener="#{usuarioFormBean.borrarAdministrativo(admin)}">
+                                <p:confirm header="Confirmacion" message="Esta Seguro?" 
+                                           icon="pi pi-exclamation-triangle"/>
+                            </p:commandButton>
+
+                        </p:column>
+                        <p:ajax id="ajxEdit" event="rowEdit" listener="#{usuarioFormBean.modificarUsuario(admin)}" update="growlAdmin tblAdmins"/>
+                        <p:ajax id="ajxCancel" event="rowEditCancel" listener="#{usuarioFormBean.onRowCancel}" update="growlAdmin"/>
+
+                    </p:dataTable>
+                    <p:separator id="spt"/>
+                    <p:commandButton value="Agregar Administrativo" id="cmdAgregar"
+                                     oncomplete="PF('altaAdmin').show()"
+                                     update=":dlgAgregar" icon="ui-icon-plus"/>
+                </h:form>
+                <p:dialog id="dlgAgregar" modal="true" widgetVar="altaAdmin" resizable="false" header="Agregar Administrativo">
+                    <h:form id="frmCrearCuentaAdmin" style="padding-left: 90px;padding-top: 10px;padding-right: 90px;"> <!--aqui le damos estilo -->
+
+                        <p:panel id="pnlNuevaAdmin" header="Crear nueva cuenta para usuarios administrativos"><!--todo lo de abajo seria el registro para un usuario nuevo -->
+                            <p:panelGrid id="pnlGCrearSesionAdmin" columns="2"> 
+                                <p:outputLabel id="lblNombreAdmin" value="Ingrese Nombre de Usuario"/>
+                                <p:inputText id="txtNombreAdmin" value="#{usuarioFormBean.usuario.nombreUsuario}" required="true" placeholder="nombre usuario"/>
+                                <p:outputLabel id="lblApellidoAdmin" value="Ingrese Su Apellido"/>
+                                <p:inputText id="txtApellidoAdmin" value="#{usuarioFormBean.usuario.apellidoUsuario}" required="true" placeholder="apellido"/>                  
+                                <p:outputLabel id="lblDNIAdmin" value="Ingrese Su DNI"/>
+                                <p:inputNumber id="nbrDNIAdmin" value="#{usuarioFormBean.usuario.dniUsuario}" required="true" 
+                                               placeholder="N° DNI" minValue="0" maxValue="99999999" decimalPlaces="0"/>
+                                <p:outputLabel id="lblEmailAdmin" value="Ingrese email valido"/>
+                                <p:inputText id="txtEmailAdmin" value="#{usuarioFormBean.usuario.emailUsuario}" required="true" 
+                                             placeholder="administrador@heladeria.com"
+                                             validator="#{usuarioFormBean.validarEmail}"/>                     
+                                <p:outputLabel id="lblContraseñaAdmin" value="Ingrese su Contraseña"/>                    
+                                <p:password id="passContraseñaAdmin" value="#{usuarioFormBean.usuario.contraseña}" required="true" 
+                                            placeholder="contraseña" title="debe tener al menos 1 Mayuscula, letras minusculas, numeros y 1 signo -,_" 
+                                            feedback="true" inline="true" strongLabel="Fuerte" promptLabel="Por favor, ingrese su contraseña"
+                                            weakLabel="Debil" goodLabel="Buena"
+                                            validator="#{usuarioFormBean.validarContraseña}"/>
+                                <p:commandButton id="btnCrearAdmin" value="CREAR" update="growlAdmin frmCrearCuentaAdmin frmAdmins"
+                                                 actionListener="#{usuarioFormBean.crearUsuarioAdministrativo()}"
+                                                 oncomplete="PF('altaAdmin').hide()"/>
+
+                            </p:panelGrid>
+                        </p:panel> <!--en este codigo de arriva llamamos a los respectivos validadores, y creamos un usuario -->
+                    </h:form>
+                </p:dialog>
+
+                <p:separator id="sptTabla"/>               
+                <h:form id="VolverSesionAdmin" style="padding-left: 40%;padding-bottom: 30%" >
+                    <p:commandLink id="lnkVolverSesion" value="Volver atras"
+                                   action="pagina_root.xhtml" update=":VolverSesionAdmin"/>
+                </h:form>
+                <h:form id="frmConfirm">
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton id="cmdAceptar" value="SI" type="button" update="tblAdmins"
+                                         styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton id="cmdCancelar" value="NO" type="button" update="tblAdmins"
+                                         styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                    </p:confirmDialog>   
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -7,6 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Heladeria F.I.</title>
+        <f:event type="preRenderView" listener="#{usuarioFormBean.controlarSesion()}"/>
     </h:head>
     <h:body>
         <div class="ui-g">

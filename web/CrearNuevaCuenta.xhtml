@@ -17,7 +17,7 @@
                     <p:inputText id="txtApellido" value="#{usuarioFormBean.usuario.apellidoUsuario}" required="true" placeholder="apellido"/>                  
                     <p:outputLabel id="lblDNI" value="Ingrese Su DNI"/>
                     <p:inputNumber id="nbrDNI" value="#{usuarioFormBean.usuario.dniUsuario}" required="true" 
-                                   placeholder="N° DNI" minValue="1000000" maxValue="99999999" decimalPlaces="0"/>
+                                   placeholder="N° DNI" minValue="0" maxValue="99999999" decimalPlaces="0"/>
                     <p:outputLabel id="lblEmail" value="Ingrese email valido"/>
                     <p:inputText id="txtEmail" value="#{usuarioFormBean.usuario.emailUsuario}" required="true" 
                                  placeholder="usuario@heladeria.com"

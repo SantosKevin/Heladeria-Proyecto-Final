@@ -5,8 +5,10 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
     <h:head>
         <title>Heladeria F.I.</title>
+       
     </h:head>
     <h:body>
         <div class="ui-g">
@@ -64,14 +66,15 @@
                     </ui:define> 
                     <ui:define name="root">
                         <h:form>
-                            <p:megaMenu style="margin-top:25px">
-                                <p:submenu label="AGREGAR ADMIN" />
+                            <p:megaMenu style="margin-top:25px" orientation="vertical">
+                                <p:menuitem value="AGREGAR ADMIN" action="CrearAdministrativo.xhtml"/>
                                 <p:submenu label="ELIMINAR ADMIN" />
                                 <p:submenu label="QUITAR HELADO" />
 
                                 <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
                             </p:megaMenu>
                         </h:form>
+ 
                     </ui:define>
 
                 </ui:composition>

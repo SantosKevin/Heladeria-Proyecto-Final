@@ -11,6 +11,7 @@
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
         <title>Facelets Template</title>
+        <f:event type="preRenderView" listener="#{usuarioFormBean.controlarSesion()}"/> 
     </h:head>
 
     <h:body>
@@ -22,7 +23,7 @@
         </div>
         <div id="menu">
             <ui:insert name="menu">
-                <h:form>
+                <h:form id="frmTemp">
                     <p:menubar>
                         <p:submenu icon="pi pi-file" label="Productos" >
                             <p:menuitem value="HELADOS" url="#" />
@@ -31,7 +32,10 @@
                         <p:submenu label="CARRITO" icon="pi pi-pencil">
                         </p:submenu>
                         <f:facet name="options">
-                            <p:commandButton type="button" value="Desconectar" icon="pi pi-home" action="Sesion" />
+                            <p:outputLabel value="Bienvenido ~ #{usuarioFormBean.devolverNombreUsuario()} ~" style="margin-right: 5px;"/>
+                            <p:commandButton id="cmdDesc" value="Desconectar" action="#{usuarioFormBean.desconectar}"
+                                             icon="ui-icon-power"/>
+              
                         </f:facet>
                     </p:menubar>
                 </h:form>

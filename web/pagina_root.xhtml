@@ -30,7 +30,7 @@
                         <p:growl id="growlAdmin" showDetail="true"/>
                         <h:form id="formAdmin">
                             <p:menubar style="margin-top:20px">
-                                <p:menuitem value="Acceder a Base de datos Helados" onclick="PF('dlgVerificar').show()"  icon="pi pi-times" />
+                                <p:menuitem value="Acceder a Base de datos Helados" onclick="PF('dlgVerificar').show()" update="formVerificar" icon="pi pi-times" />
                                 <p:menuitem value="Acceder a Base de datos Ofertas"  icon="pi pi-times" />
                             </p:menubar>
                         </h:form>
@@ -59,6 +59,8 @@
                                     <p:commandButton id="btnVerificar"
                                                      value="Autenticar"
                                                      update="growlAdmin"
+                                                     onclick="form.target='_blank';PF('dlgVerificar').hide()"
+                                                     ajax="false"
                                                      action="#{usuarioFormBean.verificarCredencialesBD()}"/>
                                 </p:panelGrid>
                             </h:form>

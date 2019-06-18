@@ -228,6 +228,7 @@ public class UsuarioFormBean implements Serializable {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No permitido", "contraseña incorrecta"));
         }
+        contraseña="";
         return redireccion;
     }
 

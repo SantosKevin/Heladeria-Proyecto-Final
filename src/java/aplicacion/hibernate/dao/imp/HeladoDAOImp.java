@@ -5,9 +5,13 @@
  */
 package aplicacion.hibernate.dao.imp;
 
+import aplicacion.hibernate.configuracion.HibernateUtil;
 import aplicacion.hibernate.dao.IHeladoDAO;
 import aplicacion.modelo.dominio.Helado;
 import java.io.Serializable;
+import java.util.List;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 
 /**
  *
@@ -15,4 +19,18 @@ import java.io.Serializable;
  */
 public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHeladoDAO, Serializable{
     
+    @Override
+    public Helado obtenerHeladoSegunIdHelado(Integer idHelado) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Helado.class);
+        List<Helado> helados = criteria.list();
+        session.close();
+        Helado helado = new Helado();
+        for (Helado h: helados){
+            if (h.getCodigoHelado().equals(idHelado)){
+                helado = h;
+            }
+        }
+        return helado;
+    }
 }

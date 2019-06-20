@@ -14,24 +14,97 @@
                 <ui:composition template="./resources/templates/template.xhtml">
                     <ui:define name="content">
                         <br></br>
-                        <p:dataTable id="tblTablaDeLibros" emptyMessage="Lista Vacia" style="margin-left: 18%"
-                                     value="#{carritoBean.obtenerCarritoSegunIdUsuario()}"
-                                     var="car">
-                            <f:facet name="header">
-                                Lista Carrito
-                            </f:facet>
-                            <p:column headerText="Nombre">
-                                <p:outputLabel value="#{car.codigoUsuario}"/>
+                        <h:form id="form">
+                            <p:growl id="mensajes" showDetail="true"/>
+                            <p:dataTable id="tblCarrito" emptyMessage="Carrito Vacio" style="margin-left: 18%"
+                                         value="#{carritoBean.obtenerCarritoSegunIdUsuario()}"
+                                         var="car" rows="3" paginator="true">
+                                <f:facet name="header">
+                                    Carrito
+                                </f:facet>
 
-                            </p:column>
-                            <p:column headerText="Detalle">
-                                <p:outputLabel value="#{car.codigoHelado}"/><br></br>
+                                <p:ajax event="rowEdit" listener="#{carritoBean.onRowEdit}" update=":form:mensajes" />
+                                <p:ajax event="rowEditCancel" listener="#{carritoBean.onRowCancel}" update=":form:mensajes" />
 
-                            </p:column> 
+                                <p:column headerText="Imagen" width="20%" style="text-align: center">
+                                    <h:graphicImage url="#{carritoBean.obtenerHelado(car.codigoHelado).imagen}"
+                                                    width="60%" height="30%"/>
+                                </p:column>
+                                <p:column headerText="Nombre">
+                                    <p:outputLabel value="#{carritoBean.obtenerHelado(car.codigoHelado).nombreHelado}"/>
+                                </p:column> 
+                                <p:column headerText="Sabor">
+                                    <p:outputLabel value="#{carritoBean.obtenerHelado(car.codigoHelado).saborHelado}"/>
+                                </p:column> 
+                                <p:column headerText="Precio c/u">
+                                    <p:outputLabel value="#{carritoBean.obtenerHelado(car.codigoHelado).precio}"/>
+                                </p:column> 
+                                <p:column headerText="Cantidad" style="text-align: center" >
+                                    <p:outputLabel value="#{car.cantidad}"/>
+                                </p:column>
+                                <p:column headerText="Opciones"  >
+                                    <p:commandButton actionListener="#{carritoBean.leer(car)}"
+                                                     oncomplete="PF('dlgModificar').show();" 
+                                                     update=":frmDialogoModificar"
+                                                     icon="ui-icon-pencil"/>
+                                    <p:spacer width="6" height="20" />
+                                    <p:commandButton actionListener="#{carritoBean.leer(car)}"
+                                                     oncomplete="PF('dlgEliminar').show();" 
+                                                     update="frmDialogo_eliminar:dialogoEliminar"
+                                                     icon="ui-icon-trash"/>
+                                </p:column>
 
-                        </p:dataTable>
+                            </p:dataTable>
+                            <p:commandButton 
+                                icon="ui-icon-circle-check" value="Confirmar Pedido" 
+                                style="float: right; margin: 1%"/>
+                        </h:form>
+                        <p:dialog id="dialogoModificar" header="Modificar" widgetVar="dlgModificar" modal="true">
+                            <h:form id="frmDialogoModificar">
+                                <h:graphicImage url="#{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).imagen}"/><br></br>
+                                <h:panelGrid id="pgDialogoHelado" columns="2" style="text-align: left">
+                                    <h:outputText value="Nombre:" />
+                                    <h:outputText value="#{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).nombreHelado}" />
 
+                                    <h:outputText value="Sabor:" />
+                                    <h:outputText value="#{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).saborHelado}" />
 
+                                    <h:outputText value="Precio:" />
+                                    <h:outputText value="#{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).precio}" />
+
+                                    <h:outputText value="Cantidad:" />
+                                    <p:spinner value="#{carritoBean.carrito.cantidad}" min="1" max="#{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).cantidad}"/>
+
+                                    <p:commandButton id="btnModificar" value="Aceptar"
+                                                     icon="ui-icon-check"
+                                                     action="#{carritoBean.modificarCarrito()}"
+                                                     update=":form:mensajes, :form:tblCarrito"
+                                                     />
+                                    <p:commandButton id="btnAtras" value="Atras"  
+                                                     onclick="PF('dlgModificar').hide();"
+                                                     icon="ui-icon-closethick"/>
+                                </h:panelGrid>
+                            </h:form>
+                        </p:dialog>
+                        <h:form id="frmDialogo_eliminar">
+                            <p:dialog id="dialogoEliminar" header="Pregunta" 
+                                      widgetVar="dlgEliminar" modal="true"
+                                      resizable="false">
+                                <h:panelGrid columns="2" >
+                                    <p:outputLabel id="lblPregunta" value="Esta seguro/a de eliminar el Helado: 
+                                                   #{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).nombreHelado} ???"/>
+                                </h:panelGrid>    
+                                <p:spacer width="190" height="20" />
+                                <p:commandButton id="btnSi" value="Si"
+                                                 action="#{carritoBean.eliminarCarrito()}"
+                                                 update=":form:mensajes, :form:tblCarrito"
+                                                 icon=" ui-icon-check"/>
+                                <p:commandButton id="btnNo" value="No" 
+                                                 onclick="PF('dlgEliminar').hide();"
+                                                 icon="ui-icon-closethick"/>
+
+                            </p:dialog> 
+                        </h:form>
                     </ui:define>
                 </ui:composition>
             </div>

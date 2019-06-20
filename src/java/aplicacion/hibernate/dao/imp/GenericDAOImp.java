@@ -62,7 +62,7 @@ public class GenericDAOImp<T, ID extends Serializable> implements IGenericDAO<T,
     public void delete(T object) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.update(object);
+        session.delete(object);
         session.getTransaction().commit();
         session.close();
     }

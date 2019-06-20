@@ -17,6 +17,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -85,6 +86,7 @@ public class HeladoBean implements Serializable{
         
         Carrito carrito = new Carrito(1, usuario.getCodigoUsuario(), helado.getCodigoHelado(), cantidad);
         carritoDAO.create(carrito);
+        PrimeFaces.current().executeScript("PF('multiProdDialog').hide();");
     }
     
     public IHeladoDAO getHeladoDAO() {

@@ -12,5 +12,5 @@ import aplicacion.modelo.dominio.Helado;
  * @author Lucas Choque
  */
 public interface IHeladoDAO extends IGenericDAO<Helado, Integer>{
-    
+    Helado obtenerHeladoSegunIdHelado(Integer idHelado);
 }

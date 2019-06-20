@@ -6,14 +6,20 @@
 package aplicacion.controladores.beans;
 
 import aplicacion.hibernate.dao.ICarritoDAO;
+import aplicacion.hibernate.dao.IHeladoDAO;
 import aplicacion.hibernate.dao.imp.CarritoDAOImp;
+import aplicacion.hibernate.dao.imp.HeladoDAOImp;
 import aplicacion.modelo.dominio.Carrito;
+import aplicacion.modelo.dominio.Helado;
 import aplicacion.modelo.dominio.Usuario;
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.PrimeFaces;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -24,11 +30,17 @@ import javax.faces.context.FacesContext;
 public class CarritoBean implements Serializable{
 
     private ICarritoDAO carritoDAO;
+    private IHeladoDAO heladoDAO;
+    private Integer cantidad;
+    private Carrito carrito;
     /**
      * Creates a new instance of CarritoBean
      */
     public CarritoBean() {
         carritoDAO = new CarritoDAOImp();
+        heladoDAO = new HeladoDAOImp();
+        carrito = new Carrito();
+        cantidad = 1;
     }
     
     public List<Carrito> obtenerCarrito(){
@@ -37,7 +49,62 @@ public class CarritoBean implements Serializable{
     
     public List<Carrito> obtenerCarritoSegunIdUsuario(){
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        System.out.println(usuario.getCodigoUsuario());
         return carritoDAO.obtenerCarritoSegunIdUsuario(usuario.getCodigoUsuario());
     }
+    
+    public Helado obtenerHelado(Integer idHelado){
+        return heladoDAO.obtenerHeladoSegunIdHelado(idHelado);
+    }
+    
+    public void leer(Carrito carritoSeleccion){
+       carrito = carritoSeleccion; // copia la referencia 
+    }
+    
+    public void modificarCarrito() {
+        carritoDAO.update(carrito);
+        FacesMessage msg = new FacesMessage("Exito", "Modificacion del carrito exitosa");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        PrimeFaces.current().executeScript("PF('dlgModificar').hide();");
+    }
+
+    public void eliminarCarrito() {
+        carritoDAO.delete(carrito);
+        FacesMessage msg = new FacesMessage("Exito", "Eliminacion del carrito exitosa");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        PrimeFaces.current().executeScript("PF('dlgEliminar').hide();");
+    }
+    
+    public ICarritoDAO getCarritoDAO() {
+        return carritoDAO;
+    }
+
+    public void setCarritoDAO(ICarritoDAO carritoDAO) {
+        this.carritoDAO = carritoDAO;
+    }
+
+    public IHeladoDAO getHeladoDAO() {
+        return heladoDAO;
+    }
+
+    public void setHeladoDAO(IHeladoDAO heladoDAO) {
+        this.heladoDAO = heladoDAO;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public Carrito getCarrito() {
+        return carrito;
+    }
+
+    public void setCarrito(Carrito carrito) {
+        this.carrito = carrito;
+    }
+    
+    
 }

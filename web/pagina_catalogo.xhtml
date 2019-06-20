@@ -16,17 +16,19 @@
                         <br></br>
                         <p:dataTable id="tblTablaDeLibros" emptyMessage="Lista Vacia" style="margin-left: 18%"
                                      value="#{heladoBean.obtenerHelados()}"
-                                     var="hel">
+                                     var="hel" rows="5">
                             <f:facet name="header">
                                 Lista de Helados
                             </f:facet>
-                            <p:column headerText="Nombre">
-                                <h:graphicImage url="#{hel.imagen}"/>
-
+                            <p:column headerText="Imagen" width="20%">
+                                <h:graphicImage url="#{hel.imagen}"  width="80%" height="40%"/>
                             </p:column>
-                            <p:column headerText="Detalle">
-                                <p:outputLabel value="#{hel.nombreHelado}"/><br></br>
-                                <p:outputLabel value="#{hel.saborHelado}"/>
+                            <p:column headerText="Detalle" style="font-size: 120%">
+                                <p:outputLabel value="Nombre: #{hel.nombreHelado}" /><br></br>
+                                <p:outputLabel value="Tipo: #{hel.tipoHelado}"/><br></br>
+                                <p:outputLabel value="Sabor: #{hel.saborHelado}"/><br></br>
+                                <p:outputLabel value="Cant Maxima: #{hel.cantidad}"/><br></br>
+                                <p:outputLabel value="Precio: #{hel.precio}"/>
                             </p:column> 
                             <p:column headerText="">
                                 <p:commandButton 

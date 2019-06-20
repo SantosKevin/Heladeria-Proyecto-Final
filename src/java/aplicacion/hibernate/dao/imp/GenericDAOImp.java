@@ -26,6 +26,10 @@ public class GenericDAOImp<T, ID extends Serializable> implements IGenericDAO<T,
      * finalmente hacemos un commit, y finalizamos la transaccion
      * @param object objecto que deseamos persistir
      */
+    
+    public GenericDAOImp() {
+    }
+
     @Override
     public void create(T object) {
         Session session = HibernateUtil.getSessionFactory().openSession();

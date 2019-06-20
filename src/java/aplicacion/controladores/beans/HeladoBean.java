@@ -5,13 +5,18 @@
  */
 package aplicacion.controladores.beans;
 
+import aplicacion.hibernate.dao.ICarritoDAO;
 import aplicacion.hibernate.dao.IHeladoDAO;
+import aplicacion.hibernate.dao.imp.CarritoDAOImp;
 import aplicacion.hibernate.dao.imp.HeladoDAOImp;
+import aplicacion.modelo.dominio.Carrito;
 import aplicacion.modelo.dominio.Helado;
+import aplicacion.modelo.dominio.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -27,11 +32,18 @@ public class HeladoBean implements Serializable{
      * Se crea una instancia de tipo heladoDAO
      */
     private IHeladoDAO heladoDAO;
+    private ICarritoDAO carritoDAO;
     /**
      * Se inicializa el atributo heladoDAO
      */
+    
+    private Helado helado;
+    private Integer cantidad;
+    
     public HeladoBean() {
         heladoDAO = new HeladoDAOImp();
+        carritoDAO = new CarritoDAOImp();
+        cantidad = 1;
     }
     /**
      * Metodo que crea un nuevo helado
@@ -39,7 +51,13 @@ public class HeladoBean implements Serializable{
      */
     public void crearHelado(Helado nuevoHelado){
         heladoDAO.create(nuevoHelado);
+        helado = new Helado();
     }
+    
+    public void leer(Helado heladoSeleccion){
+       helado = heladoSeleccion; // copia la referencia 
+    }
+            
     /**
      * Metodo que elimina un helado
      * @param Helado variable de tipo helado la cual se elimina de la base de datos
@@ -61,6 +79,14 @@ public class HeladoBean implements Serializable{
     public List<Helado> obtenerHelados(){
         return heladoDAO.getAll(Helado.class);
     }
+    
+    public void agregarAlCarrito(){
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        
+        Carrito carrito = new Carrito(1, usuario.getCodigoUsuario(), helado.getCodigoHelado(), cantidad);
+        carritoDAO.create(carrito);
+    }
+    
     public IHeladoDAO getHeladoDAO() {
         return heladoDAO;
     }
@@ -68,4 +94,24 @@ public class HeladoBean implements Serializable{
     public void setHeladoDAO(IHeladoDAO heladoDAO) {
         this.heladoDAO = heladoDAO;
     }
+
+    public Helado getHelado() {
+        return helado;
+    }
+
+    public void setHelado(Helado helado) {
+        this.helado = helado;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
+   
+    
+    
 }

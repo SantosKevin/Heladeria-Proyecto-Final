@@ -44,7 +44,7 @@ Contributor(s):
     <!--<property name="hibernate.hbm2ddl.auto">create</property>-->
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/heladeria?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3308/heladeria?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
     <property name="hibernate.show_sql">true</property>
@@ -52,5 +52,6 @@ Contributor(s):
     <mapping resource="aplicacion/hibernate/mapeos/Helado.hbm.xml"/>
     <mapping resource="aplicacion/hibernate/mapeos/Compra.hbm.xml"/>
     <mapping resource="aplicacion/hibernate/mapeos/Oferta.hbm.xml"/>
+    <mapping resource="aplicacion/hibernate/mapeos/Carrito.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

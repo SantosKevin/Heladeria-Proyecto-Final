@@ -97,8 +97,10 @@ public class UsuarioFormBean implements Serializable {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó un nuevo Usuario", "Bienvenido"));
     }
+
     /**
-     * permite controlar que haya un usuario logueado, de lo contrario nos mandara a otra pagina
+     * permite controlar que haya un usuario logueado, de lo contrario nos
+     * mandara a otra pagina
      */
     public void controlarSesion() {
         try {
@@ -113,29 +115,38 @@ public class UsuarioFormBean implements Serializable {
 
     /**
      * permite desconectarse de la sesion
+     *
      * @return la redirecion de la pagina
      */
     public String desconectar() {
-        String redireccion="";
-       FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        String redireccion = "";
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         redireccion = "Sesion?faces-redirect=true";
         return redireccion;
     }
+
     /**
      * sirve para obtener el nombre del usuario logueado
+     *
      * @return el apellido y nombre del usuario
      */
-   public String devolverNombreUsuario(){
-       Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-   return usuario.getApellidoUsuario() + ", " + usuario.getNombreUsuario();
-   }
-    
+    public String devolverNombreUsuario() {
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        return usuario.getApellidoUsuario() + ", " + usuario.getNombreUsuario();
+    }
+
+    public Integer devolverIDUsuario() {
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        return usuario.getCodigoUsuario();
+    }
+
     public void generarUsuario() {
         usuarioBean.obtenerAdministrativos();
     }
 
     /**
      * me permite obtener la lista de todos los usuarios de mi base de datos
+     *
      * @return la lista cargada
      */
     public List<Usuario> obtenerAdministrativos() {
@@ -192,12 +203,10 @@ public class UsuarioFormBean implements Serializable {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuarioAuxiliar);
                 if (usuarioAuxiliar.getTipoUsuario().equals("normal")) {
                     redireccion = "pagina_principal?faces-redirect=true";
+                } else if (usuarioAuxiliar.getTipoUsuario().equals("administrativo")) {
+                    redireccion = "pagina_administrador?faces-redirect=true";
                 } else {
-                    if (usuarioAuxiliar.getTipoUsuario().equals("administrativo")) {
-                        redireccion = "pagina_administrador?faces-redirect=true";
-                    } else {
-                        redireccion = "pagina_root?faces-redirect=true";
-                    }
+                    redireccion = "pagina_root?faces-redirect=true";
                 }
                 this.usuarioConectado = usuarioAuxiliar;
             } else {
@@ -228,7 +237,7 @@ public class UsuarioFormBean implements Serializable {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No permitido", "contraseña incorrecta"));
         }
-        contraseña="";
+        contraseña = "";
         return redireccion;
     }
 

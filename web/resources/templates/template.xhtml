@@ -26,11 +26,10 @@
                 <h:form id="frmTemp">
                     <p:menubar>
                         <p:submenu icon="pi pi-file" label="Productos" >
-                            <p:menuitem value="HELADOS" url="#" />
+                            <p:menuitem value="HELADOS" url="pagina_catalogo.xhtml" />
                         </p:submenu>
 
-                        <p:submenu label="CARRITO" icon="pi pi-pencil">
-                        </p:submenu>
+                        <p:menuitem value="CARRITO" url="pagina_carrito.xhtml" />
                         <f:facet name="options">
                             <p:outputLabel value="Bienvenido ~ #{usuarioFormBean.devolverNombreUsuario()} ~" style="margin-right: 5px;"/>
                             <p:commandButton id="cmdDesc" value="Desconectar" action="#{usuarioFormBean.desconectar}"

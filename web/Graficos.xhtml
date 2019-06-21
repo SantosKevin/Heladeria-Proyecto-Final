@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./resources/templates/template.xhtml">
+
+            <ui:define name="admin">
+               
+            </ui:define>
+
+            <ui:define name="root">
+            
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form id="frmGrafico">
+                    <p:panel>
+                        <p:panelGrid>
+                            <p:outputLabel value="Visualizar Graficos estadisticos sobre las ventas en general"
+                            <p:commandButton value="GRAFICAR" actionListener=""
+                                             update="pnlGeneral"></p:commandButton>
+                            <h:panelGroup id="pnlGeneral">
+                                <p:chart type="bar" model=""
+                                         rendered="true" ></p:chart>
+                            </h:panelGroup>
+                        </p:panelGrid>
+                    </p:panel>
+                </h:form>
+                    
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

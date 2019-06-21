@@ -21,13 +21,13 @@
             <ui:define name="content">
                 <p:growl id="growlAdmin" showDetail="true"></p:growl>
                 <h:form id="frmAdmins">
-                    <p:dataTable id="tblAdmins" var="admin" editable="true"
+                    <p:dataTable id="tblAdmins" var="admin" editable="true" widgetVar="usuariosTable"
                                  value="#{usuarioFormBean.obtenerAdministrativos()}">
-                         
-                        <p:column id="clmCodigo" headerText="Codigo Usuario" sortBy="#{admin.codigoUsuario}">
+
+                        <p:column id="clmCodigo" headerText="Codigo Usuario">
                             <h:outputText id="txtCodigoAdmin" value="#{admin.codigoUsuario}"/>
                         </p:column>
-                        <p:column headerText="Apellido" sortBy="#{admin.apellidoUsuario}">
+                        <p:column headerText="Apellido">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText id="txtApellidoA" value="#{admin.apellidoUsuario}" /></f:facet>
                                 <f:facet name="input"><p:inputText id="inpApellido" value="#{admin.apellidoUsuario}"/></f:facet>
@@ -60,9 +60,18 @@
                             </p:cellEditor>
 
                         </p:column>
-                        <p:column id="clmTipo" headerText="Tipo Usuario" sortBy="#{admin.tipoUsuario}">
-                            <h:outputText value="#{admin.tipoUsuario}"/>
+                        <p:column filterBy="#{admin.tipoUsuario}" headerText="Tipo Usuario"  filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('usuariosTable').filter()" styleClass="custom-filter">
+                                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="administrativo" itemValue="administrativo"/>
+                                    <f:selectItem itemLabel="normal" itemValue="normal"/>
+
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{admin.tipoUsuario}" />
                         </p:column>
+                       
                         <p:column id="clmOpc" headerText="Opciones">
                             <p:rowEditor />
                             <p:commandButton id="cmdBorrar" update="growlAdmin tblAdmins" icon="ui-icon-trash"

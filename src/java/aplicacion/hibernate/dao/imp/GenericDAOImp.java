@@ -8,7 +8,10 @@ package aplicacion.hibernate.dao.imp;
 import aplicacion.hibernate.configuracion.HibernateUtil;
 import aplicacion.hibernate.dao.IGenericDAO;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 
@@ -62,7 +65,7 @@ public class GenericDAOImp<T, ID extends Serializable> implements IGenericDAO<T,
     public void delete(T object) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.delete(object);
+        session.update(object);
         session.getTransaction().commit();
         session.close();
     }
@@ -79,6 +82,7 @@ public class GenericDAOImp<T, ID extends Serializable> implements IGenericDAO<T,
         Criteria criteria = session.createCriteria(object);
         List<T> objectos = criteria.list();
         session.close();
+        
         return objectos;
     }
 }

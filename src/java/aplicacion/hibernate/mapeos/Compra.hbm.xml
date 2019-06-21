@@ -40,25 +40,20 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-mapping>
-  <class name="aplicacion.modelo.dominio.Compra" catalog="heladeria" table="compras"
-         optimistic-lock="version">
-      
-      <id name="codigoCompra" type="integer">
-          <column name="com_codigo_compra" not-null="true"/>
-          <generator class="identity"/>
-      </id>
-      
-      <many-to-one name="usuarioCompra" class="aplicacion.modelo.dominio.Usuario" fetch="join">
-          <column name="com_usuario" not-null="true"/>
-      </many-to-one>
-      
-      <set name="heladosCompra" table="com_hel" fetch="join" cascade="all">
-          <key column="com_codigo_compra"/>
-          <many-to-many class="aplicacion.modelo.dominio.Helado" column="hel_codigo_helado"/>
-      </set>
-      
-      <property name="estado" type="integer">
-          <column name="com_estado_compra" not-null="true"/>
-      </property>
+  <class catalog="heladeria" name="aplicacion.modelo.dominio.Compra" optimistic-lock="version" table="compras">
+    <id name="codigoCompra" type="integer">
+      <column name="com_codigo_compra" not-null="true"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="aplicacion.modelo.dominio.Usuario" fetch="join" name="usuarioCompra">
+      <column name="com_usuario" not-null="true"/>
+    </many-to-one>
+    <set cascade="all" fetch="join" name="heladosCompra" table="com_hel">
+      <key column="com_codigo_compra"/>
+      <many-to-many class="aplicacion.modelo.dominio.Helado" column="hel_codigo_helado"/>
+    </set>
+    <property name="estado" type="integer">
+      <column name="com_estado_compra" not-null="true"/>
+    </property>
   </class>
 </hibernate-mapping>

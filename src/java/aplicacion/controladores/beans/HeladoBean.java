@@ -14,6 +14,7 @@ import aplicacion.modelo.dominio.Helado;
 import aplicacion.modelo.dominio.Usuario;
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -56,6 +57,7 @@ public class HeladoBean implements Serializable{
     }
     
     public void leer(Helado heladoSeleccion){
+        System.out.println(heladoSeleccion.getCodigoHelado());
        helado = heladoSeleccion; // copia la referencia 
     }
             
@@ -83,9 +85,22 @@ public class HeladoBean implements Serializable{
     
     public void agregarAlCarrito(){
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        Boolean bandera = true;
         
         Carrito carrito = new Carrito(1, usuario.getCodigoUsuario(), helado.getCodigoHelado(), cantidad);
-        carritoDAO.create(carrito);
+        
+        for (Carrito c: carritoDAO.obtenerCarritoSegunIdUsuario(usuario.getCodigoUsuario())){
+            if (c.getCodigoHelado().equals(carrito.getCodigoHelado())){
+                bandera = false;
+                c.setCantidad(carrito.getCantidad() + c.getCantidad());
+                carritoDAO.update(c);
+            }
+        }
+        if (bandera){
+            carritoDAO.create(carrito);
+        }
+        FacesMessage msg = new FacesMessage("Mensaje", "Agregado al Carrito");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         PrimeFaces.current().executeScript("PF('multiProdDialog').hide();");
     }
     

@@ -14,32 +14,35 @@
                 <ui:composition template="./resources/templates/template.xhtml">
                     <ui:define name="content">
                         <br></br>
-                        <p:dataTable id="tblTablaDeLibros" emptyMessage="Lista Vacia" style="margin-left: 18%"
-                                     value="#{heladoBean.obtenerHelados()}"
-                                     var="hel" rows="5">
-                            <f:facet name="header">
-                                Lista de Helados
-                            </f:facet>
-                            <p:column headerText="Imagen" width="20%">
-                                <h:graphicImage url="#{hel.imagen}"  width="80%" height="40%"/>
-                            </p:column>
-                            <p:column headerText="Detalle" style="font-size: 120%">
-                                <p:outputLabel value="Nombre: #{hel.nombreHelado}" /><br></br>
-                                <p:outputLabel value="Tipo: #{hel.tipoHelado}"/><br></br>
-                                <p:outputLabel value="Sabor: #{hel.saborHelado}"/><br></br>
-                                <p:outputLabel value="Cant Maxima: #{hel.cantidad}"/><br></br>
-                                <p:outputLabel value="Precio: #{hel.precio}"/>
-                            </p:column> 
-                            <p:column headerText="">
-                                <p:commandButton 
-                                    icon="ui-icon-circle-check" value="Agregar al Carrito" 
-                                    oncomplete="PF('multiProdDialog').show()"
-                                    action="#{heladoBean.leer(hel)}"
-                                    update="frmDialogoHelado"/>
-                                
-                            </p:column> 
-                        </p:dataTable>
+                        <h:form id="form">
+                            <p:growl id="mensajes" showDetail="true"/>
+                            <p:dataTable id="tblTablaDeLibros" emptyMessage="Lista Vacia" style="margin-left: 18%"
+                                         value="#{heladoBean.obtenerHelados()}"
+                                         var="hel" rows="5">
+                                <f:facet name="header">
+                                    Lista de Helados
+                                </f:facet>
+                                <p:column headerText="Imagen" width="20%">
+                                    <h:graphicImage url="#{hel.imagen}"  width="80%" height="40%"/>
+                                </p:column>
+                                <p:column headerText="Detalle" style="font-size: 120%">
+                                    <p:outputLabel value="Nombre: #{hel.nombreHelado}" /><br></br>
+                                    <p:outputLabel value="Tipo: #{hel.tipoHelado}"/><br></br>
+                                    <p:outputLabel value="Sabor: #{hel.saborHelado}"/><br></br>
+                                    <p:outputLabel value="Cant Maxima: #{hel.cantidad}"/><br></br>
+                                    <p:outputLabel value="Precio: #{hel.precio}"/>
+                                </p:column> 
+                                <p:column headerText="">
+                                    <p:commandButton 
+                                        icon="ui-icon-circle-check" value="Agregar al Carrito" 
+                                        oncomplete="PF('multiProdDialog').show()"
+                                        action="#{heladoBean.leer(hel)}"
+                                        update="frmDialogoHelado"
+                                        resetValues="true"/>
 
+                                </p:column> 
+                            </p:dataTable>
+                        </h:form>
                         <p:dialog header="Informacion" widgetVar="multiProdDialog" modal="true" 
                                   showEffect="fade" hideEffect="fade" resizable="false" width="450"
                                   closeOnEscape="true">
@@ -61,13 +64,15 @@
                                     <p:commandButton id="btnModificar" value="Aceptar"
                                                      icon="ui-icon-check"
                                                      action="#{heladoBean.agregarAlCarrito()}"
-                                                     />
+                                                     update=":form:mensajes"/>
                                     <p:commandButton id="btnAtras" value="Atras"  
                                                      onclick="PF('multiProdDialog').hide();"
-                                                     icon="ui-icon-closethick"/>
+                                                     icon="ui-icon-closethick"
+                                                     />
                                 </h:panelGrid>
                             </h:form>
                         </p:dialog>
+
                     </ui:define>
                 </ui:composition>
             </div>

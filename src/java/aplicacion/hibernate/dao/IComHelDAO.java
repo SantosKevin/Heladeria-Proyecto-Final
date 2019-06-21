@@ -5,14 +5,12 @@
  */
 package aplicacion.hibernate.dao;
 
-import aplicacion.modelo.dominio.Compra;
-import aplicacion.modelo.dominio.Helado;
-import java.util.List;
+import aplicacion.modelo.dominio.ComHel;
 
 /**
  *
- * @author Lucas Choque
+ * @author gabri
  */
-public interface ICompraDAO extends IGenericDAO<Compra, Integer>{
-    List<Compra> obtenerCompras();
+public interface IComHelDAO extends IGenericDAO<ComHel, Integer>{
+    
 }

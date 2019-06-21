@@ -53,5 +53,6 @@ Contributor(s):
     <mapping resource="aplicacion/hibernate/mapeos/Compra.hbm.xml"/>
     <mapping resource="aplicacion/hibernate/mapeos/Oferta.hbm.xml"/>
     <mapping resource="aplicacion/hibernate/mapeos/Carrito.hbm.xml"/>
+    <mapping resource="aplicacion/hibernate/mapeos/ComHel.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

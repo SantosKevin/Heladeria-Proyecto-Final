@@ -22,10 +22,6 @@
                                 <f:facet name="header">
                                     Carrito
                                 </f:facet>
-
-                                <p:ajax event="rowEdit" listener="#{carritoBean.onRowEdit}" update=":form:mensajes" />
-                                <p:ajax event="rowEditCancel" listener="#{carritoBean.onRowCancel}" update=":form:mensajes" />
-
                                 <p:column headerText="Imagen" width="20%" style="text-align: center">
                                     <h:graphicImage url="#{carritoBean.obtenerHelado(car.codigoHelado).imagen}"
                                                     width="60%" height="30%"/>
@@ -56,8 +52,9 @@
 
                             </p:dataTable>
                             <p:commandButton 
-                                icon="ui-icon-circle-check" value="Confirmar Pedido" 
-                                style="float: right; margin: 1%"/>
+                                icon="ui-icon-circle-check" value="Confirmar Compra" 
+                                style="float: right; margin: 1%"
+                                action="#{carritoBean.agregarCompra()}"/>
                         </h:form>
                         <p:dialog id="dialogoModificar" header="Modificar" widgetVar="dlgModificar" modal="true">
                             <h:form id="frmDialogoModificar">

@@ -14,8 +14,12 @@ import aplicacion.hibernate.dao.imp.UsuarioDAOImp;
 import aplicacion.modelo.dominio.Compra;
 import aplicacion.modelo.dominio.Helado;
 import aplicacion.modelo.dominio.Usuario;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -36,7 +40,14 @@ public class TestCompra {
         compra.setHeladosCompra(new HashSet<>(listaHelados));
         compra.setUsuarioCompra(usuario);
         
-        compraDAO.create(compra);
+        //compraDAO.create(compra);
+        //sirve para quitar valores duplicados
+        List<Compra> compras = compraDAO.getAll(Compra.class);
+        Set nums = compras.stream().collect(Collectors.toSet());
+        compras = new ArrayList<>(nums);
         
+        for(Compra c: compras){
+            System.out.println(c.toString());
+        }
     }
 }

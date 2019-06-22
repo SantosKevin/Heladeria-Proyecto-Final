@@ -55,7 +55,7 @@ public class CarritoDAOImp extends GenericDAOImp<Carrito, Integer> implements IC
         for (Carrito c: carritos){
             if (c.getCodigoUsuario().equals(idUsuario)){
                 Helado helado = heladoDAOImp.obtenerHeladoSegunIdHelado(c.getCodigoHelado());
-                helado.setCantidad(c.getCantidad());
+                helado.setCantidad(helado.getCantidad() - c.getCantidad());
                 System.out.println(helado.toString());
                 HeladoAux.add(helado);
             }
@@ -70,6 +70,12 @@ public class CarritoDAOImp extends GenericDAOImp<Carrito, Integer> implements IC
         sesion.delete(carrito);
         sesion.getTransaction().commit();
         sesion.close();
-        //listalibro.eliminarLibro(libro);
+    }
+    
+    @Override
+    public void eliminarCarrito(Integer idUsuario) {
+        for (Carrito c: obtenerCarritoSegunIdUsuario(idUsuario)){
+            eliminarCarrito(c);
+        }
     }
 }

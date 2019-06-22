@@ -83,6 +83,14 @@ public class HeladoBean implements Serializable{
         return heladoDAO.getAll(Helado.class);
     }
     
+    /**
+     * Metodo para obtener todos los helados de la base de datos que su cantidad de stock no sea igual a 0
+     * @return lista de helados
+     */
+    public List<Helado> obtenerHeladosDisponibles(){
+        return heladoDAO.obtenerHeladosDisponibles();
+    }
+    
     public void agregarAlCarrito(){
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         Boolean bandera = true;

@@ -6,7 +6,6 @@
 package aplicacion.hibernate.dao;
 
 import aplicacion.modelo.dominio.Compra;
-import aplicacion.modelo.dominio.Helado;
 import java.util.List;
 
 /**
@@ -15,4 +14,5 @@ import java.util.List;
  */
 public interface ICompraDAO extends IGenericDAO<Compra, Integer>{
     List<Compra> obtenerCompras();
+    List<Compra> obtenerComprasSegunIdUsuario(Integer idUsuario);
 }

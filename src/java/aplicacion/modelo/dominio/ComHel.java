@@ -12,12 +12,12 @@ public class ComHel  implements java.io.Serializable {
      private ComHelId id;
      private Compra compras;
      private Helado helados;
-     private int cantHelado;
+     private Integer cantHelado;
 
     public ComHel() {
     }
 
-    public ComHel(ComHelId id, Compra compras, Helado helados, int cantHelado) {
+    public ComHel(ComHelId id, Compra compras, Helado helados, Integer cantHelado) {
        this.id = id;
        this.compras = compras;
        this.helados = helados;
@@ -48,14 +48,16 @@ public class ComHel  implements java.io.Serializable {
     public void setHelados(Helado helados) {
         this.helados = helados;
     }
-    
-    public int getCantHelado() {
-        return this.cantHelado;
+
+    public Integer getCantHelado() {
+        return cantHelado;
     }
-    
-    public void setCantHelado(int cantHelado) {
+
+    public void setCantHelado(Integer cantHelado) {
         this.cantHelado = cantHelado;
     }
+    
+    
 
 
 

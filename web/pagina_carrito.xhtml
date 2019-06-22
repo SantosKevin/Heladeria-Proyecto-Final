@@ -16,7 +16,7 @@
                         <br></br>
                         <h:form id="form">
                             <p:growl id="mensajes" showDetail="true"/>
-                            <p:dataTable id="tblCarrito" emptyMessage="Carrito Vacio" style="margin-left: 18%"
+                            <p:dataTable id="tblCarrito" emptyMessage="Carrito Vacio" style="margin-left: 18%; margin-right: 18%"
                                          value="#{carritoBean.obtenerCarritoSegunIdUsuario()}"
                                          var="car" rows="3" paginator="true">
                                 <f:facet name="header">
@@ -54,7 +54,8 @@
                             <p:commandButton 
                                 icon="ui-icon-circle-check" value="Confirmar Compra" 
                                 style="float: right; margin: 1%"
-                                action="#{carritoBean.agregarCompra()}"/>
+                                oncomplete="PF('dlgPregunta').show();" 
+                                update=":form:mensajes :form:tblCarrito"/>
                         </h:form>
                         <p:dialog id="dialogoModificar" header="Modificar" widgetVar="dlgModificar" modal="true">
                             <h:form id="frmDialogoModificar">
@@ -87,19 +88,39 @@
                             <p:dialog id="dialogoEliminar" header="Pregunta" 
                                       widgetVar="dlgEliminar" modal="true"
                                       resizable="false">
-                                <h:panelGrid columns="2" >
-                                    <p:outputLabel id="lblPregunta" value="Esta seguro/a de eliminar el Helado: 
-                                                   #{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).nombreHelado} ???"/>
+                                <p:outputLabel id="lblPregunta" value="Esta seguro/a de eliminar el Helado: 
+                                               #{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).nombreHelado} ???"/>
+                                <br></br>
+                                <h:panelGrid columns="2" style="float: right">
+                                    <p:commandButton id="btnSi" value="Si"
+                                                     action="#{carritoBean.eliminarCarrito()}"
+                                                     update=":form:mensajes, :form:tblCarrito"
+                                                     icon=" ui-icon-check"
+                                                     />
+                                    <p:commandButton id="btnNo" value="No" 
+                                                     onclick="PF('dlgEliminar').hide();"
+                                                     icon="ui-icon-closethick"
+                                                     />
                                 </h:panelGrid>    
-                                <p:spacer width="190" height="20" />
-                                <p:commandButton id="btnSi" value="Si"
-                                                 action="#{carritoBean.eliminarCarrito()}"
-                                                 update=":form:mensajes, :form:tblCarrito"
-                                                 icon=" ui-icon-check"/>
-                                <p:commandButton id="btnNo" value="No" 
-                                                 onclick="PF('dlgEliminar').hide();"
-                                                 icon="ui-icon-closethick"/>
-
+                            </p:dialog> 
+                        </h:form>
+                        <h:form id="frmDialogo_pregunta">
+                            <p:dialog id="dialogoPregunta" header="Pregunta" closeOnEscape="true"
+                                      widgetVar="dlgPregunta" modal="true"
+                                      resizable="false">
+                                <p:outputLabel id="lblPregunta" value="Esta seguro/a de finalizar su compra?"/>
+                                <br></br>
+                                <h:panelGrid columns="2" style="float: right">
+                                    <p:commandButton id="btnSiPreg" value="Si" escape="true"
+                                                     update=":form:mensajes, :form:tblCarrito"
+                                                     icon=" ui-icon-check"
+                                                     action="#{carritoBean.agregarCompra()}"
+                                                     />
+                                    <p:commandButton id="btnNoPreg" value="No" 
+                                                     onclick="PF('dlgPregunta').hide();"
+                                                     icon="ui-icon-closethick"
+                                                     />
+                                </h:panelGrid>    
                             </p:dialog> 
                         </h:form>
                     </ui:define>

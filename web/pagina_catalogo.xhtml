@@ -16,8 +16,8 @@
                         <br></br>
                         <h:form id="form">
                             <p:growl id="mensajes" showDetail="true"/>
-                            <p:dataTable id="tblTablaDeLibros" emptyMessage="Lista Vacia" style="margin-left: 18%"
-                                         value="#{heladoBean.obtenerHelados()}"
+                            <p:dataTable id="tblTablaDeLibros" emptyMessage="Lista Vacia" style="margin-left: 18%; margin-right: 18%"
+                                         value="#{heladoBean.obtenerHeladosDisponibles()}"
                                          var="hel" rows="5">
                                 <f:facet name="header">
                                     Lista de Helados

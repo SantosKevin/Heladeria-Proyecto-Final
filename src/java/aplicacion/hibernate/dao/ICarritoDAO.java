@@ -17,4 +17,5 @@ public interface ICarritoDAO extends IGenericDAO<Carrito, Integer>{
     List<Carrito> obtenerCarritoSegunIdUsuario(Integer idUsuario);
     List<Helado> obtenerHeladoSegunIdUsuario(Integer idUsuario);
     void eliminarCarrito(Carrito carrito) ;
+    void eliminarCarrito(Integer idUsuario);
 }

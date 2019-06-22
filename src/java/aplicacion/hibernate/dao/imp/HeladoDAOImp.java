@@ -9,6 +9,7 @@ import aplicacion.hibernate.configuracion.HibernateUtil;
 import aplicacion.hibernate.dao.IHeladoDAO;
 import aplicacion.modelo.dominio.Helado;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -25,6 +26,7 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
         Criteria criteria = session.createCriteria(Helado.class);
         List<Helado> helados = criteria.list();
         session.close();
+        
         Helado helado = new Helado();
         for (Helado h: helados){
             if (h.getCodigoHelado().equals(idHelado)){
@@ -32,5 +34,23 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
             }
         }
         return helado;
+    }
+    
+    @Override
+    public List<Helado> obtenerHeladosDisponibles() {
+        List<Helado> heladosAux =  new ArrayList<>();
+        
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Helado.class);
+        List<Helado> helados = criteria.list();
+        session.close();
+        
+        Helado helado = new Helado();
+        for (Helado h: helados){
+            if (!h.getCantidad().equals(0)){
+                heladosAux.add(h);
+            }
+        }
+        return heladosAux;
     }
 }

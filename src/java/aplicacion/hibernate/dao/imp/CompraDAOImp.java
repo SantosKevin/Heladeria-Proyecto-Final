@@ -7,15 +7,10 @@ package aplicacion.hibernate.dao.imp;
 
 import aplicacion.hibernate.configuracion.HibernateUtil;
 import aplicacion.hibernate.dao.ICompraDAO;
-import aplicacion.modelo.dominio.Carrito;
 import aplicacion.modelo.dominio.Compra;
-import aplicacion.modelo.dominio.Helado;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 
@@ -27,19 +22,60 @@ public class CompraDAOImp extends GenericDAOImp<Compra, Integer> implements ICom
 
     public CompraDAOImp() {
     }
-    
+    /**
+     * @return Returna una lista con todas las compras
+     */
     @Override
     public List<Compra> obtenerCompras() {
+        List<Compra> comprasAux = new ArrayList<>();
+        
         Session session = HibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Compra.class);
         List<Compra> compras = criteria.list();
         session.close();
         
-        //sirve para quitar valores duplicados
-        Set listAux = compras.stream().collect(Collectors.toSet());
-        compras = new ArrayList<>(listAux);
-        Collections.reverse(compras);
+        //quita valores repetidos segun el id de compra
+        for (Compra c: compras){
+            boolean bandera = true;
+            for(Compra cAux: comprasAux){
+                if ( cAux.getCodigoCompra().equals(c.getCodigoCompra())){
+                    bandera = false;
+                }
+            }
+            if ( bandera){
+                comprasAux.add(c);
+            }
+        }
+        return comprasAux;
+    }
+    
+    /**
+     * @param idUsuario id del Usuario
+     * @return Returna una lista con todas las compras segund IdUsuario
+     */
+    @Override
+    public List<Compra> obtenerComprasSegunIdUsuario(Integer idUsuario) {
+        List<Compra> comprasAux = new ArrayList<>();
         
-        return compras;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Compra.class);
+        List<Compra> compras = criteria.list();
+        session.close();
+        
+        //quita valores repetidos segun el id de compra
+        for (Compra c: compras){
+            boolean bandera = true;
+            if (c.getUsuarioCompra().getCodigoUsuario().equals(idUsuario)){
+                for(Compra cAux: comprasAux){
+                if ( cAux.getCodigoCompra().equals(c.getCodigoCompra())){
+                    bandera = false;
+                }
+            }
+            if ( bandera){
+                comprasAux.add(c);
+            }
+            }
+        }
+        return comprasAux;
     }
 }

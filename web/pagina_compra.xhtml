@@ -16,9 +16,9 @@
                         <br></br>
                         <h:form id="form">
                             <p:growl id="mensajes" showDetail="true"/>
-                            <p:dataTable id="tblCarrito" emptyMessage="Carrito Vacio" style="margin-left: 18%"
+                            <p:dataTable id="tblCarrito" emptyMessage="Carrito Vacio" style="margin-left: 18%; margin-right: 18%"
                                          value="#{compraBean.obtenerCompras()}"
-                                         var="comp" rows="3" paginator="true">
+                                         var="comp" rows="10" paginator="true">
                                 <f:facet name="header">
                                     Compras
                                 </f:facet>
@@ -32,12 +32,11 @@
                                     <p:outputLabel value="#{comp.usuarioCompra.nombreUsuario} #{comp.usuarioCompra.apellidoUsuario} "/>
                                 </p:column> 
                                 <p:column headerText="Estado">
-                                    <p:outputLabel value="#{comp.usuarioCompra.estado} "/>
+                                    <p:outputLabel value="#{compraBean.ObtenerEstadoCompra(comp.estado)} "/>
                                 </p:column> 
                                 <p:rowExpansion>
-                                    <p:dataTable id="tblHelado" emptyMessage="Sin Helados" style="margin-left: 2%"
+                                    <p:dataTable id="tblHelado" emptyMessage="Sin Helados" style="margin-left: 3%"
                                                  value="#{comp.heladosCompra}"
-                                                 
                                                  var="hel" >
                                         <p:column headerText="Imagen" width="20%" style="text-align: center">
                                             <h:graphicImage url="#{hel.imagen}"
@@ -53,7 +52,7 @@
                                             <p:outputLabel value="#{hel.precio}"/>
                                         </p:column> 
                                         <p:column headerText="Cantidad" style="text-align: center" >
-                                            <p:outputLabel value="#{hel.cantidad}"/>
+                                            <p:outputLabel value="#{compraBean.obtenerCantidadComHel(comp.codigoCompra,hel.codigoHelado)}"/>
                                         </p:column>
                                     </p:dataTable>
                                 </p:rowExpansion>

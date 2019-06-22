@@ -6,6 +6,7 @@
 package aplicacion.hibernate.dao;
 
 import aplicacion.modelo.dominio.Helado;
+import java.util.List;
 
 /**
  *
@@ -13,4 +14,5 @@ import aplicacion.modelo.dominio.Helado;
  */
 public interface IHeladoDAO extends IGenericDAO<Helado, Integer>{
     Helado obtenerHeladoSegunIdHelado(Integer idHelado);
+    List<Helado> obtenerHeladosDisponibles();
 }

@@ -87,7 +87,7 @@
                         <h:form id="frmDialogo_eliminar">
                             <p:dialog id="dialogoEliminar" header="Pregunta" 
                                       widgetVar="dlgEliminar" modal="true"
-                                      resizable="false">
+                                      resizable="true" responsive="true" >
                                 <p:outputLabel id="lblPregunta" value="Esta seguro/a de eliminar el Helado: 
                                                #{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).nombreHelado} ???"/>
                                 <br></br>
@@ -107,7 +107,7 @@
                         <h:form id="frmDialogo_pregunta">
                             <p:dialog id="dialogoPregunta" header="Pregunta" closeOnEscape="true"
                                       widgetVar="dlgPregunta" modal="true"
-                                      resizable="false">
+                                      resizable="true" responsive="true">
                                 <p:outputLabel id="lblPregunta" value="Esta seguro/a de finalizar su compra?"/>
                                 <br></br>
                                 <h:panelGrid columns="2" style="float: right">

@@ -36,6 +36,7 @@ public class UsuarioFormBean implements Serializable {
     private Usuario usuarioConectado;
     private String nombreUsu;
     private String contraseña;
+    private Integer paramBaseDeDatos;
 
     /**
      * Creates a new instance of UsuarioFormBean
@@ -231,10 +232,13 @@ public class UsuarioFormBean implements Serializable {
      */
     public String verificarCredencialesBD() {
         String redireccion = "";
+        FacesContext facesContext = FacesContext.getCurrentInstance();
         if (contraseña.equals(this.usuarioConectado.getContraseña())) {
-            redireccion = "baseDeDatosHelados?faces-redirect=true";
+            if(this.paramBaseDeDatos == 1)
+                redireccion = "baseDeDatosHelados?faces-redirect=true";
+            else
+                redireccion = "baseDeDatosOfertas?faces-redirect=true";
         } else {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No permitido", "contraseña incorrecta"));
         }
         contraseña = "";
@@ -314,4 +318,14 @@ public class UsuarioFormBean implements Serializable {
     public void setUsuarioConectado(Usuario usuarioConectado) {
         this.usuarioConectado = usuarioConectado;
     }
+
+    public Integer getParamBaseDeDatos() {
+        return paramBaseDeDatos;
+    }
+
+    public void setParamBaseDeDatos(Integer paramBaseDeDatos) {
+        this.paramBaseDeDatos = paramBaseDeDatos;
+    }
+    
+    
 }

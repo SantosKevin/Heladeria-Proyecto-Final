@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./resources/templates/templateBaseDeDatos.xhtml">
+            <ui:define name="content">
+                <p:growl id="growlOferta" showDetail="true"/>
+                <h:form id="formTabla">
+                    <p:dataTable id="tblOferta"
+                                 var="oferta"
+                                 value="#{ofertaFormBean.listaOfertas}">
+                        <f:facet name="header">
+                            Lista de Ofertas
+                        </f:facet>
+
+                        <p:column headerText="Codigo">
+                            <p:outputLabel value="#{oferta.codigoOferta}"/>
+                        </p:column>
+
+                        <p:column headerText="Tipo">
+                            <p:outputLabel value="#{oferta.tipoOferta}"/>
+                        </p:column>
+
+                        <p:column headerText="Fecha de inicio">
+                            <p:outputLabel value="#{oferta.fechaInicio}"/>
+                        </p:column>
+
+                        <p:column headerText="Fecha de final">
+                            <p:outputLabel value="#{oferta.fechaFinal}"/>
+                        </p:column>
+
+                        <p:column headerText="estado">
+                            <p:outputLabel value="#{oferta.estado}"/>
+                        </p:column>
+
+                        <p:column headerText="Helados en oferta">
+                            <p:dataTable id="tblHeladoOferta"
+                                         var="helado"
+                                         value="#{oferta.heladosOferta}">
+                                <p:column headerText="Codigo Helado">
+                                    <p:outputLabel value="#{helado.codigoHelado}"/>
+                                </p:column>
+
+                                <p:column headerText="Nombre Helado">
+                                    <p:outputLabel value="#{helado.nombreHelado}"/>
+                                </p:column>
+                                
+                                <p:column headerText="Tipo Helado">
+                                    <p:outputLabel value="#{helado.tipoHelado}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:column>
+                    </p:dataTable>
+                    <p/>
+                    <p:commandButton id="btnAgregarOferta"
+                                     onclick="PF('dlgAgregarOferta').show()"
+                                     update="formAgregarFechaOferta"
+                                     value="Agregar Nueva Oferta"/>
+                    <p:commandButton id="btnActualizarOfertas"
+                                     value="Actualizar Ofertas"
+                                     update="formTabla"
+                                     actionListener="#{ofertaFormBean.actualizarOfertas()}"/>
+                </h:form>
+                <p:dialog id="idDlgAgregarFechaOferta"
+                          widgetVar="dlgAgregarOferta"
+                          modal="true"
+                          resizable="false"
+                          header="Agregar Nueva Oferta">
+                    <h:form id="formAgregarFechaOferta">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Agregar Fecha Inicial"/>
+                            <p:calendar value="#{ofertaFormBean.oferta.fechaInicio}"
+                                        required="true"
+                                        requiredMessage="Ingrese fecha inicial por favor"/>
+
+                            <p:outputLabel value="Agregar Fecha Final"/>
+                            <p:calendar value="#{ofertaFormBean.oferta.fechaFinal}"
+                                        required="true"
+                                        requiredMessage="Ingrese fecha final por favor"/>
+                            
+                            <p:outputLabel value="Agregar tipo de Oferta"/>
+                            <p:selectOneMenu value="#{ofertaFormBean.oferta.tipoOferta}">
+                                <f:selectItems value="#{ofertaFormBean.saboresYTipos.obtenerTiposOfertas()}"
+                                               var="ofertas"
+                                               itemLabel="#{ofertas}"
+                                               itemValue="#{oferta}"/>
+                            </p:selectOneMenu>
+
+                            <p:commandButton id="btnSiguiente"
+                                             value="Siguiente"
+                                             actionListener="#{ofertaFormBean.validarFechas()}"
+                                             update="growlOferta"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+                <p:dialog id="idDlgAgregarHeladoOferta"
+                          widgetVar="dlgAgregarHeladoOferta"
+                          modal="true"
+                          resizable="false"
+                          header="Agregar Productos">
+                    <h:form id="formAgregarHeladoOferta">
+                        <p:panel header="Agregar por Tipo de Helados">
+                            <p:panelGrid columns="3">
+                                <p:outputLabel value="Ingrese el tipo de helados"/>
+                                <p:selectOneMenu value="#{ofertaFormBean.helado.tipoHelado}">
+                                    <f:selectItems value="#{ofertaFormBean.saboresYTipos.obtenerTipos()}"
+                                                   var="tipos"
+                                                   itemLabel="#{tipos}"
+                                                   itemValue="#{tipos}"/>
+                                </p:selectOneMenu>
+                                <p:commandButton id="btnAgregarOfertaTipo"
+                                                 value="Agregar Oferta por Tipo"
+                                                 update="formTabla growlOferta"
+                                                 onclick="PF('dlgAgregarHeladoOferta').hide()"
+                                                 actionListener="#{ofertaFormBean.crearOfertaTipo()}"/>
+                            </p:panelGrid>
+                        </p:panel>
+                        <p:panel header="Agregar por Codigo de Helado">
+                            <p:panelGrid columns="3">
+                                <p:outputLabel value="Ingrese codigo de helado"/>
+                                <p:inputNumber value="#{ofertaFormBean.helado.codigoHelado}"
+                                               decimalPlaces="0"
+                                               minValue="0"/>
+                                <p:commandButton value="Agregar Helado"
+                                                 update="growlOferta"
+                                                 actionListener="#{ofertaFormBean.agregarHeladoOferta()}"/>
+                            </p:panelGrid>
+                            <p:commandButton id="btnAgregarOfertaHelado"
+                                             value="Agregar Oferta por Helados"
+                                             update="formTabla growlOferta"
+                                             onclick="PF('dlgAgregarHeladoOferta').hide()"
+                                             actionListener="#{ofertaFormBean.crearOfertaHelado()}"/>
+                        </p:panel>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

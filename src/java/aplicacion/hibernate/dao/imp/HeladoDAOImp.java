@@ -53,4 +53,37 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
         }
         return heladosAux;
     }
+
+    /**
+     * Metodo que obtiene un helado en singular,
+     * Metodo para obtener un solo helado, el helado se obtiene mediante un codigo que es pasado por parametro
+     * Se declara un objeto de tipo helado y se recorre la base de datos de helado, consultando por el codigo
+     * @param codigoHelado
+     * @return 
+     */
+    @Override
+    public Helado obtenerUnicoHelado(Integer codigoHelado) {
+        Helado heladoUnico = null;
+        for(Helado h: super.getAll(Helado.class)){
+            if(h.getCodigoHelado() == codigoHelado)
+                heladoUnico = h;
+        }
+        return heladoUnico;
+    }
+
+    /**
+     * Metodo que devuelve una lista de helados de un tipo en especifico, dicho tipo se pasa por parametro
+     * Se crea una lista auxiliar y se recorre la base de datos helados, consultando el tipo de helado
+     * @param tipo tipo de helado que se desea almacenar en la lista
+     * @return una lista de helados de un tipo en especifico
+     */
+    @Override
+    public List<Helado> obtenerHeladosTipo(String tipo) {
+        List<Helado> listaHeladosTipo = new ArrayList<>();
+        for(Helado h : super.getAll(Helado.class)){
+            if(h.getTipoHelado().equalsIgnoreCase(tipo))
+                listaHeladosTipo.add(h);
+        }
+        return listaHeladosTipo;
+    }
 }

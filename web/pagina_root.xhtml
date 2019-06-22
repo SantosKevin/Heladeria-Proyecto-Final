@@ -5,10 +5,10 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+
     <h:head>
         <title>Heladeria F.I.</title>
-       
+
     </h:head>
     <h:body>
         <div class="ui-g">
@@ -29,9 +29,19 @@
                     <ui:define name="admin">
                         <p:growl id="growlAdmin" showDetail="true"/>
                         <h:form id="formAdmin">
-                            <p:menubar style="margin-top:20px">
-                                <p:menuitem value="Acceder a Base de datos Helados" onclick="PF('dlgVerificar').show()" update="formVerificar" icon="pi pi-times" />
-                                <p:menuitem value="Acceder a Base de datos Ofertas"  icon="pi pi-times" />
+                            <p:menubar>
+                                <p:menuitem value="Acceder a Base de datos Helados"
+                                            onclick="PF('dlgVerificar').show()"
+                                            actionListener="#{usuarioFormBean.setParamBaseDeDatos(1)}"
+                                            update="formVerificar"
+                                            icon="pi pi-times" >
+                                    <p:commandButton value="Aqui"/>
+                                </p:menuitem>
+                                <p:menuitem value="Acceder a Base de datos Ofertas"
+                                            onclick="PF('dlgVerificar').show()"
+                                            actionListener="#{usuarioFormBean.setParamBaseDeDatos(2)}"
+                                            update="formVerificar"
+                                            icon="pi pi-times" />
                             </p:menubar>
                         </h:form>
                         <p:dialog id="idDlgVerificarContrasena"
@@ -59,7 +69,7 @@
                                     <p:commandButton id="btnVerificar"
                                                      value="Autenticar"
                                                      update="growlAdmin"
-                                                     onclick="form.target='_blank';PF('dlgVerificar').hide()"
+                                                     onclick="form.target = '_blank';PF('dlgVerificar').hide()"
                                                      ajax="false"
                                                      action="#{usuarioFormBean.verificarCredencialesBD()}"/>
                                 </p:panelGrid>
@@ -72,12 +82,11 @@
                                 <p:menuitem value="AGREGAR ADMIN" action="CrearAdministrativo.xhtml"/>
                                 <p:submenu label="ELIMINAR ADMIN" />
                                 <p:submenu label="QUITAR HELADO" />
-                                <p:menuitem value="VER ESTADISTICAS" action=""
-
+                                <p:menuitem value="VER ESTADISTICAS"/>
                                 <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
                             </p:megaMenu>
                         </h:form>
- 
+
                     </ui:define>
 
                 </ui:composition>

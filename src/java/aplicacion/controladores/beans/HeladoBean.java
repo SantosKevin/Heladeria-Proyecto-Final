@@ -83,6 +83,13 @@ public class HeladoBean implements Serializable{
         return heladoDAO.getAll(Helado.class);
     }
     
+    public List<Helado> obtenerHeladosTipo(String tipo){
+        return heladoDAO.obtenerHeladosTipo(tipo);
+    }
+    
+    public Helado obtenerHeladoUnico(Integer codigoHelado){
+        return heladoDAO.obtenerUnicoHelado(codigoHelado);
+    }
     /**
      * Metodo para obtener todos los helados de la base de datos que su cantidad de stock no sea igual a 0
      * @return lista de helados
@@ -90,6 +97,8 @@ public class HeladoBean implements Serializable{
     public List<Helado> obtenerHeladosDisponibles(){
         return heladoDAO.obtenerHeladosDisponibles();
     }
+    
+    
     
     public void agregarAlCarrito(){
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");

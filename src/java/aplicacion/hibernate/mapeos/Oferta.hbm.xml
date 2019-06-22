@@ -53,9 +53,20 @@ Contributor(s):
           <many-to-many class="aplicacion.modelo.dominio.Helado" column="hel_codigo_helado"/>
       </set>
       
-      <property name="descuento" type="double">
-          <column name="ofe_descuento_oferta" not-null="true"/>
+      <property name="tipoOferta" type="string">
+          <column name="ofe_tipo_oferta" not-null="true"/>
       </property>
       
+      <property name="fechaInicio" type="date">
+          <column name="ofe_fecha_inicio" not-null="true"/>
+      </property>
+      
+      <property name="fechaFinal" type="date">
+          <column name="ofe_fecha_final" not-null="true"/>
+      </property>
+      
+      <property name="estado" type="boolean">
+          <column name="ofe_estado" not-null="true"/>
+      </property>
   </class>
 </hibernate-mapping>

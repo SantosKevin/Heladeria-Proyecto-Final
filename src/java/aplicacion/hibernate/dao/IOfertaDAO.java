@@ -5,12 +5,18 @@
  */
 package aplicacion.hibernate.dao;
 
+import aplicacion.modelo.dominio.Helado;
 import aplicacion.modelo.dominio.Oferta;
+import java.util.List;
 
 /**
  *
  * @author Lucas Choque
  */
 public interface IOfertaDAO extends IGenericDAO<Oferta, Integer>{
-    
+    Oferta obtenerUnicaOferta(Integer codigoOferta);
+    List<Oferta> obtenerOfertaDistinct();
+    List<Oferta> obtenerOfertasActuales();
+    List<Helado> obtenerHeladosEnOferta();
+    boolean consultarOferta(Integer codigoOferta);
 }

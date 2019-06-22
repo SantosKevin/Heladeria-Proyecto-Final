@@ -7,6 +7,7 @@ package aplicacion.controladores.beans.forms;
 
 import aplicacion.controladores.beans.HeladoBean;
 import aplicacion.modelo.dominio.Helado;
+import aplicacion.modelo.util.SaboresYTipos;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -36,6 +37,7 @@ public class HeladoFormBean implements Serializable {
     private HeladoBean heladoBean;
     private Helado helado;
     private List<Helado> listaHelados;
+    private SaboresYTipos saboresYTipos;
 
     /**
      * Creates a new instance of HeladoFormBean
@@ -48,6 +50,7 @@ public class HeladoFormBean implements Serializable {
     @PostConstruct
     public void init() {
         helado = new Helado();
+        saboresYTipos = new SaboresYTipos();
         generarHelados();
     }
     /**
@@ -128,4 +131,14 @@ public class HeladoFormBean implements Serializable {
     public void setListaHelados(List<Helado> listaHelados) {
         this.listaHelados = listaHelados;
     }
+
+    public SaboresYTipos getSaboresYTipos() {
+        return saboresYTipos;
+    }
+
+    public void setSaboresYTipos(SaboresYTipos saboresYTipos) {
+        this.saboresYTipos = saboresYTipos;
+    }
+    
+    
 }

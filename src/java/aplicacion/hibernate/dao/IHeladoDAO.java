@@ -15,4 +15,6 @@ import java.util.List;
 public interface IHeladoDAO extends IGenericDAO<Helado, Integer>{
     Helado obtenerHeladoSegunIdHelado(Integer idHelado);
     List<Helado> obtenerHeladosDisponibles();
+    Helado obtenerUnicoHelado(Integer codigoHelado);
+    List<Helado> obtenerHeladosTipo(String tipo);
 }

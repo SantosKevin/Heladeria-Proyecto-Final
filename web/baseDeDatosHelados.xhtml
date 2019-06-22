@@ -45,7 +45,10 @@
                                 <f:facet name="output"><p:outputLabel value="#{helado.tipoHelado}"/></f:facet>
                                 <f:facet name="input">
                                     <p:selectOneMenu value="#{helado.tipoHelado}">
-                                        <f:selectItem itemLabel="POTE" itemValue="POTE"/>
+                                        <f:selectItems value="#{heladoFormBean.saboresYTipos.obtenerTipos()}"
+                                                       var="tipos"
+                                                       itemLabel="#{tipos}"
+                                                       itemValue="#{tipos}"/>
                                     </p:selectOneMenu>
                                 </f:facet>
                             </p:cellEditor>
@@ -57,9 +60,10 @@
                                 <f:facet name="output"><p:outputLabel value="#{helado.saborHelado}"/></f:facet>
                                 <f:facet name="input">
                                     <p:selectOneMenu value="#{helado.saborHelado}">
-                                        <f:selectItem itemLabel="Frutilla" itemValue="Frutilla"/>
-                                        <f:selectItem itemLabel="Vainilla" itemValue="Vainilla"/>
-                                        <f:selectItem itemLabel="Chocolate" itemValue="Chocolate"/>
+                                        <f:selectItems value="#{heladoFormBean.saboresYTipos.obtenerSabores()}"
+                                                       var="sabores"
+                                                       itemLabel="#{sabores}"
+                                                       itemValue="#{sabores}"/>
                                     </p:selectOneMenu>
                                 </f:facet>
                             </p:cellEditor>
@@ -121,22 +125,26 @@
                             </p:inputText>
 
                             <p:outputLabel id="oplTipo" value="Ingrese el Tipo"/>
-                            <p:inputText id="iptTipo"
-                                         required="true"
-                                         requiredMessage="Ingrese el tipo por favor"
-                                         validatorMessage="Exceso de caracteres al agregar el tipo"
-                                         value="#{heladoFormBean.helado.tipoHelado}">
-                                <f:validateLength minimum="1" maximum="30"/>
-                            </p:inputText>
+                            <p:selectOneMenu id="somTipo"
+                                             value="#{heladoFormBean.helado.tipoHelado}"
+                                             required="true"
+                                             requiredMessage="Ingrese el tipo por favor">
+                                <f:selectItems value="#{heladoFormBean.saboresYTipos.obtenerTipos()}"
+                                               var="agregarTipos"
+                                               itemLabel="#{agregarTipos}"
+                                               itemValue="#{agregarTipos}"/>
+                            </p:selectOneMenu>
 
                             <p:outputLabel id="oplSabor" value="Ingrese el Sabor"/>
-                            <p:inputText id="iptSabor"
-                                         required="true"
-                                         requiredMessage="Ingrese el sabor por favor"
-                                         validatorMessage="Exceso de caracteres al agregar el sabor"
-                                         value="#{heladoFormBean.helado.saborHelado}">
-                                <f:validateLength minimum="1" maximum="30"/>
-                            </p:inputText>
+                            <p:selectOneMenu id="somSabor"
+                                             value="#{heladoFormBean.helado.saborHelado}"
+                                             required="true"
+                                             requiredMessage="Ingrese el sabor por favor">
+                                <f:selectItems value="#{heladoFormBean.saboresYTipos.obtenerSabores()}"
+                                               var="agregarSabores"
+                                               itemLabel="#{agregarSabores}"
+                                               itemValue="#{agregarSabores}"/>
+                            </p:selectOneMenu>
 
                             <p:outputLabel id="oplPrecio" value="Ingrese el Precio"/>
                             <p:inputNumber id="iptPrecio"

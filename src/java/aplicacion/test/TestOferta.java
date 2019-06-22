@@ -27,7 +27,7 @@ public class TestOferta {
         Oferta oferta = new Oferta();
         
         oferta.setHeladosOferta(new HashSet<>(listaHelados));
-        oferta.setDescuento(100.0);
+        //oferta.setDescuento(100.0);
         
         ofertaDAO.create(oferta);
         

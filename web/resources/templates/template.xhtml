@@ -10,7 +10,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
-        <title>Facelets Template</title>
+        <title>Heladeria F.I.U.N.Ju</title>
         <f:event type="preRenderView" listener="#{usuarioFormBean.controlarSesion()}"/> 
     </h:head>
 
@@ -53,7 +53,17 @@
         </div>
 
         <div id="bottom">
-            <ui:insert name="bottom">Bottom</ui:insert>
+            <ui:insert name="bottom">
+                <center><h1 style="margin: auto; 
+                               position: relative;     
+                               padding:0!important;
+                               color: #ffffff">Heladeria F.I. U.N.Ju</h1>
+                <h:outputLabel value="Los Mejores HELADOS de la Provincia" style="margin: auto; 
+                               position: relative;     
+                               padding:0!important;
+                               color: #ffffff"/>
+                </center>
+            </ui:insert>
         </div>
 
     </h:body>

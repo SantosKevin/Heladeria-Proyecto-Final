@@ -15,8 +15,8 @@
 
 #bottom {
     margin: 0 auto!important;
-    background-color: #f7f7f9;
-    height: 5%;
+    background-color: black;
+    height: 100px;
     width: 100%;
     position: relative;
     clear: both
@@ -25,11 +25,11 @@
 #admin {
     margin-top: 1%;
     float: left;
-    background: url(../img/img_rigth.jpg) no-repeat;
+    background: url(https://media.metrolatam.com/2018/03/15/infografiaseohelados2018uymesa20de20trabajo201-12c7973e29dc9be1a3e52b4e7ca71559-1200x0.jpg) no-repeat;
     background-size: cover;height: 300px;background-position: bottom;
     padding: 1%;
-    width: 15%;
-    height: 500px;
+    width: 10%;
+    height: 600px;
 }
 
 #root {
@@ -37,11 +37,11 @@
     margin: 0 auto;
     margin-top: 1%;
     float: right;
-    background: url(../img/img_rigth.jpg) no-repeat;
+    background: url(https://i1.wp.com/noticias.perfil.com/wp-content/uploads/2018/04/Captura-de-pantalla-2018-04-06-a-las-12-624x1066.jpg?resize=474%2C810) no-repeat;
     background-size: cover;height: 300px;background-position: bottom;
     padding: 1%;
-    width: 15%;
-    height: 500px;
+    width: 10%;
+    height: 600px;
 }
 
 
@@ -86,7 +86,7 @@
 .carrucel{
     margin: 0 auto; 
     margin-top: 2%;
-    width: 60%; 
+    width: 800px; 
     height: 420px;
     border: 1em solid transparent;
     background: linear-gradient(white,white), url(../img/img_fondo_carrucel.jpg);

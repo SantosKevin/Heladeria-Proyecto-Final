@@ -20,6 +20,7 @@ import aplicacion.modelo.dominio.Compra;
 import aplicacion.modelo.dominio.Helado;
 import aplicacion.modelo.dominio.Usuario;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -99,6 +100,7 @@ public class CarritoBean implements Serializable {
 
             compra.setUsuarioCompra(usuario);
             compra.setHeladosCompra(new HashSet<>(listaHelado));
+            compra.setFecha_compra(new Date());
             compra.setEstado(0);
 
             compraDAO.create(compra);

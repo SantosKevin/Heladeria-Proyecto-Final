@@ -55,5 +55,8 @@ Contributor(s):
     <property name="estado" type="integer">
       <column name="com_estado_compra" not-null="true"/>
     </property>
+    <property name="fecha_compra" type="date">
+      <column name="com_fecha" not-null="true"/>
+    </property>
   </class>
 </hibernate-mapping>

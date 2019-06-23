@@ -6,6 +6,7 @@
 package aplicacion.modelo.dominio;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -38,23 +39,29 @@ public class Compra implements Serializable{
      */
     private Integer estado;
     
+    private Date fecha_compra;
+    
     /**
      * Constructor por defecto
      */
     public Compra() {
     }
+
+    
     /**
      * Constructor parametrizado
      * @param codigoCompra codigo unico que representa a cada compra
      * @param usuarioCompra Usuario que realiza la compra
      * @param heladosCompra Helados que pueden inclurse en la compra
      * @param estado Estado de la compra
+     * @param fecha_compra Fecha de compra
      */
-    public Compra(Integer codigoCompra, Usuario usuarioCompra, Set<Helado> heladosCompra, Integer estado) {
+    public Compra(Integer codigoCompra, Usuario usuarioCompra, Set<Helado> heladosCompra, Integer estado, Date fecha_compra) {
         this.codigoCompra = codigoCompra;
         this.usuarioCompra = usuarioCompra;
         this.heladosCompra = heladosCompra;
         this.estado = estado;
+        this.fecha_compra = fecha_compra;
     }
     /**
      * @return the codigoCompra
@@ -104,4 +111,14 @@ public class Compra implements Serializable{
     public void setEstado(Integer estado) {
         this.estado = estado;
     }
+
+    public Date getFecha_compra() {
+        return fecha_compra;
+    }
+
+    public void setFecha_compra(Date fecha_compra) {
+        this.fecha_compra = fecha_compra;
+    }
+    
+    
 }

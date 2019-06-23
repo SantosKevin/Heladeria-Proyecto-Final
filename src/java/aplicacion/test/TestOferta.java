@@ -11,6 +11,7 @@ import aplicacion.hibernate.dao.imp.HeladoDAOImp;
 import aplicacion.hibernate.dao.imp.OfertaDAOImp;
 import aplicacion.modelo.dominio.Helado;
 import aplicacion.modelo.dominio.Oferta;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -26,12 +27,17 @@ public class TestOferta {
         
         Oferta oferta = new Oferta();
         
+        Date f1 = new Date(2019, 6, 21);
+        Date f2 = new Date(2019, 6, 28);
+        
+        oferta.setFechaInicio(f1);
+        oferta.setFechaFinal(f2);
+        oferta.setTipoOferta("2x1");
+        oferta.setEstado(true);
         oferta.setHeladosOferta(new HashSet<>(listaHelados));
-        //oferta.setDescuento(100.0);
+        
         
         ofertaDAO.create(oferta);
-        
-        
         
     }
     

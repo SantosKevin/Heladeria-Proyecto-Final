@@ -31,6 +31,11 @@
                                 <p:column headerText="Nombre Usuario">
                                     <p:outputLabel value="#{comp.usuarioCompra.nombreUsuario} #{comp.usuarioCompra.apellidoUsuario} "/>
                                 </p:column> 
+                                <p:column headerText="Fecha">
+                                    <p:outputLabel value="#{comp.fecha_compra}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </p:outputLabel>
+                                </p:column> 
                                 <p:column headerText="Estado">
                                     <p:outputLabel value="#{compraBean.ObtenerEstadoCompra(comp.estado)} "/>
                                 </p:column> 

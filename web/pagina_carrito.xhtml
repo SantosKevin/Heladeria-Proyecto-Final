@@ -57,7 +57,8 @@
                                 oncomplete="PF('dlgPregunta').show();" 
                                 update=":form:mensajes :form:tblCarrito"/>
                         </h:form>
-                        <p:dialog id="dialogoModificar" header="Modificar" widgetVar="dlgModificar" modal="true">
+                        <p:dialog id="dialogoModificar" header="Modificar" widgetVar="dlgModificar" modal="true"
+                                  responsive="true"  closeOnEscape="true">
                             <h:form id="frmDialogoModificar">
                                 <h:graphicImage url="#{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).imagen}"/><br></br>
                                 <h:panelGrid id="pgDialogoHelado" columns="2" style="text-align: left">
@@ -87,7 +88,8 @@
                         <h:form id="frmDialogo_eliminar">
                             <p:dialog id="dialogoEliminar" header="Pregunta" 
                                       widgetVar="dlgEliminar" modal="true"
-                                      resizable="true" responsive="true" >
+                                      resizable="true" responsive="true"
+                                      closeOnEscape="true">
                                 <p:outputLabel id="lblPregunta" value="Esta seguro/a de eliminar el Helado: 
                                                #{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).nombreHelado} ???"/>
                                 <br></br>

@@ -100,7 +100,7 @@ public class CarritoBean implements Serializable {
 
             compra.setUsuarioCompra(usuario);
             compra.setHeladosCompra(new HashSet<>(listaHelado));
-            compra.setFecha_compra(new Date());
+            compra.setFechaCompra(new Date());
             compra.setEstado(0);
 
             compraDAO.create(compra);

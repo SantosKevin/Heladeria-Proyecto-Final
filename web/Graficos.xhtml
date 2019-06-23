@@ -3,35 +3,74 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./resources/templates/template.xhtml">
 
             <ui:define name="admin">
-               
+
             </ui:define>
 
             <ui:define name="root">
-            
+
             </ui:define>
 
             <ui:define name="content">
-                <h:form id="frmGrafico">
-                    <p:panel>
-                        <p:panelGrid>
-                            <p:outputLabel value="Visualizar Graficos estadisticos sobre las ventas en general"
-                            <p:commandButton value="GRAFICAR" actionListener=""
-                                             update="pnlGeneral"></p:commandButton>
-                            <h:panelGroup id="pnlGeneral">
-                                <p:chart type="bar" model=""
-                                         rendered="true" ></p:chart>
+                <p:growl id="growlGrafico" showDetail="true"/>
+                <h:form id="frmGrafico" style="padding-left: 200px;padding-right: 200px;">
+                    <p:panel id="pnlGrafico">
+                        <p:panelGrid id="pnlGridGrafico">
+                            <p:outputLabel id="lblGrafico" value="Visualizar Graficos estadisticos sobre las ventas en general"/>
+                            <p:separator id="sptGrafico"/>
+                            <p:commandButton id="cmdGrafico" value="GRAFICAR" actionListener="#{graficosFormBean.graficarEstadisticaGeneral()}"
+                                             update="pnlGeneral growlGrafico"></p:commandButton>
+                            <h:panelGroup id="pnlGeneral" style="width: 200px;height: 200px">
+                                <p:chart id="crtGrafico" type="bar" model="#{graficoBean.model}" style="height:300px"
+                                         rendered="#{graficoBean.model != null}" ></p:chart>
                             </h:panelGroup>
                         </p:panelGrid>
                     </p:panel>
                 </h:form>
-                    
+                <h:form id="frmGraficoDia" style="padding-left: 200px;padding-right: 200px;">
+                    <p:panel id="pnlGraficoDia">
+                        <p:panelGrid id="pnlGridGraficoDia">
+                            <p:outputLabel id="lblGraficoDia" value="Visualizar Graficos estadisticos por dia"/>
+                            <p:separator id="sptGraficoDia"/>
+                            <p:commandButton id="cmdGraficoDia" value="GRAFICAR POR DIA" actionListener="#{graficosFormBean.graficarPorDia()}"
+                                             update="pnlGeneraldia growlGrafico"></p:commandButton>
+                            <h:panelGroup id="pnlGeneraldia" style="width: 200px;height: 200px">
+                                <p:chart id="crtGraficoDia" type="bar" model="#{graficoBean.barras}" style="height:300px"
+                                         rendered="#{graficoBean.barras != null}" ></p:chart>
+                            </h:panelGroup>
+                        </p:panelGrid>
+                    </p:panel>
+                </h:form>
+
+                <h:form id="frmGraficoEntreFechas" style="padding-left: 200px;padding-right: 200px;">
+                    <p:panel id="pnlGraficoEntreFechas">
+                        <p:panelGrid id="pnlGridGraficoEntreFechas">
+                            <p:outputLabel id="lblGraficoEntreFechas" value="Visualizar Graficos estadisticos entre dos fechas"/>
+                            <p:separator id="sptGraficoEntreFechas"/>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel id="lblIngreso" value="Ingrese primer fecha"/>
+                                <p:calendar value="#{graficosFormBean.fechaMenor}"/>
+                                <p:outputLabel id="lblIngresoDos" value="Ingrese segunda fecha"/>
+                                <p:calendar value="#{graficosFormBean.fechaMayor}"/> 
+                            </p:panelGrid>
+                                                       
+                            <p:commandButton id="cmdGraficoEntreFechas" value="GRAFICAR" actionListener="#{graficosFormBean.graficarEntreDosFechas()}"
+                                             update="pnlGeneralGraficoEntreFechas growlGrafico"></p:commandButton>
+                            <h:panelGroup id="pnlGeneralGraficoEntreFechas" style="width: 200px;height: 200px">
+                                <p:chart id="crtGraficoEntreFechas" type="bar" model="#{graficoBean.barrasEntreFechas}" style="height:300px"
+                                         rendered="#{graficoBean.barrasEntreFechas != null}" ></p:chart>
+                            </h:panelGroup>
+                        </p:panelGrid>
+                    </p:panel>
+                </h:form>
+
             </ui:define>
 
         </ui:composition>

@@ -26,11 +26,7 @@ public class Compra implements Serializable{
      * Helados que pueden inclurse en la compra
      */
     private Set<Helado> heladosCompra;
-    /**
-     * Pendiente: agregar la fecha de compra (no la agrego porque no se mapear objetos de tipo Calendar)
-     * 
-     * private Calendar fechaCompra;
-     */
+    
     /**
      * Estado de la compra
      * 1) Pendiente: En espera a que el usuario confirme la compra
@@ -39,7 +35,7 @@ public class Compra implements Serializable{
      */
     private Integer estado;
     
-    private Date fecha_compra;
+    private Date fechaCompra;
     
     /**
      * Constructor por defecto
@@ -54,14 +50,14 @@ public class Compra implements Serializable{
      * @param usuarioCompra Usuario que realiza la compra
      * @param heladosCompra Helados que pueden inclurse en la compra
      * @param estado Estado de la compra
-     * @param fecha_compra Fecha de compra
+     * @param fechaCompra Fecha de compra
      */
-    public Compra(Integer codigoCompra, Usuario usuarioCompra, Set<Helado> heladosCompra, Integer estado, Date fecha_compra) {
+    public Compra(Integer codigoCompra, Usuario usuarioCompra, Set<Helado> heladosCompra, Integer estado, Date fechaCompra) {
         this.codigoCompra = codigoCompra;
         this.usuarioCompra = usuarioCompra;
         this.heladosCompra = heladosCompra;
         this.estado = estado;
-        this.fecha_compra = fecha_compra;
+        this.fechaCompra = fechaCompra;
     }
     /**
      * @return the codigoCompra
@@ -112,12 +108,12 @@ public class Compra implements Serializable{
         this.estado = estado;
     }
 
-    public Date getFecha_compra() {
-        return fecha_compra;
+    public Date getFechaCompra() {
+        return fechaCompra;
     }
 
-    public void setFecha_compra(Date fecha_compra) {
-        this.fecha_compra = fecha_compra;
+    public void setFechaCompra(Date fecha_compra) {
+        this.fechaCompra = fecha_compra;
     }
     
     

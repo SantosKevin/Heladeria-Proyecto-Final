@@ -16,7 +16,7 @@
                         <br></br>
                         <h:form id="form">
                             <p:growl id="mensajes" showDetail="true"/>
-                            <p:dataTable id="tblCarrito" emptyMessage="Carrito Vacio" style="margin-left: 18%; margin-right: 18%"
+                            <p:dataTable id="tblCarrito" emptyMessage="Carrito Vacio" style="margin-left: 14%; margin-right: 14%"
                                          value="#{carritoBean.obtenerCarritoSegunIdUsuario()}"
                                          var="car" rows="3" paginator="true">
                                 <f:facet name="header">
@@ -42,6 +42,16 @@
                                 <p:column headerText="Cantidad" style="text-align: center" >
                                     <p:outputLabel value="#{car.cantidad}"/>
                                 </p:column>
+                                <p:column headerText="Total" style="text-align: center" >
+                                    <p:outputLabel value="#{car.total}"/>
+                                </p:column>
+                                <p:columnGroup type="footer">
+                                    <p:row>
+                                        <p:column colspan="6" style="text-align:right" footerText="Total:" />
+                                        <p:column colspan="2" footerText=" $#{carritoBean.calcularTotal()}" 
+                                                  style="text-align:left; font-size: 150%"/>
+                                    </p:row>
+                                </p:columnGroup>
                                 <p:column headerText="Opciones"  >
                                     <p:commandButton actionListener="#{carritoBean.leer(car)}"
                                                      oncomplete="PF('dlgModificar').show();" 
@@ -57,7 +67,7 @@
                             </p:dataTable>
                             <p:commandButton 
                                 icon="ui-icon-circle-check" value="Confirmar Compra" 
-                                style="float: right; margin: 1%"
+                                 style="float: right; margin: 1%; margin-right: 3%"
                                 oncomplete="PF('dlgPregunta').show();" 
                                 update=":form:mensajes :form:tblCarrito"/>
                         </h:form>

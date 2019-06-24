@@ -40,23 +40,26 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-mapping>
-  <class catalog="heladeria" name="aplicacion.modelo.dominio.Compra" optimistic-lock="version" table="compras">
-    <id name="codigoCompra" type="integer">
-      <column name="com_codigo_compra" not-null="true"/>
-      <generator class="identity"/>
-    </id>
-    <many-to-one class="aplicacion.modelo.dominio.Usuario" fetch="join" name="usuarioCompra">
-      <column name="com_usuario" not-null="true"/>
-    </many-to-one>
-    <set cascade="all" fetch="join" name="heladosCompra" table="com_hel">
-      <key column="com_codigo_compra"/>
-      <many-to-many class="aplicacion.modelo.dominio.Helado" column="hel_codigo_helado"/>
-    </set>
-    <property name="estado" type="integer">
-      <column name="com_estado_compra" not-null="true"/>
-    </property>
-    <property name="fechaCompra" type="date">
-      <column name="com_fecha" not-null="true"/>
-    </property>
-  </class>
+    <class catalog="heladeria" name="aplicacion.modelo.dominio.Compra" optimistic-lock="version" table="compras">
+        <id name="codigoCompra" type="integer">
+            <column name="com_codigo_compra" not-null="true"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="aplicacion.modelo.dominio.Usuario" fetch="join" name="usuarioCompra">
+            <column name="com_usuario" not-null="true"/>
+        </many-to-one>
+        <set cascade="all" fetch="join" name="heladosCompra" table="com_hel">
+            <key column="com_codigo_compra"/>
+            <many-to-many class="aplicacion.modelo.dominio.Helado" column="hel_codigo_helado"/>
+        </set>
+        <property name="estado" type="integer">
+            <column name="com_estado_compra" not-null="true"/>
+        </property>
+        <property name="fechaCompra" type="date">
+            <column name="com_fecha" not-null="true"/>
+        </property>
+        <property name="total" type="double">
+            <column name="com_total" not-null="true" />
+        </property>
+    </class>
 </hibernate-mapping>

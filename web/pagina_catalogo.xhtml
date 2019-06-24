@@ -54,8 +54,9 @@
                                     tiene una oferta disponible <br/>
                                     Desea ir a verla?
                                 </p>
-                                <p:commandButton value="Aceptar" action="pagina_principal"/>
-                                <p:commandButton value="Cancelar" onclick="PF('dlgOfertaDisponible').hide()"/>
+                                <p:commandButton value="Si" action="pagina_principal"/>
+                                <p:commandButton value="No" oncomplete="PF('dlgOfertaDisponible').hide()"
+                                                 onclick="PF('multiProdDialog').show()"/>
                             </h:form>
                             
                         </p:dialog>

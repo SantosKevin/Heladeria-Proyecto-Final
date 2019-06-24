@@ -16,7 +16,7 @@
                         <br></br>
                         <h:form id="form">
                             <p:growl id="mensajes" showDetail="true"/>
-                            <p:dataTable id="tblCarrito" emptyMessage="Carrito Vacio" style="margin-left: 18%; margin-right: 18%"
+                            <p:dataTable id="tblCarrito" emptyMessage="Carrito Vacio" style="margin-left: 14%; margin-right: 14%"
                                          value="#{compraBean.obtenerCompras()}"
                                          var="comp" rows="10" paginator="true">
                                 <f:facet name="header">
@@ -35,6 +35,9 @@
                                     <p:outputLabel value="#{comp.fechaCompra}">
                                         <f:convertDateTime pattern="dd/MM/yyyy" />
                                     </p:outputLabel>
+                                </p:column> 
+                                <p:column headerText="Total">
+                                    <p:outputLabel value="#{comp.total} "/>
                                 </p:column> 
                                 <p:column headerText="Estado">
                                     <p:outputLabel value="#{compraBean.ObtenerEstadoCompra(comp.estado,comp.fechaCompra)} "/>
@@ -58,6 +61,9 @@
                                         </p:column> 
                                         <p:column headerText="Cantidad" style="text-align: center" >
                                             <p:outputLabel value="#{compraBean.obtenerCantidadComHel(comp.codigoCompra,hel.codigoHelado)}"/>
+                                        </p:column>
+                                        <p:column headerText="Total" style="text-align: center" >
+                                            <p:outputLabel value="#{compraBean.obtenerCantidadComHel(comp.codigoCompra,hel.codigoHelado) * hel.precio}"/>
                                         </p:column>
                                     </p:dataTable>
                                 </p:rowExpansion>

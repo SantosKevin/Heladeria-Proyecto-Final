@@ -40,6 +40,14 @@ public class CompraBean {
         comHelDAO = new ComHelDAOImp();
     }
 
+    
+    public int obtenerCantidadComHel(Integer idCompra, Integer idHelado){
+        System.out.println(idCompra);
+        System.out.println(idHelado);
+        System.out.println(comHelDAO.obtenerCantidadComHel(idCompra, idHelado));
+        return comHelDAO.obtenerCantidadComHel(idCompra, idHelado);
+    }
+    
     public List<Compra> obtenerCompras(){
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         if (usuario.getTipoUsuario().equals("normal")){
@@ -70,12 +78,6 @@ public class CompraBean {
         return "Cancelado";
     }
     
-    public int obtenerCantidadComHel(Integer idCompra, Integer idHelado){
-        System.out.println(idCompra);
-        System.out.println(idHelado);
-        System.out.println(comHelDAO.obtenerCantidadComHel(idCompra, idHelado));
-        return comHelDAO.obtenerCantidadComHel(idCompra, idHelado);
-    }
     
     public ICompraDAO getCompraDAO() {
         return compraDAO;

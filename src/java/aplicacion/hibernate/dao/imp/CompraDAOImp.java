@@ -78,4 +78,21 @@ public class CompraDAOImp extends GenericDAOImp<Compra, Integer> implements ICom
         }
         return comprasAux;
     }
+    
+    /**
+     permite obtener el ultimo codigo compra de la tabla Compra en base al Id de
+     * Usuario
+     * @param idUsuario
+     * @return un Integer con el ultimo codigo
+     **/
+    @Override
+    public Integer obtenerUltimoCodigodeCompra(Integer idUsuario) {
+        List<Compra> compras = obtenerComprasSegunIdUsuario(idUsuario);
+        Integer codigo = 0;
+        for (Compra c: compras){
+            codigo = c.getCodigoCompra();
+            System.out.println(c.getCodigoCompra());
+        }
+        return codigo;
+    }
 }

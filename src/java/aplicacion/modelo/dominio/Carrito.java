@@ -14,16 +14,20 @@ public class Carrito {
     private Integer codigoUsuario;
     private Integer codigoHelado;
     private Integer cantidad;
+    private Double total;
 
     public Carrito() {
     }
-    
-    public Carrito(Integer codigo, Integer codigoUsuario, Integer codigoHelado, Integer cantidad) {
+
+    public Carrito(Integer codigo, Integer codigoUsuario, Integer codigoHelado, Integer cantidad, Double total) {
         this.codigo = codigo;
         this.codigoUsuario = codigoUsuario;
         this.codigoHelado = codigoHelado;
         this.cantidad = cantidad;
+        this.total = total;
     }
+    
+    
 
     public Integer getCodigo() {
         return codigo;
@@ -56,5 +60,16 @@ public class Carrito {
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    
+    
     
 }

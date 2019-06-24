@@ -15,4 +15,5 @@ import java.util.List;
 public interface ICompraDAO extends IGenericDAO<Compra, Integer>{
     List<Compra> obtenerCompras();
     List<Compra> obtenerComprasSegunIdUsuario(Integer idUsuario);
+    Integer obtenerUltimoCodigodeCompra(Integer idUsuario);
 }

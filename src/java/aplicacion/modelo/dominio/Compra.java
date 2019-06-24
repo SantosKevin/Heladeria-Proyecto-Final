@@ -37,6 +37,8 @@ public class Compra implements Serializable{
     
     private Date fechaCompra;
     
+    private double total;
+    
     /**
      * Constructor por defecto
      */
@@ -51,14 +53,17 @@ public class Compra implements Serializable{
      * @param heladosCompra Helados que pueden inclurse en la compra
      * @param estado Estado de la compra
      * @param fechaCompra Fecha de compra
+     * @param total total de la compra
      */
-    public Compra(Integer codigoCompra, Usuario usuarioCompra, Set<Helado> heladosCompra, Integer estado, Date fechaCompra) {
+    public Compra(Integer codigoCompra, Usuario usuarioCompra, Set<Helado> heladosCompra, Integer estado, Date fechaCompra, Double total) {    
         this.codigoCompra = codigoCompra;
         this.usuarioCompra = usuarioCompra;
         this.heladosCompra = heladosCompra;
         this.estado = estado;
         this.fechaCompra = fechaCompra;
+        this.total = total;
     }
+
     /**
      * @return the codigoCompra
      */
@@ -115,6 +120,13 @@ public class Compra implements Serializable{
     public void setFechaCompra(Date fecha_compra) {
         this.fechaCompra = fecha_compra;
     }
-    
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
     
 }

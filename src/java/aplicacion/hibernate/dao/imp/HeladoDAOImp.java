@@ -20,22 +20,9 @@ import org.hibernate.Session;
  */
 public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHeladoDAO, Serializable{
     
-    @Override
-    public Helado obtenerHeladoSegunIdHelado(Integer idHelado) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Helado.class);
-        List<Helado> helados = criteria.list();
-        session.close();
-        
-        Helado helado = new Helado();
-        for (Helado h: helados){
-            if (h.getCodigoHelado().equals(idHelado)){
-                helado = h;
-            }
-        }
-        return helado;
-    }
-    
+    /**
+     * @return una lista de helado con stock mayor a 0
+     **/
     @Override
     public List<Helado> obtenerHeladosDisponibles() {
         List<Helado> heladosAux =  new ArrayList<>();
@@ -53,22 +40,25 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
         }
         return heladosAux;
     }
-
+    
     /**
-     * Metodo que obtiene un helado en singular,
-     * Metodo para obtener un solo helado, el helado se obtiene mediante un codigo que es pasado por parametro
-     * Se declara un objeto de tipo helado y se recorre la base de datos de helado, consultando por el codigo
-     * @param codigoHelado
-     * @return 
-     */
+     * @param idHelado
+     * @return un helado segun el id del helado
+     **/
     @Override
-    public Helado obtenerUnicoHelado(Integer codigoHelado) {
-        Helado heladoUnico = null;
-        for(Helado h: super.getAll(Helado.class)){
-            if(h.getCodigoHelado() == codigoHelado)
-                heladoUnico = h;
+    public Helado obtenerHeladoSegunIdHelado(Integer idHelado) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Helado.class);
+        List<Helado> helados = criteria.list();
+        session.close();
+        
+        Helado helado = new Helado();
+        for (Helado h: helados){
+            if (h.getCodigoHelado().equals(idHelado)){
+                helado = h;
+            }
         }
-        return heladoUnico;
+        return helado;
     }
 
     /**
@@ -85,5 +75,22 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
                 listaHeladosTipo.add(h);
         }
         return listaHeladosTipo;
+    }
+    
+    /**
+     * Metodo que obtiene un helado en singular,
+     * Metodo para obtener un solo helado, el helado se obtiene mediante un codigo que es pasado por parametro
+     * Se declara un objeto de tipo helado y se recorre la base de datos de helado, consultando por el codigo
+     * @param codigoHelado
+     * @return 
+     */
+    @Override
+    public Helado obtenerUnicoHelado(Integer codigoHelado) {
+        Helado heladoUnico = null;
+        for(Helado h: super.getAll(Helado.class)){
+            if(h.getCodigoHelado() == codigoHelado)
+                heladoUnico = h;
+        }
+        return heladoUnico;
     }
 }

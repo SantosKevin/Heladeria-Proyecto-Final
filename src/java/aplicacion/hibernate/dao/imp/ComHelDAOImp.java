@@ -25,6 +25,37 @@ import org.hibernate.Session;
  */
 public class ComHelDAOImp extends GenericDAOImp<ComHel, Integer> implements IComHelDAO, Serializable {
 
+    /**
+     * actualiza la cantidad de helados que se compraron de la tabla ComHel
+     * @param compra tipo Compra
+     * @param idUsuario Integer
+     **/
+    @Override
+    public void actualizarCantidadHeladoComHel(Compra compra, Integer idUsuario) {
+        ICarritoDAO carritoDAO = new CarritoDAOImp();
+        IComHelDAO comHelDAO = new ComHelDAOImp();
+        for (Helado h : compra.getHeladosCompra()) {
+            for (Carrito c : carritoDAO.obtenerCarritoSegunIdUsuario(idUsuario)) {
+                if (h.getCodigoHelado().equals(c.getCodigoHelado())) {
+                    ComHel comHel = new ComHel();
+                    comHel.setId(new ComHelId(compra.getCodigoCompra(), h.getCodigoHelado()));
+                    comHel.setCompras(compra);
+                    comHel.setHelados(h);
+                    comHel.setCantHelado(c.getCantidad());
+                    comHelDAO.update(comHel);
+                }
+            }
+        }
+        
+    }
+    
+    /**
+     * permite obtener la cantidad de helado que se compro de la tabla ComHel
+     * segun el id de Compra y el id de Helado
+     * @param idCompra
+     * @param idHelado
+     * @return la cantidad de helado
+     **/
     @Override
     public int obtenerCantidadComHel(Integer idCompra, Integer idHelado) {
 
@@ -44,22 +75,5 @@ public class ComHelDAOImp extends GenericDAOImp<ComHel, Integer> implements ICom
         return 0;
     }
     
-    @Override
-    public void actualizarCantidadHeladoComHel(Compra compra, Integer idUsuario) {
-        ICarritoDAO carritoDAO = new CarritoDAOImp();
-        IComHelDAO comHelDAO = new ComHelDAOImp();
-        for (Helado h : compra.getHeladosCompra()) {
-            for (Carrito c : carritoDAO.obtenerCarritoSegunIdUsuario(idUsuario)) {
-                if (h.getCodigoHelado().equals(c.getCodigoHelado())) {
-                    ComHel comHel = new ComHel();
-                    comHel.setId(new ComHelId(compra.getCodigoCompra(), h.getCodigoHelado()));
-                    comHel.setCompras(compra);
-                    comHel.setHelados(h);
-                    comHel.setCantHelado(c.getCantidad());
-                    comHelDAO.update(comHel);
-                }
-            }
-        }
-        
-    }
+    
 }

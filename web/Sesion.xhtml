@@ -28,12 +28,12 @@
             <p:panel id="pnlSesion" header="Iniciar Sesion en HeladeriaP.F." style="background-color: transparent;padding-top: 15%">
                 <p:panelGrid id="pnlGSesion" columns="2"
                              styleClass="noBorder td , transparentBackground td">
-                    <p:outputLabel id="lblNombreUsuario" value="Ingrese Nombre de Usuario" styleClass="letra"
+                    <p:outputLabel id="lblEmailUsuario" value="Ingrese Email o  Gmail" styleClass="letra"
                                    />
-                    <p:inputText id="txtNombreUsuario" value="#{usuarioFormBean.nombreUsu}" required="true" 
-                                 placeholder="nombre usuario"/>
+                    <p:inputText id="txtEmailUsuario" value="#{usuarioFormBean.emailUsu}" required="true" 
+                                 placeholder="nombre usuario" requiredMessage="INGRESE EMAIL POR FAVOR!"/>
                     <p:outputLabel id="lblPass" value="Ingrese su Contraseña" styleClass="letra"/>
-                    <p:password id="passContraseñaSesion" value="#{usuarioFormBean.contraseña}" required="true" placeholder="contraseña"/>
+                    <p:password id="passContraseñaSesion" value="#{usuarioFormBean.contraseña}" required="true" placeholder="contraseña" requiredMessage="INGRESE CONTRASEÑA PORFAVOR!"/>
                     <p:commandButton id="tbnIngresar" value="Ingresar" update="growlSesion frmSesion" styleClass="letra"
                                      action="#{usuarioFormBean.verificarCredenciales()}"/>
                 </p:panelGrid>

@@ -13,11 +13,18 @@
             <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding:0!important;position:relative;">
                 <ui:composition template="./resources/templates/template.xhtml">
                     <ui:define name="content">
-                        <br></br>
-                        <h:form id="form">
+
+                        <h:form id="frmMenu" style="margin-left: 15%; margin-top: 1%">
                             <p:growl id="mensajes" showDetail="true"/>
-                            <p:dataTable id="tblCarrito" emptyMessage="Carrito Vacio" style="margin-left: 14%; margin-right: 14%"
-                                         value="#{compraBean.obtenerCompras()}"
+                            <h:panelGrid columns="3">
+                                <p:outputLabel for="txtCodigo" id="lblCodigo" value="Codigo de Compra:"/>
+                                <p:inputText id="txtCodigo" value="#{vendedorBean.codigo}"/>
+                                <p:commandButton value="Buscar"
+                                                 action="#{vendedorBean.obtenerCompraSegunId()}"
+                                                 update="tblCarrito"/>
+                            </h:panelGrid>
+                            <p:dataTable id="tblCarrito" emptyMessage="Lista vacia" style="margin-left: 0%; margin-right: 16%"
+                                         value="#{vendedorBean.compras}"
                                          var="comp" rows="10" paginator="true">
                                 <f:facet name="header">
                                     Compras
@@ -69,8 +76,13 @@
                                 </p:rowExpansion>
 
                             </p:dataTable>
+                            <p:commandButton 
+                                icon="ui-icon-circle-check" value="Confirmar Compra" 
+                                style="float: right; margin: 1%; margin-right: 3%"
+                                action="#{vendedorBean.confirmarCompra()}"
+                                ajax="false" update="tblCarrito"
+                                />
                         </h:form>
-
                     </ui:define>
                 </ui:composition>
             </div>

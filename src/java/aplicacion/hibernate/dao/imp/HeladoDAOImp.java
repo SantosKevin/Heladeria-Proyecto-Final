@@ -34,7 +34,7 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
         
         Helado helado = new Helado();
         for (Helado h: helados){
-            if (!h.getCantidad().equals(0)){
+            if (!h.getCantidad().equals(0)&&h.getEstado()){
                 heladosAux.add(h);
             }
         }

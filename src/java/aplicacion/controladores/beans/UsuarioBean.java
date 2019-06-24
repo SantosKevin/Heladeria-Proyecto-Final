@@ -86,12 +86,12 @@ public class UsuarioBean implements Serializable{
     }
     /**
      * verificar si es un usuario valido 
-     * @param nombreUsu (nombre del usuario)
+     * @param EmailUsu (nombre del usuario)
      * @param contraseña del usuario
      * @return un objeto de tipo Usuario
      */
-    public Usuario verificarUsuario(String nombreUsu,String contraseña){
-        return iUsuario.verificarUsuario(nombreUsu, contraseña);
+    public Usuario verificarUsuario(String EmailUsu,String contraseña){
+        return iUsuario.verificarUsuario(EmailUsu, contraseña);
     }
     
     //seccion de getters y setters

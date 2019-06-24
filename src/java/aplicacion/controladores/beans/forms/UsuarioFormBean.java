@@ -35,7 +35,7 @@ public class UsuarioFormBean implements Serializable {
     private UsuarioBean usuarioBean;
     private Usuario usuario;
     private Usuario usuarioConectado;
-    private String nombreUsu;
+    private String EmailUsu;
     private String contraseña;
     private Integer paramBaseDeDatos;
 
@@ -211,7 +211,7 @@ public class UsuarioFormBean implements Serializable {
      */
     public String verificarCredenciales() {
         String redireccion = "";
-        Usuario usuarioAuxiliar = usuarioBean.verificarUsuario(nombreUsu, contraseña);
+        Usuario usuarioAuxiliar = usuarioBean.verificarUsuario(EmailUsu, contraseña);
         if (usuarioAuxiliar != null) {
             if (usuarioAuxiliar.getEstado()) {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuarioAuxiliar);
@@ -221,6 +221,9 @@ public class UsuarioFormBean implements Serializable {
                     redireccion = "pagina_administrador?faces-redirect=true";
                 } else {
                     redireccion = "pagina_root?faces-redirect=true";
+                    if(usuarioAuxiliar.getTipoUsuario().equals("vendedor")){
+                        redireccion="pagina_vendedor?faces-redirect = true";
+                    }
                 }
                 this.usuarioConectado = usuarioAuxiliar;
             } else {
@@ -231,7 +234,7 @@ public class UsuarioFormBean implements Serializable {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No permitido", "error credenciales"));
         }
-        nombreUsu = "";
+        EmailUsu = "";
         contraseña = "";
         return redireccion;
     }
@@ -309,12 +312,12 @@ public class UsuarioFormBean implements Serializable {
         this.usuario = usuario;
     }
 
-    public String getNombreUsu() {
-        return nombreUsu;
+    public String getEmailUsu() {
+        return EmailUsu;
     }
 
-    public void setNombreUsu(String nombreUsu) {
-        this.nombreUsu = nombreUsu;
+    public void setEmailUsu(String EmailUsu) {
+        this.EmailUsu = EmailUsu;
     }
 
     public String getContraseña() {

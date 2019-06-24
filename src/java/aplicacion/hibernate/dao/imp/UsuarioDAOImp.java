@@ -97,10 +97,10 @@ public class UsuarioDAOImp extends GenericDAOImp<Usuario, Integer> implements IU
      * @return un objeto de tipo USUARIO
      */
     @Override
-    public Usuario verificarUsuario(String nombreUsu,String contraseña) {
+    public Usuario verificarUsuario(String EmailUsu,String contraseña) {
         Session session = HibernateUtil.getSessionFactory().openSession(); //abrimos una sesion
         Criteria criteria = session.createCriteria(Usuario.class); //criteria, es para hacer una consulta
-        criteria.add(Restrictions.like("nombreUsuario", nombreUsu)); //filtramos la busqueda por nombreUusuario
+        criteria.add(Restrictions.like("emailUsuario", EmailUsu)); //filtramos la busqueda por EmailUsu
         criteria.add(Restrictions.like("contraseña", contraseña)); //tambien la filtramos por contraeña
         Usuario usu = null;
         if(!criteria.list().isEmpty()){ //verificamos que la lista no este vacia

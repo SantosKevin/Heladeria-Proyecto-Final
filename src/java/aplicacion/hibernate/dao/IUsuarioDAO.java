@@ -38,5 +38,5 @@ public interface IUsuarioDAO extends IGenericDAO<Usuario, Integer> {
      * @param contraseña del usuario
      * @return un objeto de tipo USUARIO
      */
-    public Usuario verificarUsuario(String nombreUsu, String contraseña);
+    public Usuario verificarUsuario(String EmailUsu, String contraseña);
 }

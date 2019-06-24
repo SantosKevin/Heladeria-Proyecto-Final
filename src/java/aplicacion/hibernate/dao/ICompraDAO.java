@@ -16,4 +16,5 @@ public interface ICompraDAO extends IGenericDAO<Compra, Integer>{
     List<Compra> obtenerCompras();
     List<Compra> obtenerComprasSegunIdUsuario(Integer idUsuario);
     Integer obtenerUltimoCodigodeCompra(Integer idUsuario);
+    List<Compra> obtenerCompra(Integer codigo);
 }

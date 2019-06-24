@@ -56,7 +56,7 @@ public class CompraBean {
         return compraDAO.obtenerCompras();
     }
     
-    public String ObtenerEstadoCompra(Integer estado, Date fecha){
+    public String ObtenerEstadoCompra(Integer estado, Date fecha, Compra comp){
         //Creamos una instancia de la fecha del momento en que se corre el codigo
         Date date = Calendar.getInstance().getTime();  
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
@@ -70,6 +70,9 @@ public class CompraBean {
         long days = ChronoUnit.DAYS.between(from, to);
         //Preguntamos la variable dias es mayor o igual a 1 es que pasaron 2 dias
         if (days>=2){
+            estado=3;
+            comp.setEstado(estado);
+            compraDAO.update(comp);
             return "CANCELADO";
         }
         if (estado.equals(0)){

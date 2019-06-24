@@ -23,7 +23,7 @@
                                     Lista de Helados
                                 </f:facet>
                                 <p:column headerText="Imagen" width="20%">
-                                    <h:graphicImage url="#{hel.imagen}"  width="80%" height="40%"/>
+                                    <p:graphicImage name="#{hel.imagen}" height="350" width="300" />
                                 </p:column>
                                 <p:column headerText="Detalle" style="font-size: 120%">
                                     <p:outputLabel value="Nombre: #{hel.nombreHelado}" /><br></br>
@@ -55,8 +55,7 @@
                                     Desea ir a verla?
                                 </p>
                                 <p:commandButton value="Si" action="pagina_principal"/>
-                                <p:commandButton value="No" oncomplete="PF('dlgOfertaDisponible').hide()"
-                                                 onclick="PF('multiProdDialog').show()"/>
+                                <p:commandButton value="No" oncomplete="PF('dlgOfertaDisponible').hide()"/>
                             </h:form>
                             
                         </p:dialog>

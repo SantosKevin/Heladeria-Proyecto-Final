@@ -48,7 +48,32 @@ public class CompraDAOImp extends GenericDAOImp<Compra, Integer> implements ICom
         }
         return comprasAux;
     }
-    
+    @Override
+    public List<Compra> obtenerCompra(Integer codigo) {
+        List<Compra> comprasAux = new ArrayList<>();
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Compra.class);
+        List<Compra> compras = criteria.list();
+        session.close();
+
+        
+        //quita valores repetidos segun el id de compra
+        for (Compra c : compras) {
+            boolean bandera = true;
+            if (c.getCodigoCompra().equals(codigo)) {
+                for (Compra cAux : comprasAux) {
+                    if (cAux.getCodigoCompra().equals(c.getCodigoCompra())) {
+                        bandera = false;
+                    }
+                }
+                if (bandera) {
+                    comprasAux.add(c);
+                }
+            }
+        }
+        return comprasAux;
+    }
     /**
      * @param idUsuario id del Usuario
      * @return Returna una lista con todas las compras segund IdUsuario

@@ -52,9 +52,15 @@ public class GraficosFormBean implements Serializable{
      * permite graficar entre dos fechas ingresadas por el administrador
      */
     public void graficarEntreDosFechas(){
+        if(fechaMayor.compareTo(fechaMenor)>=0){
         graficoBean.graficarEntreFechas(fechaMenor, fechaMayor);
          FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se graficó exitosamente", "A observar!"));
+        }else{
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR", "LA SEGUNDA FECHA DEBE SER MAYOR A LA PRIMERA"));
+        }
+       
 
     }
     /**

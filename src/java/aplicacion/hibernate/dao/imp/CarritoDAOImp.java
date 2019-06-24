@@ -120,7 +120,7 @@ public class CarritoDAOImp extends GenericDAOImp<Carrito, Integer> implements IC
             if (helado.getPrecioOferta().equals(0.0)){
                 total = total + c.getTotal();
             }else{
-                total = total + helado.getPrecioOferta(); //* c.getCantidad();
+                total = total + helado.getPrecioOferta() * c.getCantidad();
             }
         }
         return total;

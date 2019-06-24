@@ -29,7 +29,7 @@
                             <p:dataTable id="tblMostrarOfertas"
                                          var="oferta"
                                          value="#{ofertaFormBean.listaOfertasActuales}"
-                                         style="margin-left: 18%; margin-right: 18%">
+                                         style="margin-left: 18%; margin-right: 18%" emptyMessage="No hay Ofertas Disponibles">
                                 <p:column headerText="Helados en Ofertas">
                                     <p:outputLabel value="Super Oferta #{oferta.tipoOferta}" style="font-size: 25px"/><br/>
                                     <p:dataTable id="tblMostrarHeladosOferta"
@@ -80,7 +80,7 @@
                                         <h:outputText value="#{heladoBean.helado.saborHelado}" />
 
                                         <h:outputText value="Precio:" />
-                                        <h:outputText value="#{heladoBean.helado.precio}" />
+                                        <h:outputText value="$#{heladoBean.helado.precioOferta}" />
 
                                         <h:outputText value="Cantidad:" />
                                         <p:spinner value="#{heladoBean.cantidad}" min="1" max="#{heladoBean.helado.cantidad}"/>

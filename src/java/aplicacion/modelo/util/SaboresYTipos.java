@@ -47,11 +47,10 @@ public class SaboresYTipos {
         Tipos[3] = "Familiar";
         Tipos[4] = "Postres";
         
-        TiposOfertas = new String[3];
+        TiposOfertas = new String[2];
         
-        TiposOfertas[0] = "2x1";
-        TiposOfertas[1] = "10% de Descuento";
-        TiposOfertas[2] = "20% de Descuento";
+        TiposOfertas[0] = "10% de Descuento";
+        TiposOfertas[1] = "20% de Descuento";
     }
     
     /**

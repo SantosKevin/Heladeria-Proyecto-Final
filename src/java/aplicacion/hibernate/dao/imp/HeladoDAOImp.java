@@ -70,7 +70,7 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
     @Override
     public List<Helado> obtenerHeladosTipo(String tipo) {
         List<Helado> listaHeladosTipo = new ArrayList<>();
-        for(Helado h : super.getAll(Helado.class)){
+        for(Helado h : this.obtenerHeladosDisponibles()){
             if(h.getTipoHelado().equalsIgnoreCase(tipo))
                 listaHeladosTipo.add(h);
         }
@@ -87,7 +87,7 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
     @Override
     public Helado obtenerUnicoHelado(Integer codigoHelado) {
         Helado heladoUnico = null;
-        for(Helado h: super.getAll(Helado.class)){
+        for(Helado h: this.obtenerHeladosDisponibles()){
             if(h.getCodigoHelado() == codigoHelado)
                 heladoUnico = h;
         }

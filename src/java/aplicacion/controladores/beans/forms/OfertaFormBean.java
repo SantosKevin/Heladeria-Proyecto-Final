@@ -186,9 +186,14 @@ public class OfertaFormBean implements Serializable{
         if(!validarHeladoRepetido){
             if(validarCodigoExistente){
                 if(!validarHeladoRepetidoEnOferta){
-                    listaHelados.add(heladoBean.obtenerHeladoUnico(helado.getCodigoHelado()));
-                    FacesContext.getCurrentInstance().
-                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "El Helado se ha agregado"));
+                    if(heladoAuxiliar != null){
+                        listaHelados.add(heladoAuxiliar);
+                        FacesContext.getCurrentInstance().
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "El Helado se ha agregado"));
+                    }else{
+                        FacesContext.getCurrentInstance().
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR", "El Helado NO ESTA DISPONIBLE"));
+                    }
                 }else{
                     FacesContext.getCurrentInstance().
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Helado que intenta agregar, ya posee una oferta activa"));

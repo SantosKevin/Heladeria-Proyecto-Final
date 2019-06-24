@@ -20,6 +20,7 @@ import aplicacion.modelo.dominio.Compra;
 import aplicacion.modelo.dominio.Helado;
 import aplicacion.modelo.dominio.Usuario;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -100,6 +101,7 @@ public class CarritoBean implements Serializable {
 
             compra.setUsuarioCompra(usuario);
             compra.setHeladosCompra(new HashSet<>(listaHelado));
+            //Esto seria para hora y fecha pero hibernate no lo realiza: compra.setFechaCompra(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
             compra.setFechaCompra(new Date());
             compra.setEstado(0);
 

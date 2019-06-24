@@ -37,7 +37,7 @@
                                     </p:outputLabel>
                                 </p:column> 
                                 <p:column headerText="Estado">
-                                    <p:outputLabel value="#{compraBean.ObtenerEstadoCompra(comp.estado)} "/>
+                                    <p:outputLabel value="#{compraBean.ObtenerEstadoCompra(comp.estado,comp.fechaCompra)} "/>
                                 </p:column> 
                                 <p:rowExpansion>
                                     <p:dataTable id="tblHelado" emptyMessage="Sin Helados" style="margin-left: 3%"

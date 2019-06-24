@@ -51,7 +51,6 @@ public class OfertaFormBean implements Serializable{
     private List<Helado> listaHelados;
     private SaboresYTipos saboresYTipos;
     
-
     /**
      * Creates a new instance of OfertaFormBean
      */
@@ -76,7 +75,7 @@ public class OfertaFormBean implements Serializable{
         listaOfertas = ofertaBean.obtenerOfertas();
     }
     /**
-     * Metodo que genera solo las ofertas Activas, es decir las que tiene le estado en Verdadero
+     * Metodo que genera solo las ofertas Activas, es decir las que tiene el estado en Verdadero
      */
     public void generarOfertasActuales(){
         listaOfertasActuales = ofertaBean.obtenerOfertasActuales();
@@ -86,13 +85,49 @@ public class OfertaFormBean implements Serializable{
      * Recorre la lista completa de ofertas determinando su estado en Verdadero o Falso
      */
     public void actualizarOfertas(){
+        actualizarPrecio();
         for(Oferta o: listaOfertas){
-            if(ofertaBean.consultarOferta(o.getCodigoOferta())){
+            if(ofertaBean.consultarOferta(o.getCodigoOferta()) == 0){
                 o.setEstado(true);
             }else{
                 o.setEstado(false);
             }
             ofertaBean.modificarOferta(o);
+        }
+        generarOfertas();
+        generarOfertasActuales();
+    }
+    /**
+     * Metodo que actualiza el precio de los productos en oferta
+     * Se recorre todas las ofertas de la base de dato consultado que oferta estan activas, y que ofertas terminaron definitivamente.
+     * En las ofertas que estan activa, se hace un recorrido consultado el tipo de oferta que tiene, para asignarle el precio correspondiente
+     * En las ofertas que estan terminadas, tambien se hace un recorrido, solo que a esos productos se le asinga $0 a sus preciosOFerta
+     * 
+     */
+    public void actualizarPrecio(){
+        for(Oferta o: listaOfertas){
+            if(ofertaBean.consultarOferta(o.getCodigoOferta()) == 0){
+                for(Helado h : o.getHeladosOferta()){
+                    if(o.getTipoOferta().equalsIgnoreCase("10% de Descuento"))
+                        h.setPrecioOferta(h.getPrecio() - h.getPrecio()*0.1);
+                    else{
+                        if(o.getTipoOferta().equalsIgnoreCase("20% de Descuento"))
+                            h.setPrecioOferta(h.getPrecio() - h.getPrecio()*0.2);
+                        else{
+                            if(o.getTipoOferta().equalsIgnoreCase("2x1"))
+                                System.out.println("haceeer con la cantidad "+heladoBean.getCantidad());
+                        }
+                    }
+                    heladoBean.modificarHelado(h);
+                }
+            }else{
+                if(ofertaBean.consultarOferta(o.getCodigoOferta()) == 1){
+                    for(Helado h : o.getHeladosOferta()){
+                        h.setPrecioOferta(0.0);
+                        heladoBean.modificarHelado(h);
+                    }
+                }
+            }
         }
         generarOfertas();
         generarOfertasActuales();
@@ -158,7 +193,25 @@ public class OfertaFormBean implements Serializable{
                 addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Helado ya se encuentra agregado"));
         }
     }
-    
+    /**
+     * Metodo para detectar si un helado esta en oferta o no
+     * Este metodo lo que recibe como parametro es el codigo de un helado
+     * luego se recorre la lista de todos los helados en oferta y se pregunta si 
+     * los codigos son iguales
+     * @param codigoHelado codigo del helado que se desea consultar
+     */
+    public void detectarHeladoOferta(Integer codigoHelado){
+        boolean validar = false;
+        for(Helado h: ofertaBean.obtenerHeladosEnOferta()){
+            if(h.getCodigoHelado() == codigoHelado)
+                validar = true;
+        }
+        if(validar){
+            PrimeFaces.current().executeScript("PF('dlgOfertaDisponible').show();");   
+        }else
+            PrimeFaces.current().executeScript("PF('multiProdDialog').show();");
+        
+    }
     /**
      * Metodos para crear una oferta con helados seleccionados por codigo
      * 1ro: se Setea la lista de helados previamente validada

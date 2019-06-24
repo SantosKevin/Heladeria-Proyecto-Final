@@ -41,7 +41,7 @@ public class OfertaBean implements Serializable{
     public void modificarOferta(Oferta oferta){
         ofertaDAO.update(oferta);
     }
-    public boolean consultarOferta(Integer codigoOferta){
+    public int consultarOferta(Integer codigoOferta){
         return ofertaDAO.consultarOferta(codigoOferta);
     }
     public List<Oferta> obtenerOfertas(){

@@ -56,16 +56,22 @@ public class OfertaDAOImp extends GenericDAOImp<Oferta, Integer> implements IOfe
      * mientras que la otra va a tener la fecha actual del sistema. Luego se comparan dichas fechas y
      * se determina si la oferta continua o no.
      * @param codigoOferta codigo de la oferta que se desea consultar
-     * @return Verdadero si la oferta continua. Falso si la oferta termino
+     * @return
+     * -1 si la oferta todavia no empezo
+     * 0 si la oferta esta activa
+     * 1 si la oferta ya termino
      */
     @Override
-    public boolean consultarOferta(Integer codigoOferta) {
+    public int consultarOferta(Integer codigoOferta) {
         Date fechaInicial = this.obtenerUnicaOferta(codigoOferta).getFechaInicio();
         Date fechaFinal = this.obtenerUnicaOferta(codigoOferta).getFechaFinal();
         Date fechaActual = new Date();
-        boolean consultar = false;
-        if(fechaActual.compareTo(fechaInicial) >= 0 && fechaActual.compareTo(fechaFinal) <= 0){
-            consultar = true;
+        int consultar = 1;
+        if(fechaActual.compareTo(fechaInicial) < 0)
+            consultar = -1;
+        else{
+            if(fechaActual.compareTo(fechaInicial) >= 0 && fechaActual.compareTo(fechaFinal) <= 0)
+                consultar = 0;
         }
         return consultar;
     }
@@ -78,7 +84,7 @@ public class OfertaDAOImp extends GenericDAOImp<Oferta, Integer> implements IOfe
     @Override
     public List<Oferta> obtenerOfertasActuales() {
        List<Oferta> listaOfertasActuales = new ArrayList<>();
-       for(Oferta o : super.getAll(Oferta.class)){
+       for(Oferta o : this.obtenerOfertaDistinct()){
            if(o.isEstado())
                listaOfertasActuales.add(o);
        }

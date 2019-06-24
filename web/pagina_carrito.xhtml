@@ -28,13 +28,17 @@
                                 </p:column>
                                 <p:column headerText="Nombre">
                                     <p:outputLabel value="#{carritoBean.obtenerHelado(car.codigoHelado).nombreHelado}"/>
-                                </p:column> 
+                                </p:column>
                                 <p:column headerText="Sabor">
                                     <p:outputLabel value="#{carritoBean.obtenerHelado(car.codigoHelado).saborHelado}"/>
-                                </p:column> 
+                                </p:column>
                                 <p:column headerText="Precio c/u">
                                     <p:outputLabel value="#{carritoBean.obtenerHelado(car.codigoHelado).precio}"/>
-                                </p:column> 
+                                </p:column>
+                                
+                                <p:column headerText="Precio Oferta">
+                                    <p:outputLabel value="#{carritoBean.obtenerHelado(car.codigoHelado).precioOferta}"/>
+                                </p:column>
                                 <p:column headerText="Cantidad" style="text-align: center" >
                                     <p:outputLabel value="#{car.cantidad}"/>
                                 </p:column>

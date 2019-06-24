@@ -63,6 +63,7 @@ public class HeladoFormBean implements Serializable {
      * Metodo que crea un helado
      */
     public void crearHelado() {
+        helado.setPrecioOferta(0.0);
         helado.setEstado(Boolean.TRUE);
         heladoBean.crearHelado(helado);
         helado = new Helado();
@@ -107,7 +108,6 @@ public class HeladoFormBean implements Serializable {
         FacesContext.getCurrentInstance().
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cancelado", "La modificacion se ha cancelado"));
     }
-
     public HeladoBean getHeladoBean() {
         return heladoBean;
     }

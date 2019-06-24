@@ -101,6 +101,7 @@ public class HeladoBean implements Serializable{
     
     
     public void agregarAlCarrito(){
+        System.out.println(this.cantidad);
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         Boolean bandera = true;
         

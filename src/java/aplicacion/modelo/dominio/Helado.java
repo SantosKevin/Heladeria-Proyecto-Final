@@ -29,6 +29,10 @@ public class Helado implements Serializable {
      */
     private Double precio;
     /**
+     * precio de oferta del helado
+     */
+    private Double precioOferta;
+    /**
      * sabor del helado
      */
     private String saborHelado;
@@ -55,16 +59,18 @@ public class Helado implements Serializable {
      * @param nombreHelado Nombre del helado
      * @param tipoHelado Especifica el tipo de helado
      * @param precio precio unitario del helado
+     * @param precioOferta precio oferta del helado
      * @param saborHelado sabor del helado
      * @param cantidad stock del helado
      * @param imagen imagen del helado
      * @param estado Especifica si el helado se encuentra disponible, independientemente del stock
      */
-    public Helado(Integer codigoHelado, String nombreHelado, String tipoHelado, Double precio, String saborHelado, Integer cantidad,String imagen,Boolean estado) {
+    public Helado(Integer codigoHelado, String nombreHelado, String tipoHelado, Double precio, Double precioOferta,String saborHelado, Integer cantidad,String imagen,Boolean estado) {
         this.codigoHelado = codigoHelado;
         this.nombreHelado = nombreHelado;
         this.tipoHelado = tipoHelado;
         this.precio = precio;
+        this.precioOferta = precioOferta;
         this.saborHelado = saborHelado;
         this.cantidad = cantidad;
         this.imagen = imagen;
@@ -161,5 +167,13 @@ public class Helado implements Serializable {
      */
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public Double getPrecioOferta() {
+        return precioOferta;
+    }
+
+    public void setPrecioOferta(Double precioOferta) {
+        this.precioOferta = precioOferta;
     }
 }

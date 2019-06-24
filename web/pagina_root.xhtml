@@ -21,13 +21,6 @@
                         <p:growl id="growlAdmin" showDetail="true"/>
                         <h:form id="formAdmin">
                             <p:menubar>
-                                <p:menuitem value="Acceder a Base de datos Helados"
-                                            onclick="PF('dlgVerificar').show()"
-                                            actionListener="#{usuarioFormBean.setParamBaseDeDatos(1)}"
-                                            update="formVerificar"
-                                            icon="pi pi-times" >
-                                    <p:commandButton value="Aqui"/>
-                                </p:menuitem>
                                 <p:menuitem value="Acceder a Base de datos Ofertas"
                                             onclick="PF('dlgVerificar').show()"
                                             actionListener="#{usuarioFormBean.setParamBaseDeDatos(2)}"

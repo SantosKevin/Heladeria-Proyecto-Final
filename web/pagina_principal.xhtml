@@ -7,14 +7,15 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Heladeria F.I.</title>
-        
+
     </h:head>
     <h:body>
-            <div class="ui-g">
-                <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding:0!important;position:relative;">
-                    <ui:composition template="./resources/templates/template.xhtml">
-                        <ui:define name="content">
-                            <h:form>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-lg-12" style="padding:0!important;position:relative;">
+                <ui:composition template="./resources/templates/template.xhtml">
+                    <ui:define name="content">
+                        <p:growl id="growlGeneral" showDetail="true"/>
+                        <h:form id="formGeneral">
                             <!--Esto seria para ver la imagen conrriendoce-->
                             <div class="carrucel">
                                 <p:imageSwitch effect="fade" id="fadeEffect" style="width: 100%" >
@@ -25,6 +26,73 @@
                                     <p:graphicImage name="img/helado5.jpg" class="image" />
                                 </p:imageSwitch>
                             </div>
+                            <p:dataTable id="tblMostrarOfertas"
+                                         var="oferta"
+                                         value="#{ofertaFormBean.listaOfertasActuales}"
+                                         style="margin-left: 18%; margin-right: 18%">
+                                <p:column headerText="Helados en Ofertas">
+                                    <p:dataTable id="tblMostrarHeladosOferta"
+                                                 var="helado"
+                                                 value="#{oferta.heladosOferta}">
+                                        <p:column >
+                                            <p:graphicImage name="#{helado.imagen}" width="50" height="50"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:panelGrid columns="2" layout="grid">
+                                                <p:outputLabel value="Nombre "/>
+                                                <p:outputLabel value="#{helado.nombreHelado}"/>
+                                                
+                                                <p:outputLabel value="Tipo "/>
+                                                <p:outputLabel value="#{helado.tipoHelado}"/>
+                                                
+                                                <p:outputLabel value="Sabor "/>
+                                                <p:outputLabel value="#{helado.saborHelado}"/>
+                                                
+                                                <p:outputLabel value="Precio "/>
+                                                <p:outputLabel value="$#{helado.precioOferta}"/>
+                                            </p:panelGrid>
+                                        </p:column>
+                                        <p:column>
+                                            <p:commandButton icon="ui-icon-cart" value="Agregar al Carrito" 
+                                                             oncomplete="PF('dlgAgregarOferta').show()"
+                                                             action="#{heladoBean.leer(helado)}"
+                                                             update="formAgregarOferta"
+                                                             resetValues="true"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                        <p:dialog header="Informacion" widgetVar="dlgAgregarOferta" modal="true" 
+                                      showEffect="fade" hideEffect="fade" resizable="false" width="450"
+                                      closeOnEscape="true" responsive="true">
+                                <h:form id="formAgregarOferta">
+                                    <h:graphicImage url="#{heladoBean.helado.imagen}"/><br></br>
+                                    <h:panelGrid id="pgDialogoHelado" columns="2" style="text-align: left">
+                                        <h:outputText value="Nombre:" />
+                                        <h:outputText value="#{heladoBean.helado.nombreHelado}" />
+
+                                        <h:outputText value="Sabor:" />
+                                        <h:outputText value="#{heladoBean.helado.saborHelado}" />
+
+                                        <h:outputText value="Precio:" />
+                                        <h:outputText value="#{heladoBean.helado.precio}" />
+
+                                        <h:outputText value="Cantidad:" />
+                                        <p:spinner value="#{heladoBean.cantidad}" min="1" max="#{heladoBean.helado.cantidad}"/>
+
+                                        <p:commandButton id="btnModificar" value="Aceptar"
+                                                         icon="ui-icon-check"
+                                                         action="#{heladoBean.agregarAlCarrito()}"
+                                                         update="formGeneral growlGeneral"/>
+                                        <p:commandButton id="btnAtras" value="Atras"  
+                                                         onclick="PF('dlgAgregarOferta').hide();"
+                                                         icon="ui-icon-closethick"
+                                                         />
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:dialog>
+                        <h:form>
                             <center>
                                 <div class="ui-g-12">
                                     <div class="box ui-g-4"> <p:graphicImage name="img/ofer_oferta10.jpg" class="image" style="width:100%"/>
@@ -40,14 +108,10 @@
                                     </div>
                                 </div>
                             </center>
-                            
-                           
-                            
-                            </h:form>
-                        </ui:define>
-                    </ui:composition>
-                </div>
-                
+                        </h:form>
+                    </ui:define>
+                </ui:composition>
             </div>
+        </div>
     </h:body>
 </html>

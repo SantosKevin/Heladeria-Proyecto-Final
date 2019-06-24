@@ -57,5 +57,4 @@ public class Carrito {
         this.cantidad = cantidad;
     }
     
-    
 }

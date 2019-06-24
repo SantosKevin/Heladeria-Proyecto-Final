@@ -60,6 +60,10 @@ Contributor(s):
           <column name="hel_precio_helado" not-null="true"/>
       </property>
       
+      <property name="precioOferta" type="double">
+          <column name="hel_precio_oferta_helado" not-null="true"/>
+      </property>
+      
       <property name="saborHelado" type="string">
           <column name="hel_sabor_helado" length="45" not-null="true"/>
       </property>

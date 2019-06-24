@@ -34,15 +34,31 @@
                                 </p:column> 
                                 <p:column headerText="">
                                     <p:commandButton 
-                                        icon="ui-icon-circle-check" value="Agregar al Carrito" 
-                                        oncomplete="PF('multiProdDialog').show()"
-                                        action="#{heladoBean.leer(hel)}"
+                                        icon="ui-icon-circle-check" value="Agregar al Carrito"
+                                        actionListener="#{heladoBean.leer(hel)}"
+                                        action="#{ofertaFormBean.detectarHeladoOferta(hel.codigoHelado)}"
                                         update="frmDialogoHelado"
                                         resetValues="true"/>
 
                                 </p:column> 
                             </p:dataTable>
                         </h:form>
+                        <p:dialog id="idDlgOfertaDisponible"
+                                  widgetVar="dlgOfertaDisponible" showEffect="fade"
+                                  header="Oferta Disponible" hideEffect="fade"
+                                  modal="true"
+                                  resizable="false">
+                            <h:form>
+                                <p>
+                                    El helado que acaba de seleccionar <br/>
+                                    tiene una oferta disponible <br/>
+                                    Desea ir a verla?
+                                </p>
+                                <p:commandButton value="Aceptar" action="pagina_principal"/>
+                                <p:commandButton value="Cancelar" onclick="PF('dlgOfertaDisponible').hide()"/>
+                            </h:form>
+                            
+                        </p:dialog>
                         <p:dialog header="Informacion" widgetVar="multiProdDialog" modal="true" 
                                   showEffect="fade" hideEffect="fade" resizable="false" width="450"
                                   closeOnEscape="true" responsive="true">

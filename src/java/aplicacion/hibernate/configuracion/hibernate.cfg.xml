@@ -46,7 +46,7 @@ Contributor(s):
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/heladeria?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">root</property>
+    <property name="hibernate.connection.password">abc123</property>
     <property name="hibernate.show_sql">true</property>
     <mapping resource="aplicacion/hibernate/mapeos/Usuario.hbm.xml"/>
     <mapping resource="aplicacion/hibernate/mapeos/Helado.hbm.xml"/>

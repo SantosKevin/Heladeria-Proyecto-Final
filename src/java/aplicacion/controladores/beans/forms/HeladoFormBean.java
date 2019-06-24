@@ -110,18 +110,31 @@ public class HeladoFormBean implements Serializable {
         FacesContext.getCurrentInstance().
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cancelado", "La modificacion se ha cancelado"));
     }
-    /**public void modificarStock(int parametro){
+    /**
+     * Este metodo modifica el stock actual
+     * mediante un parametro se determina si el usuario desea agregar o quitar el stock
+     * @param parametro 
+     */
+    public void modificarStock(int parametro){
         Helado helado = heladoBean.obtenerHeladoUnico(codigoHelado);
         if(parametro == 1){
             helado.setCantidad(helado.getCantidad() + this.stock);
+            FacesContext.getCurrentInstance().
+                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "El Stock se ha agregado"));
         }else{
-            if(helado.getCantidad() >= this.stock)
+            if(helado.getCantidad() >= this.stock){
+                FacesContext.getCurrentInstance().
+                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "El Stock se ha decrementado"));
                 helado.setCantidad(helado.getCantidad() - this.stock);
+            }
             else
                FacesContext.getCurrentInstance().
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Stock que desea quitar es mayor que el stock actual")); 
         }
-    }**/
+        heladoBean.modificarHelado(helado);
+        this.stock=0;
+        generarHelados();
+    }
     public HeladoBean getHeladoBean() {
         return heladoBean;
     }

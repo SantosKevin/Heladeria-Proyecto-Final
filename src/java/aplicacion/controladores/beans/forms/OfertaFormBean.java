@@ -66,6 +66,8 @@ public class OfertaFormBean implements Serializable{
         saboresYTipos = new SaboresYTipos();
         generarOfertas();
         generarOfertasActuales();
+        actualizarOfertas();
+        actualizarPrecio();
         listaHelados = new ArrayList<>();
     }
     /**
@@ -159,6 +161,8 @@ public class OfertaFormBean implements Serializable{
             oferta = new Oferta();
             generarOfertas();
             generarOfertasActuales();
+            actualizarOfertas();
+            actualizarPrecio();
         }else{
             FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No hay Helados de tipo : \""+helado.getTipoHelado()+"\" "
@@ -229,6 +233,8 @@ public class OfertaFormBean implements Serializable{
         oferta = new Oferta();
         generarOfertas();
         generarOfertasActuales();
+        actualizarOfertas();
+        actualizarPrecio();
         this.listaHelados.clear();
     }
     /**

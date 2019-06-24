@@ -114,8 +114,13 @@ public class OfertaFormBean implements Serializable{
                         if(o.getTipoOferta().equalsIgnoreCase("20% de Descuento"))
                             h.setPrecioOferta(h.getPrecio() - h.getPrecio()*0.2);
                         else{
-                            if(o.getTipoOferta().equalsIgnoreCase("2x1"))
-                                System.out.println("haceeer con la cantidad "+heladoBean.getCantidad());
+                            if(o.getTipoOferta().equalsIgnoreCase("2x1")){
+                                System.out.println("Cual es la cantidad aquiiuuii" + heladoBean.getCantidad());
+                                if(heladoBean.getCantidad() == 2)
+                                    h.setPrecioOferta(h.getPrecio()/2);
+                                else
+                                    h.setPrecioOferta(0.0);
+                            }
                         }
                     }
                     heladoBean.modificarHelado(h);
@@ -207,7 +212,7 @@ public class OfertaFormBean implements Serializable{
                 validar = true;
         }
         if(validar){
-            PrimeFaces.current().executeScript("PF('dlgOfertaDisponible').show();");   
+            PrimeFaces.current().executeScript("PF('dlgOfertaDisponible').show();");
         }else
             PrimeFaces.current().executeScript("PF('multiProdDialog').show();");
         

@@ -38,7 +38,9 @@ public class HeladoFormBean implements Serializable {
     private Helado helado;
     private List<Helado> listaHelados;
     private SaboresYTipos saboresYTipos;
-
+    
+    private Integer codigoHelado;
+    private Integer stock;
     /**
      * Creates a new instance of HeladoFormBean
      */
@@ -108,6 +110,18 @@ public class HeladoFormBean implements Serializable {
         FacesContext.getCurrentInstance().
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cancelado", "La modificacion se ha cancelado"));
     }
+    /**public void modificarStock(int parametro){
+        Helado helado = heladoBean.obtenerHeladoUnico(codigoHelado);
+        if(parametro == 1){
+            helado.setCantidad(helado.getCantidad() + this.stock);
+        }else{
+            if(helado.getCantidad() >= this.stock)
+                helado.setCantidad(helado.getCantidad() - this.stock);
+            else
+               FacesContext.getCurrentInstance().
+                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Stock que desea quitar es mayor que el stock actual")); 
+        }
+    }**/
     public HeladoBean getHeladoBean() {
         return heladoBean;
     }
@@ -139,6 +153,20 @@ public class HeladoFormBean implements Serializable {
     public void setSaboresYTipos(SaboresYTipos saboresYTipos) {
         this.saboresYTipos = saboresYTipos;
     }
-    
-    
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public Integer getCodigoHelado() {
+        return codigoHelado;
+    }
+
+    public void setCodigoHelado(Integer codigoHelado) {
+        this.codigoHelado = codigoHelado;
+    }
 }

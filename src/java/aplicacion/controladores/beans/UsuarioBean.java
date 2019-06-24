@@ -94,13 +94,6 @@ public class UsuarioBean implements Serializable{
         return iUsuario.verificarUsuario(nombreUsu, contraseña);
     }
     
-    public boolean esNormal() { //returna true si la sesion actual es de un Administrativo
-        boolean resultado = false;
-        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        if(usuario.getTipoUsuario().equals("normal"))
-            resultado = true;        
-        return resultado;                
-    }
     //seccion de getters y setters
 
     public IUsuarioDAO getiUsuario() {

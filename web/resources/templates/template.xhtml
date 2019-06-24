@@ -25,13 +25,13 @@
             <ui:insert name="menu">
                 <h:form id="frmTemp">
                     <p:menubar>
-                        <p:menuitem value="Inicio" url="pagina_principal.xhtml" />
-                        <p:submenu label="Productos" rendered="#{usuarioBean.esNormal()}" >
+                        <p:menuitem value="Inicio" action="#{usuarioFormBean.redireccion()}"/>
+                        <p:submenu label="Productos" >
                             <p:menuitem value="Helados" url="pagina_catalogo.xhtml" />
                         </p:submenu>
 
-                        <p:menuitem value="Carrito" url="pagina_carrito.xhtml" rendered="#{usuarioBean.esNormal()}"/>
-                        <p:menuitem value="Pedidos" url="pagina_compra.xhtml" rendered="#{usuarioBean.esNormal()}"/>
+                        <p:menuitem value="Carrito" url="pagina_carrito.xhtml" />
+                        <p:menuitem value="Pedidos" url="pagina_compra.xhtml" />
                         <f:facet name="options">
                             <p:outputLabel value="Bienvenido ~ #{usuarioFormBean.devolverNombreUsuario()} ~" style="margin-right: 5px;"/>
                             <p:commandButton id="cmdDesc" value="Desconectar" action="#{usuarioFormBean.desconectar}"

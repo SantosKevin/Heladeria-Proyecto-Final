@@ -18,6 +18,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
 
 /**
@@ -123,6 +124,18 @@ public class UsuarioFormBean implements Serializable {
         String redireccion = "";
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         redireccion = "Sesion?faces-redirect=true";
+        return redireccion;
+    }
+    public String redireccion(){
+        String redireccion = "";
+        if(this.usuarioConectado.getTipoUsuario().equalsIgnoreCase("normal"))
+            redireccion = "pagina_principal?faces-redirect=true";
+        else{
+            if(this.usuarioConectado.getTipoUsuario().equalsIgnoreCase("administrativo"))
+                redireccion = "pagina_administrador?faces-redirect=true";
+            else
+                redireccion = "pagina_root?faces-redirect=true";
+        }
         return redireccion;
     }
 
@@ -241,6 +254,7 @@ public class UsuarioFormBean implements Serializable {
         } else {
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No permitido", "contraseña incorrecta"));
         }
+        
         contraseña = "";
         return redireccion;
     }

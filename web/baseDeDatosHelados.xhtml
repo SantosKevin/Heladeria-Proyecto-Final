@@ -71,7 +71,11 @@
                         </p:column>
 
                         <p:column headerText="Precio">
-                            <p:outputLabel value="$#{helado.precio}"/>
+                            <p:cellEditor>
+                                <f:facet name="output"><p:outputLabel value="$#{helado.precio}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{helado.precio}"/></f:facet>
+                            </p:cellEditor>
+                            
 
                         </p:column>
 
@@ -85,10 +89,9 @@
 
                         <p:column headerText="Vista">
                             <p:cellEditor>
-                                <f:facet name="output"><p:outputLabel value="#{helado.imagen}"/></f:facet>
+                                <f:facet name="output"><h:graphicImage url="#{helado.imagen}"  width="80%" height="40%"/></f:facet>
                                 <f:facet name="input"><p:inputText value="#{helado.imagen}"/></f:facet>
                             </p:cellEditor>
-                            <!--cuando se agrege las imagenes cambiar este componente por graphic image-->
 
                         </p:column>
 
@@ -100,13 +103,41 @@
                                              update="formTabla growlGeneral">
                                 <p:confirm header="Confirmacion" message="¿Estas seguro de realizar la accion de ELIMINAR HELADO?"/>
                             </p:commandButton>
+                            <!--<p:commandButton id="btnReponer"
+                                     update="formAgregarHelado"
+                                     actionListener="#{heladoFormBean.codigoHelado}"
+                                     onclick="PF('dlgModificarStock').show()"
+                                     value="Modificar Stock"/>-->
                         </p:column>
+                        
                     </p:dataTable>
+                    <br/>
                     <p:commandButton id="btnAgregar"
                                      update="formAgregarHelado"
                                      value="Agregar Helado"
                                      onclick="PF('dlgAgregarHelado').show()"/>
+                    
                 </h:form>
+                <p:dialog id="idDlgModificarStock"
+                          widgetVar="dlgModificarStock"
+                          header="Modificar Stock"
+                          modal="true"
+                          resizable="true">
+                    <h:form id="formModificarStock">
+                        <p:outputLabel value="Ingrese la cantidad de stock que desea modificar"/>
+                        <p:inputNumber value="#{heladoFormBean.stock}"/>
+                        
+                        <p> Que desea hacer con esa cantidad? </p>
+                        <p:commandButton value="Agregar Stock"
+                                         
+                                         actionListener="#{heladoFormBean.modificarStock(1)}"
+                                         update="growlGeneral formTabla"/>
+                        <p:commandButton value="Quitar Stock"
+                                         update="growlGeneral formTabla"
+                                         actionListener="#{heladoFormBean.modificarStock(0)}"/>
+                    </h:form>
+                    
+                </p:dialog>
                 <p:dialog id="idDlgAgregarHelado"
                           widgetVar="dlgAgregarHelado"
                           header="Agregar Nuevo Helado"
@@ -191,6 +222,5 @@
                 </h:form>
             </ui:define>
         </ui:composition>
-
     </body>
 </html>

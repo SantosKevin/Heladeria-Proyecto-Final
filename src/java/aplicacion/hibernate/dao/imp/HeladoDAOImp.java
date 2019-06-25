@@ -26,21 +26,13 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
     @Override
     public List<Helado> obtenerHeladosDisponibles() {
         List<Helado> heladosAux =  new ArrayList<>();
-        
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Helado.class);
-        List<Helado> helados = criteria.list();
-        session.close();
-        
-        Helado helado = new Helado();
-        for (Helado h: helados){
-            if (!h.getCantidad().equals(0)&&h.getEstado()){
+        for (Helado h: super.getAll(Helado.class)){
+            if (!h.getCantidad().equals(0) && h.getEstado()){
                 heladosAux.add(h);
             }
         }
         return heladosAux;
     }
-    
     /**
      * @param idHelado
      * @return un helado segun el id del helado
@@ -87,10 +79,28 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
     @Override
     public Helado obtenerUnicoHelado(Integer codigoHelado) {
         Helado heladoUnico = null;
-        for(Helado h: this.obtenerHeladosDisponibles()){
-            if(h.getCodigoHelado() == codigoHelado)
+        for(Helado h: super.getAll(Helado.class)){
+            if(h.getEstado()){
+                if(h.getCodigoHelado() == codigoHelado)
                 heladoUnico = h;
+            }
         }
         return heladoUnico;
+    }
+    /**
+     * Metodo que obtiene un helado en particular y ese helado esta disponible
+     * recoore la lista de todos los helados disponibles, es decir que tiene
+     * su stock mayor que 0 o que tiene su estado en True
+     * @param codigoHelado codigo del helado que se desea obtener
+     * @return null si el helado no esta disponible, Helado si el helado esta disponible
+     */
+    @Override
+    public Helado obtenerUnicoHeladoDisponible(Integer codigoHelado){
+        Helado heladoUnicoDisponible = null;
+        for(Helado h: this.obtenerHeladosDisponibles()){
+            if(h.getCodigoHelado() == codigoHelado)
+                heladoUnicoDisponible = h;
+        }
+        return heladoUnicoDisponible;
     }
 }

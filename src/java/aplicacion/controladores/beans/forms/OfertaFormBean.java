@@ -140,22 +140,20 @@ public class OfertaFormBean implements Serializable{
         generarOfertasActuales();
     }
     /**
-     * Metodo que crear una oferta de helados de un solo tipo
-     * 1ro: se crea una lista de helados auxiliar donde se almacenan helados de un solo tipo
-     * 2do: se crear otra lista auxilair donde se almacenan helados de un solo tipo, eliminando las repeticiones si es necesario
+     * Este metodo lo que hace es crear una oferta en donde solo se incluyen helados de un solo tipo
+     * 1ro: se crea una lista de helados auxiliar, llamada listaHeladoRubro en donde se almacenan solo helados de un solo tipo
+     * 2do: se crear otra lista auxiliar, en esta se almacenaran los helados de la variable ListaHeladoRubro, solo que sin repeticiones
      * 3ro: se pregunta si el tamaña de la lista es >0, esto para determinar si hay helados o no para agregar a la oferta
-     *      si el tamañno es >0, quiere decir que si hay helados, por lo tanto se agrega a la base de datos de oferta
-     *      sino se muestra un mensaje de error
+     * si el tamañno es >0, quiere decir que si hay helados, por lo tanto se agrega a la base de datos de oferta
+     * sino se muestra un mensaje de error.
      */
     public void crearOfertaTipo(){
         List<Helado> listaHeladoRubro = heladoBean.obtenerHeladosTipo(helado.getTipoHelado());
         List<Helado> listaHeladoAuxiliar = validacionesOferta.eliminarHeladoRepetidoPorTipos(ofertaBean.obtenerHeladosEnOferta(), listaHeladoRubro);
         if(listaHeladoAuxiliar.size() > 0){
-            if(listaHeladoRubro.size() != listaHeladoAuxiliar.size()){
-                FacesContext.getCurrentInstance().
-                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Atencion", "Algunos helados del tipo: \""+helado.getTipoHelado()+"\" \n"
-                        + "ya se encuentran en oferta, por lo tanto han sido omitidos"));
-            }
+            FacesContext.getCurrentInstance().
+            addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Atencion", "Existe la posiblidad de que algunos helados"
+                    + " hallan sido omitidos por estar en oferta o por no estar disponibles"));
             oferta.setHeladosOferta(new HashSet<>(listaHeladoAuxiliar));
             ofertaBean.agregarOferta(oferta);
             oferta = new Oferta();
@@ -170,16 +168,16 @@ public class OfertaFormBean implements Serializable{
         }
     }
     /**
-     * Metodo para agregar los helados a una lista, para luego ser agregados a una oferta
-     * 1ro: se crea un objecto de tipo helado auxiliar, que sera el helado que se desea agregar a la oferta
+     * Este Metodo lo unico que hace es agregar helados 1 por 1 a una lista auxiliar, para luego ser agregados a la oferta
+     * 1ro: se crea un objecto de tipo helado llamado  heladoAuxiliar, que sera el helado que se desea agregar a la oferta
      * 2do: se valida si el helado es repetido
-     * 3ro: se valida si el helado ya se encuentra en una oferta
-     * 4to: se valida si el helado existe y tiene un codigo correcto
-     * 5to: una vez realizadas las validaciones necesarios, se agrega el helado a la lista de helados y se muestra un mensaje
-     *      caso contrario, se muestran mensajes respectivos
+     * 3ro: se valida si el helado ya se encuentra en una oferta activa
+     * 4to: se valida si el helado existe y si tiene un codigo correcto
+     * 5to: una vez realizadas las validaciones necesarias, se agrega el helado a la lista de helados y se muestra un mensaje
+     *  En el caso de que alguna validacion sea incorrecta, se mostra un mensaje de error.
      */
     public void agregarHeladoOferta(){
-        Helado heladoAuxiliar = heladoBean.obtenerHeladoUnico(helado.getCodigoHelado());
+        Helado heladoAuxiliar = heladoBean.obtenerHeladoUnicoDisponible(helado.getCodigoHelado());
         boolean validarHeladoRepetido = validacionesOferta.validarHeladoRepetido(listaHelados, helado.getCodigoHelado());
         boolean validarHeladoRepetidoEnOferta = validacionesOferta.validarHeladoRepetido(ofertaBean.obtenerHeladosEnOferta(), helado.getCodigoHelado());
         boolean validarCodigoExistente = validacionesOferta.validarCodigoExistente(heladoBean.obtenerHelados(),helado.getCodigoHelado());
@@ -192,7 +190,7 @@ public class OfertaFormBean implements Serializable{
                         addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "El Helado se ha agregado"));
                     }else{
                         FacesContext.getCurrentInstance().
-                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR", "El Helado NO ESTA DISPONIBLE"));
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Helado no esta disponible"));
                     }
                 }else{
                     FacesContext.getCurrentInstance().
@@ -209,9 +207,8 @@ public class OfertaFormBean implements Serializable{
     }
     /**
      * Metodo para detectar si un helado esta en oferta o no
-     * Este metodo lo que recibe como parametro es el codigo de un helado
-     * luego se recorre la lista de todos los helados en oferta y se pregunta si 
-     * los codigos son iguales
+     * Este metodo lo que recibe como parametro es el codigo del helado que se desea verificar
+     * luego se recorre la lista de todos los helados en oferta y se pregunta si los codigos son iguales
      * @param codigoHelado codigo del helado que se desea consultar
      */
     public void detectarHeladoOferta(Integer codigoHelado){
@@ -227,24 +224,32 @@ public class OfertaFormBean implements Serializable{
         
     }
     /**
-     * Metodos para crear una oferta con helados seleccionados por codigo
-     * 1ro: se Setea la lista de helados previamente validada
-     * 2do: se la persiste con la base de datos y se limpia la lista de helados
+     * Este metodo crea una oferta, Los helados que se almacenan en esta oferta 
+     * son los helados de ListaHelados que previamente fueron cargados con el metodo agregarHeladoOferta()
+     * Se pregunta si el atributo ListaHelados tiene un tamaña mayor a 0, si es correcto
+     * quiere decir que posee helados para agregar a la oferta, entonces se los agrega a la oferta
+     * y se crea dicha oferta, actualizando todas las ofertas y los precios de oferta
      * 
+     * Si el atributo ListaHelados tiene un tamaño de 0, quiere decir que no hay helados para agregar
+     * a la oferta, por lo tanto solo se muestra un mensaje de error.
      */
     public void crearOfertaHelado(){
-        oferta.setHeladosOferta(new HashSet<>(this.listaHelados));
-        ofertaBean.agregarOferta(oferta);
-        oferta = new Oferta();
-        generarOfertas();
-        generarOfertasActuales();
-        actualizarOfertas();
-        actualizarPrecio();
-        this.listaHelados.clear();
+        if(this.listaHelados.size() > 0){
+             oferta.setHeladosOferta(new HashSet<>(this.listaHelados));
+             ofertaBean.agregarOferta(oferta);
+             oferta = new Oferta();
+             generarOfertas();
+            generarOfertasActuales();
+            actualizarOfertas();
+            actualizarPrecio();
+            this.listaHelados.clear();
+        }else
+            FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se puede crear una oferta sin helados"));
     }
     /**
      * Metodo para validar las fechas de la oferta
-     * si las fechas son correctas, se ejecuta un scrips que muestra un dialog en la vista
+     * si las fechas son correctas, se ejecuta un scrips que muestra un dialog en la vista.
      */
     public void validarFechas(){
         boolean validarFechas = validacionesOferta.validarFechasOferta(oferta.getFechaInicio(), oferta.getFechaFinal());
@@ -255,6 +260,10 @@ public class OfertaFormBean implements Serializable{
             FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La fecha inicial es mayor que la fecha final"));
     }
+    
+    /**
+     * Metodos Getters Y Setters.
+     */
     public OfertaBean getOfertaBean() {
         return ofertaBean;
     }

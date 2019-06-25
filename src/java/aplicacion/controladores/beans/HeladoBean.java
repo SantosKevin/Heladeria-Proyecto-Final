@@ -126,6 +126,9 @@ public class HeladoBean implements Serializable{
     public Helado obtenerHeladoUnico(Integer codigoHelado){
         return heladoDAO.obtenerUnicoHelado(codigoHelado);
     }
+    public Helado obtenerHeladoUnicoDisponible(Integer codigoHelado){
+        return heladoDAO.obtenerUnicoHeladoDisponible(codigoHelado);
+    }
         
     public IHeladoDAO getHeladoDAO() {
         return heladoDAO;

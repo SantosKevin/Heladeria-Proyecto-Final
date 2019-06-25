@@ -117,21 +117,28 @@ public class HeladoFormBean implements Serializable {
      */
     public void modificarStock(int parametro){
         Helado helado = heladoBean.obtenerHeladoUnico(codigoHelado);
-        if(parametro == 1){
-            helado.setCantidad(helado.getCantidad() + this.stock);
-            FacesContext.getCurrentInstance().
-                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "El Stock se ha agregado"));
-        }else{
-            if(helado.getCantidad() >= this.stock){
+        if(helado != null){
+            if(parametro == 1){
+                helado.setCantidad(helado.getCantidad() + this.stock);
                 FacesContext.getCurrentInstance().
-                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "El Stock se ha decrementado"));
-                helado.setCantidad(helado.getCantidad() - this.stock);
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "El Stock se ha agregado"));
+            }else{
+                if(helado.getCantidad() >= this.stock){
+                    FacesContext.getCurrentInstance().
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "El Stock se ha decrementado"));
+                    helado.setCantidad(helado.getCantidad() - this.stock);
+                }
+                else
+                   FacesContext.getCurrentInstance().
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Stock que desea quitar es mayor que el stock actual")); 
             }
-            else
-               FacesContext.getCurrentInstance().
-                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Stock que desea quitar es mayor que el stock actual")); 
+            heladoBean.modificarHelado(helado);
         }
-        heladoBean.modificarHelado(helado);
+        else
+            FacesContext.getCurrentInstance().
+                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El helado se encuentra eliminado"));
+            
+        
         this.stock=0;
         generarHelados();
     }

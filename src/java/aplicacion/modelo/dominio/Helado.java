@@ -176,4 +176,10 @@ public class Helado implements Serializable {
     public void setPrecioOferta(Double precioOferta) {
         this.precioOferta = precioOferta;
     }
+
+    @Override
+    public String toString() {
+        return "Helado{" + "codigoHelado=" + codigoHelado + ", nombreHelado=" + nombreHelado + ", tipoHelado=" + tipoHelado + ", precio=" + precio + ", precioOferta=" + precioOferta + ", saborHelado=" + saborHelado + ", cantidad=" + cantidad + ", imagen=" + imagen + ", estado=" + estado + '}';
+    }
+    
 }

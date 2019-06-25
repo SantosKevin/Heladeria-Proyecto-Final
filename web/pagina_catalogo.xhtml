@@ -23,7 +23,7 @@
                                     Lista de Helados
                                 </f:facet>
                                 <p:column headerText="Imagen" width="20%">
-                                    <p:graphicImage name="#{hel.imagen}" height="350" width="300" />
+                                    <h:graphicImage name="#{hel.imagen}" height="350" width="300" />
                                 </p:column>
                                 <p:column headerText="Detalle" style="font-size: 120%">
                                     <p:outputLabel value="Nombre: #{hel.nombreHelado}" /><br></br>
@@ -63,7 +63,7 @@
                                   showEffect="fade" hideEffect="fade" resizable="false" width="450"
                                   closeOnEscape="true" responsive="true">
                             <h:form id="frmDialogoHelado">
-                                <p:graphicImage name="#{heladoBean.helado.imagen}"/><br></br>
+                                <h:graphicImage name="#{heladoBean.helado.imagen}"/><br></br>
                                 <h:panelGrid id="pgDialogoHelado" columns="2" style="text-align: left">
                                     <h:outputText value="Nombre:" />
                                     <h:outputText value="#{heladoBean.helado.nombreHelado}" />

@@ -36,7 +36,7 @@
                                                  var="helado"
                                                  value="#{oferta.heladosOferta}">
                                         <p:column >
-                                            <p:graphicImage name="#{helado.imagen}" width="200" height="250"/>
+                                            <h:graphicImage name="#{helado.imagen}" width="200" height="250"/>
                                         </p:column>
                                         <p:column>
                                             <p:panelGrid columns="2" layout="grid">
@@ -71,7 +71,7 @@
                                       showEffect="fade" hideEffect="fade" resizable="false" width="450"
                                       closeOnEscape="true" responsive="true">
                                 <h:form id="formAgregarOferta">
-                                    <p:graphicImage name="#{heladoBean.helado.imagen}"/><br></br>
+                                    <h:graphicImage name="#{heladoBean.helado.imagen}"/><br></br>
                                     <h:panelGrid id="pgDialogoHelado" columns="2" style="text-align: left">
                                         <h:outputText value="Nombre:" />
                                         <h:outputText value="#{heladoBean.helado.nombreHelado}" />

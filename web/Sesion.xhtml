@@ -5,49 +5,48 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Iniciar Sesión</title>
-        <style type="text/css"> 
-            .letra{
-                font-size: 15px;
-                font-style: italic;
-                font-weight: bold;
-                color: chartreuse;
-            }
 
-            .tr,.noBorder td { border: 0 !important; }
-
-            .transparentBackground tr,
-            .transparentBackground td { background: transparent !important; }
-
-        </style>
     </h:head>
 
-    <h:body style="background:url(https://media-cdn.tripadvisor.com/media/photo-s/02/b5/b6/c7/ristorante-pizzeria-gelateria.jpg) no-repeat;
+    <h:body style="background:url(http://all-freepicture.com/wp-content/uploads/2018/12/Cream-Background-Ice-Cream-4K.jpg) no-repeat;
             position: absolute;
             background-size: cover;"> <!--aqui le damos formato-->
         <h:form id="frmSesion" style="padding-left: 90px;padding-top: 50px;">
             <p:growl id="growlSesion" showDetail="true"/>
-            <p:panel id="pnlSesion" header="Iniciar Sesion en HeladeriaP.F." style="background-color: transparent;padding-top: 12%">
-                <p:panelGrid id="pnlGSesion" columns="2"
-                             styleClass="noBorder td , transparentBackground td">
-                    <p:outputLabel id="lblEmailUsuario" value="Ingrese Email o  Gmail" styleClass="letra"
-                                   />
-                    <p:inputText id="txtEmailUsuario" value="#{usuarioFormBean.emailUsu}" required="true" 
-                                 placeholder="nombre usuario" requiredMessage="INGRESE EMAIL POR FAVOR!"/>
-                    <p:outputLabel id="lblPass" value="Ingrese su Contraseña" styleClass="letra"/>
-                    <p:password id="passContraseñaSesion" value="#{usuarioFormBean.contraseña}" required="true" placeholder="contraseña" requiredMessage="INGRESE CONTRASEÑA PORFAVOR!"/>
-                    <p:commandButton id="tbnIngresar" value="Ingresar" update="growlSesion frmSesion" styleClass="letra"
-                                     action="#{usuarioFormBean.verificarCredenciales()}"/>
-                </p:panelGrid>
+            <p:panel id="pnlSesion" style="padding-top: 5%;background: #013947;">
+
+                <p:outputLabel value="Iniciar Sesion" style="font-size: 35px; font-weight: bold; color: #ffffff"/>
+                
+                <br/><br/><br/>
+                <p:inputText id="txtEmailUsuario"
+                             value="#{usuarioFormBean.emailUsu}"
+                             required="true" 
+                             placeholder="Correo Electronico"
+                             requiredMessage="Correo Electronico no ingresado"
+                             style="width: 400px; height: 30px; background: #013947; font-size: 20px; color: #ffffff"/><br/>
+                <br/>
+                <p:password id="passContraseñaSesion" value="#{usuarioFormBean.contraseña}"
+                            required="true"
+                            placeholder="Contraseña"
+                            requiredMessage="Contraseña no ingresada"
+                            style="width: 400px; height: 30px; background: #013947;font-size: 20px; color: #ffffff"/><br/>
+                <br/>
+                <p:commandButton id="tbnIngresar"
+                                 value="Ingresar"
+                                 style="background: #1ab188; color: #ffffff; width: 410px; height: 50px; font-size: 25px"
+                                 update="growlSesion frmSesion"
+                                 action="#{usuarioFormBean.verificarCredenciales()}"/>
                 <p:separator id="separator"/>
             </p:panel>
 
         </h:form>
         <h:form id="frmCrear" style="padding-left: 90px">
-            <p:panel id="pnlNuevaCuenta">
-                <p:commandLink id="lnkCrear" value="No tienes cuenta? Crea una aqui!" 
-                               action="CrearNuevaCuenta.xhtml"/> <!--nos dirige a la pagina para crear una cuenta -->
+            <p:panel id="pnlNuevaCuenta" style="background: #013947;">
+                <p:commandButton id="lnkCrear"
+                                 value="Registrarse Aqui"
+                                 style="background: #1ab188; color: #ffffff"
+                                 action="CrearNuevaCuenta.xhtml"/> <!--nos dirige a la pagina para crear una cuenta -->
             </p:panel>
         </h:form>
     </h:body>
 </html>
-

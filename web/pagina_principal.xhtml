@@ -7,7 +7,6 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Heladeria F.I.</title>
-
     </h:head>
     <h:body>
         <div class="ui-g">
@@ -30,73 +29,62 @@
                                          var="oferta"
                                          value="#{ofertaFormBean.listaOfertasActuales}"
                                          style="margin-left: 18%; margin-right: 18%" emptyMessage="No hay Ofertas Disponibles">
-                                <p:column headerText="Helados en Ofertas">
+                                <p:column headerText="OFERTAAAS!!!">
                                     <p:outputLabel value="Super Oferta #{oferta.tipoOferta}" style="font-size: 25px"/><br/>
                                     <p:dataTable id="tblMostrarHeladosOferta"
                                                  var="helado"
                                                  value="#{oferta.heladosOferta}">
-                                        <p:column >
-                                            <h:graphicImage name="#{helado.imagen}" width="200" height="250"/>
-                                        </p:column>
-                                        <p:column>
-                                            <p:panelGrid columns="2" layout="grid">
-                                                <p:outputLabel value="Nombre "/>
-                                                <p:outputLabel value="#{helado.nombreHelado}"/>
-                                                
-                                                <p:outputLabel value="Tipo "/>
-                                                <p:outputLabel value="#{helado.tipoHelado}"/>
-                                                
-                                                <p:outputLabel value="Sabor "/>
-                                                <p:outputLabel value="#{helado.saborHelado}"/>
-                                                
-                                                 <p:outputLabel value="Precio Original"/>
-                                                <p:outputLabel value="$#{helado.precio}"/>
-                                                
-                                                <p:outputLabel value="Precio de Oferta"/>
-                                                <p:outputLabel value="$#{helado.precioOferta}"/>
-                                            </p:panelGrid>
-                                        </p:column>
-                                        <p:column>
-                                            <p:commandButton icon="ui-icon-cart" value="Agregar al Carrito" 
+                                        <p:column style="font-size: 20px; font-style: italic;">
+                                            <p:panelGrid columns="2">
+                                                <h:graphicImage name="#{helado.imagen}" width="300" height="350"/>
+                                                <p:panel>
+                                                    <p:outputLabel value="#{helado.nombreHelado}"/><br/><br/>
+                                                    <p:outputLabel value="Sabor #{helado.saborHelado}"/><br/><br/>
+                                                    <p:outputLabel value="Cantidad disponible: #{helado.cantidad}"/> <br/><br/>
+                                                    <p:outputLabel value="Precio de lista $#{helado.precio}"/> <br/><br/>
+                                                    <p:outputLabel value="Precio de oferta $#{helado.precioOferta}"/> <br/><br/><br/>
+                                                    <p:commandButton icon="ui-icon-cart" value="Agregar al Carrito" 
                                                              oncomplete="PF('dlgAgregarOferta').show()"
                                                              action="#{heladoBean.leer(helado)}"
                                                              update="formAgregarOferta"
                                                              resetValues="true"/>
+                                                </p:panel>
+                                            </p:panelGrid>
                                         </p:column>
                                     </p:dataTable>
                                 </p:column>
                             </p:dataTable>
                         </h:form>
                         <p:dialog header="Informacion" widgetVar="dlgAgregarOferta" modal="true" 
-                                      showEffect="fade" hideEffect="fade" resizable="false" width="450"
-                                      closeOnEscape="true" responsive="true">
-                                <h:form id="formAgregarOferta">
-                                    <h:graphicImage name="#{heladoBean.helado.imagen}"/><br></br>
-                                    <h:panelGrid id="pgDialogoHelado" columns="2" style="text-align: left">
-                                        <h:outputText value="Nombre:" />
-                                        <h:outputText value="#{heladoBean.helado.nombreHelado}" />
+                                  showEffect="fade" hideEffect="fade" resizable="false" width="450"
+                                  closeOnEscape="true" responsive="true">
+                            <h:form id="formAgregarOferta">
+                                <h:graphicImage name="#{heladoBean.helado.imagen}"/><br></br>
+                                <h:panelGrid id="pgDialogoHelado" columns="2" style="text-align: left">
+                                    <h:outputText value="Nombre:" />
+                                    <h:outputText value="#{heladoBean.helado.nombreHelado}" />
 
-                                        <h:outputText value="Sabor:" />
-                                        <h:outputText value="#{heladoBean.helado.saborHelado}" />
+                                    <h:outputText value="Sabor:" />
+                                    <h:outputText value="#{heladoBean.helado.saborHelado}" />
 
-                                        <h:outputText value="Precio:" />
-                                        <h:outputText value="$#{heladoBean.helado.precioOferta}" />
+                                    <h:outputText value="Precio:" />
+                                    <h:outputText value="$#{heladoBean.helado.precioOferta}" />
 
-                                        <h:outputText value="Cantidad:" />
-                                        <p:spinner value="#{heladoBean.cantidad}" min="1" max="#{heladoBean.helado.cantidad}"/>
+                                    <h:outputText value="Cantidad:" />
+                                    <p:spinner value="#{heladoBean.cantidad}" min="1" max="#{heladoBean.helado.cantidad}"/>
 
-                                        <p:commandButton id="btnModificar" value="Aceptar"
-                                                         icon="ui-icon-check"
-                                                         action="#{heladoBean.agregarAlCarrito()}"
-                                                         onclick="PF('dlgAgregarOferta').hide()"
-                                                         update="formGeneral growlGeneral"/>
-                                        <p:commandButton id="btnAtras" value="Atras"  
-                                                         onclick="PF('dlgAgregarOferta').hide();"
-                                                         icon="ui-icon-closethick"
-                                                         />
-                                    </h:panelGrid>
-                                </h:form>
-                            </p:dialog>
+                                    <p:commandButton id="btnModificar" value="Aceptar"
+                                                     icon="ui-icon-check"
+                                                     action="#{heladoBean.agregarAlCarrito()}"
+                                                     onclick="PF('dlgAgregarOferta').hide()"
+                                                     update="formGeneral growlGeneral"/>
+                                    <p:commandButton id="btnAtras" value="Atras"  
+                                                     onclick="PF('dlgAgregarOferta').hide();"
+                                                     icon="ui-icon-closethick"
+                                                     />
+                                </h:panelGrid>
+                            </h:form>
+                        </p:dialog>
                         <h:form>
                             <center>
                                 <div class="ui-g-12">

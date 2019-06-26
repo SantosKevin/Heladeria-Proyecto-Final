@@ -80,7 +80,7 @@ public class VendedorBean {
             helados.add(h);
         }
         
-        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/compraReport.jasper"));
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/helado.jasper"));
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(helados));
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         response.setContentType("application/pdf");

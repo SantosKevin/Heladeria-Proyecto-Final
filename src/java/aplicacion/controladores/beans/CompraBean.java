@@ -10,6 +10,7 @@ import aplicacion.hibernate.dao.ICompraDAO;
 import aplicacion.hibernate.dao.imp.ComHelDAOImp;
 import aplicacion.hibernate.dao.imp.CompraDAOImp;
 import aplicacion.modelo.dominio.Compra;
+import aplicacion.modelo.dominio.Helado;
 import aplicacion.modelo.dominio.Usuario;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -83,7 +84,15 @@ public class CompraBean {
         return "Vendido";  //actualizamos la tabla
     }
     
-    
+    public Double obtenerTotal(Helado helado, Compra compra){
+        
+        Integer cantidad = obtenerCantidadComHel(compra.getCodigoCompra(), helado.getCodigoHelado());
+        if (helado.getPrecioOferta() > 0){
+            return helado.getPrecioOferta() * cantidad;
+        }else{
+            return helado.getPrecio() * cantidad;
+        }
+    }
     public ICompraDAO getCompraDAO() {
         return compraDAO;
     }

@@ -54,7 +54,7 @@
                                                  value="#{comp.heladosCompra}"
                                                  var="hel" >
                                         <p:column headerText="Imagen" width="20%" style="text-align: center">
-                                            <h:graphicImage url="#{hel.imagen}"
+                                            <h:graphicImage name="#{hel.imagen}"
                                                             width="60%" height="30%"/>
                                         </p:column>
                                         <p:column headerText="Nombre">
@@ -65,6 +65,9 @@
                                         </p:column> 
                                         <p:column headerText="Precio c/u">
                                             <p:outputLabel value="#{hel.precio}"/>
+                                        </p:column> 
+                                        <p:column headerText="Precio de Oferta c/u">
+                                            <p:outputLabel value="#{hel.precioOferta}"/>
                                         </p:column> 
                                         <p:column headerText="Cantidad" style="text-align: center" >
                                             <p:outputLabel value="#{compraBean.obtenerCantidadComHel(comp.codigoCompra,hel.codigoHelado)}"/>

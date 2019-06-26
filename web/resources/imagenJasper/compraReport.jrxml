@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="compraReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="277a2e2d-00f2-4045-8c0d-ec4243f2aa12">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="codigoHelado" class="java.lang.Integer"/>
+	<field name="nombreHelado" class="java.lang.String"/>
+	<field name="tipoHelado" class="java.lang.String"/>
+	<field name="precio" class="java.lang.Double"/>
+	<field name="saborHelado" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Integer"/>
+	<background>
+		<band height="802" splitType="Stretch">
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Top">
+				<reportElement x="-20" y="-30" width="595" height="832" uuid="93f7f0fb-c930-443c-acfb-a661fa9f401b"/>
+				<imageExpression><![CDATA["asdas.jpg"]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame">
+				<reportElement x="110" y="210" width="310" height="320" uuid="3436a71d-e48c-4b05-adda-e962c668187e"/>
+				<imageExpression><![CDATA["helados-c.png"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="110" splitType="Stretch">
+			<textField>
+				<reportElement x="150" y="30" width="371" height="51" uuid="8d99cd6e-4f5c-4a61-b387-17a9d5545088"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="30"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Heladeria FI-UNJU"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="1" y="0" width="119" height="110" uuid="8b4f6041-79a7-449e-87ed-23bd1c61b00a"/>
+				<imageExpression><![CDATA["271111547023211.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="211" height="21" uuid="d79737a8-362a-45d5-8f96-035023b63858"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resumen de Compra:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="0" width="95" height="30" uuid="3f241646-578d-4596-bcf4-b9f1c6bd6b3a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8f233682-a9b9-4385-8d75-5d7392418541"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="0" width="105" height="30" uuid="6dcd247b-854e-424d-beb1-44aaef0b919c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="750d6b03-7ad1-40e0-84c4-26d21c1be57e"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="90" height="30" uuid="10e678ae-32e3-4d43-9b64-ee15eb56da24">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="edef9dab-9038-4c1b-a00b-f51188c6538f"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="0" width="81" height="30" uuid="8c640ee1-e0bf-4004-9471-554d6e3bda2e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="91cba1ec-7334-4217-93d6-df9c710ab5b7"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="0" width="92" height="30" uuid="9963ce7a-9d51-43f7-814d-0350f4f2d301">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7cf1b841-f408-4f48-a66a-4f9932eebb36"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sabor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="0" width="92" height="30" uuid="8de283f6-87e8-4ab8-b796-a8bdeaf93bdf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0aa4894-a9ea-4e25-8b10-42e46fa58522"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="10" width="95" height="30" uuid="bb8ea4fb-dfe2-4815-86b5-c6ff2a9d708f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8f233682-a9b9-4385-8d75-5d7392418541"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{codigoHelado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="96" y="10" width="105" height="30" uuid="9393e8f6-1894-4fad-a2d8-6c954cbe265c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="750d6b03-7ad1-40e0-84c4-26d21c1be57e"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nombreHelado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="201" y="10" width="90" height="30" uuid="9b3f7015-dfc5-4e48-b8c2-3c5caed6fb22">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="edef9dab-9038-4c1b-a00b-f51188c6538f"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tipoHelado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="291" y="10" width="81" height="30" uuid="fb221ed2-c61f-4389-99e4-397fc927e4d4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="91cba1ec-7334-4217-93d6-df9c710ab5b7"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="372" y="10" width="92" height="30" uuid="d8d9a620-9b5a-4836-a9ba-24ed67496713">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7cf1b841-f408-4f48-a66a-4f9932eebb36"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{saborHelado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="464" y="10" width="92" height="30" uuid="96054f85-db10-4838-b516-05b7e91397bd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0aa4894-a9ea-4e25-8b10-42e46fa58522"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

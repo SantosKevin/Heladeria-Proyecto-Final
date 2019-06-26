@@ -23,18 +23,18 @@
                                  var="helado"
                                  editable="true"
                                  value="#{heladoFormBean.listaHelados}">
-                        <f:facet name="header">
+                        <f:facet id="fctHelado" name="header">
                             Base de Datos Helados <br/>
                         </f:facet>
 
-                        <p:ajax event="rowEdit" listener="#{heladoFormBean.onRowEdit}" update="growlGeneral" />
-                        <p:ajax event="rowEditCancel" listener="#{heladoFormBean.onRowEditCancel}" update="growlGeneral"/>
+                        <p:ajax id="ajxHeladoEdit" event="rowEdit" listener="#{heladoFormBean.onRowEdit}" update="growlGeneral" />
+                        <p:ajax id="ajxHeladoCancel" event="rowEditCancel" listener="#{heladoFormBean.onRowEditCancel}" update="growlGeneral"/>
 
-                        <p:column headerText="Codigo">
-                            <p:outputLabel value="#{helado.codigoHelado}"/>
+                        <p:column id="clmCodigoHelado" headerText="Codigo">
+                            <p:outputLabel id="lblCodigoHelado" value="#{helado.codigoHelado}"/>
                         </p:column>
                         
-                        <p:column filterBy="#{helado.nombreHelado}" filterMatchMode="contains" headerText="Nombre">
+                        <p:column id="clmNombreHelado" filterBy="#{helado.nombreHelado}" filterMatchMode="contains" headerText="Nombre">
                             <p:cellEditor>
                                 <f:facet name="output"><p:outputLabel value="#{helado.nombreHelado}"/></f:facet>
                                 <f:facet name="input"><p:inputText value="#{helado.nombreHelado}"/></f:facet>
@@ -42,11 +42,11 @@
 
                         </p:column>
 
-                        <p:column headerText="Tipo">
+                        <p:column id="clmTipoHelado" headerText="Tipo">
                             <p:cellEditor>
                                 <f:facet name="output"><p:outputLabel value="#{helado.tipoHelado}"/></f:facet>
                                 <f:facet name="input">
-                                    <p:selectOneMenu value="#{helado.tipoHelado}">
+                                    <p:selectOneMenu id="slcTipoHelado" value="#{helado.tipoHelado}">
                                         <f:selectItems value="#{heladoFormBean.saboresYTipos.obtenerTipos()}"
                                                        var="tipos"
                                                        itemLabel="#{tipos}"
@@ -57,11 +57,11 @@
 
                         </p:column>
 
-                        <p:column headerText="Sabor">
+                        <p:column id="clmSaborHelado" headerText="Sabor">
                             <p:cellEditor>
                                 <f:facet name="output"><p:outputLabel value="#{helado.saborHelado}"/></f:facet>
                                 <f:facet name="input">
-                                    <p:selectOneMenu value="#{helado.saborHelado}">
+                                    <p:selectOneMenu id="slcSaborHelado" value="#{helado.saborHelado}">
                                         <f:selectItems value="#{heladoFormBean.saboresYTipos.obtenerSabores()}"
                                                        var="sabores"
                                                        itemLabel="#{sabores}"
@@ -72,7 +72,7 @@
 
                         </p:column>
 
-                        <p:column headerText="Precio">
+                        <p:column id="clmPrecioHelado" headerText="Precio">
                             <p:cellEditor>
                                 <f:facet name="output"><p:outputLabel value="$#{helado.precio}"/></f:facet>
                                 <f:facet name="input"><p:inputText value="#{helado.precio}"/></f:facet>
@@ -81,15 +81,15 @@
 
                         </p:column>
 
-                        <p:column headerText="Stock">
-                            <p:outputLabel value="#{helado.cantidad}"/>
+                        <p:column id="clmStockHelado" headerText="Stock">
+                            <p:outputLabel id="lblStockHelado" value="#{helado.cantidad}"/>
                         </p:column>
 
-                        <p:column headerText="Estado">
-                            <p:outputLabel value="#{helado.estado}"/>
+                        <p:column id="clmEstadoHelado" headerText="Estado">
+                            <p:outputLabel id="lblEstadoHelado" value="#{helado.estado}"/>
                         </p:column>
 
-                        <p:column headerText="Vista">
+                        <p:column id="clmVistaHelado" headerText="Vista">
                             <p:cellEditor>
                                 <f:facet name="output"><h:graphicImage name="#{helado.imagen}"  width="80%" height="40%"/></f:facet>
                                 <f:facet name="input"><p:inputText value="#{helado.imagen}"/></f:facet>
@@ -97,7 +97,7 @@
 
                         </p:column>
 
-                        <p:column headerText="Acciones">
+                        <p:column id="clmAccionesHelado" headerText="Acciones">
                             <p:rowEditor/>
                             <p:commandButton id="btnEliminar"
                                              value="Eliminar"
@@ -122,8 +122,9 @@
                           modal="true"
                           resizable="true">
                     <h:form id="formModificarStock">
-                        <p:outputLabel value="Ingrese stock a modificar"/><br/>
-                        <p:inputNumber value="#{heladoFormBean.stock}"
+                        <p:outputLabel id="lblStockModi" value="Ingrese stock a modificar"/><br/>
+                        <p:inputNumber id="nbrStockModi"
+                                       value="#{heladoFormBean.stock}"
                                        decimalPlaces="0"
                                        minValue="0"
                                        required="true"

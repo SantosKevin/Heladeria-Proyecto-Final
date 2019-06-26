@@ -18,31 +18,31 @@
                             Lista de Ofertas
                         </f:facet>
 
-                        <p:column headerText="Codigo">
-                            <p:outputLabel value="#{oferta.codigoOferta}"/>
+                        <p:column id="clmCodigoOferta" headerText="Codigo">
+                            <p:outputLabel id="lblCodigoOferta" value="#{oferta.codigoOferta}"/>
                         </p:column>
 
-                        <p:column headerText="Tipo">
-                            <p:outputLabel value="#{oferta.tipoOferta}"/>
+                        <p:column id="clmTipoOferta" headerText="Tipo">
+                            <p:outputLabel id="lblTipoOferta" value="#{oferta.tipoOferta}"/>
                         </p:column>
 
-                        <p:column headerText="Fecha de inicio">
-                            <p:outputLabel value="#{oferta.fechaInicio}"/>
+                        <p:column  id="clmFechaOferta" headerText="Fecha de inicio">
+                            <p:outputLabel id="lblFechaOferta" value="#{oferta.fechaInicio}"/>
                         </p:column>
 
-                        <p:column headerText="Fecha de final">
-                            <p:outputLabel value="#{oferta.fechaFinal}"/>
+                        <p:column id="clmFinalOferta" headerText="Fecha de final">
+                            <p:outputLabel id="lblFinalOferta" value="#{oferta.fechaFinal}"/>
                         </p:column>
 
-                        <p:column headerText="estado">
-                            <p:outputLabel value="#{oferta.estado}"/>
+                        <p:column id="clmEstadoOferta" headerText="estado">
+                            <p:outputLabel id="lblEstadoOferta" value="#{oferta.estado}"/>
                         </p:column>
 
-                        <p:column headerText="Helados en oferta">
+                        <p:column id="clmHeladosOferta" headerText="Helados en oferta">
                             <p:dataTable id="tblHeladoOferta"
                                          var="helado"
                                          value="#{oferta.heladosOferta}">
-                                <p:column headerText="Codigo Helado">
+                                <p:column  headerText="Codigo Helado">
                                     <p:outputLabel value="#{helado.codigoHelado}"/>
                                 </p:column>
 

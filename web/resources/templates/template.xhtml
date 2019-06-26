@@ -11,10 +11,16 @@
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
         <title>Heladeria F.I.U.N.Ju</title>
-        <f:event type="preRenderView" listener="#{usuarioFormBean.controlarSesion()}"/> 
+        <f:event type="preRenderView" listener="#{usuarioFormBean.controlarSesion()}"/>
+        <script type="text/javascript">
+            window.history.forward();
+            function sinVueltaAtras() {
+                window.history.forward();
+            }
+        </script>
     </h:head>
 
-    <h:body>
+    <h:body onload="sinVueltaAtras();"  onunload="">
 
         <div id="top">
             <div id="titulo">
@@ -36,7 +42,7 @@
                             <p:outputLabel value="Bienvenido ~ #{usuarioFormBean.devolverNombreUsuario()} ~" style="margin-right: 5px;"/>
                             <p:commandButton id="cmdDesc" value="Desconectar" action="#{usuarioFormBean.desconectar}"
                                              icon="ui-icon-power"/>
-              
+
                         </f:facet>
                     </p:menubar>
                 </h:form>
@@ -56,13 +62,13 @@
         <div id="bottom">
             <ui:insert name="bottom">
                 <center><h1 style="margin: auto; 
-                               position: relative;     
-                               padding:0!important;
-                               color: #ffffff">Heladeria F.I. U.N.Ju</h1>
-                <h:outputLabel value="Los Mejores HELADOS de la Provincia" style="margin: auto; 
-                               position: relative;     
-                               padding:0!important;
-                               color: #ffffff"/>
+                            position: relative;     
+                            padding:0!important;
+                            color: #ffffff">Heladeria F.I. U.N.Ju</h1>
+                    <h:outputLabel value="Los Mejores HELADOS de la Provincia" style="margin: auto; 
+                                   position: relative;     
+                                   padding:0!important;
+                                   color: #ffffff"/>
                 </center>
             </ui:insert>
         </div>

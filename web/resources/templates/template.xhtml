@@ -28,7 +28,9 @@
             </div> 
         </div>
         <div id="menu">
+            
             <ui:insert name="menu">
+                <p:growl id="growlGen" showDetail="true"/>
                 <h:form id="frmTemp">
                     <p:menubar>
                         <p:menuitem value="Inicio" actionListener="#{ofertaFormBean.actualizarOfertas()}" action="#{usuarioFormBean.redireccion()}" icon="ui-icon-home"/>
@@ -38,6 +40,7 @@
 
                         <p:menuitem value="Carrito" url="pagina_carrito.xhtml" icon="ui-icon-cart" />
                         <p:menuitem value="Pedidos" url="pagina_compra.xhtml" icon="ui-icon-mail-closed" />
+                        <p:menuitem value="Editar Datos" onclick="PF('dlgModificarDatos').show()"/>
                         <f:facet name="options">
                             <p:outputLabel value="Bienvenido ~ #{usuarioFormBean.devolverNombreUsuario()} ~" style="margin-right: 5px;"/>
                             <p:commandButton id="cmdDesc" value="Desconectar" action="#{usuarioFormBean.desconectar}"
@@ -46,7 +49,33 @@
                         </f:facet>
                     </p:menubar>
                 </h:form>
-
+                <p:dialog id="dlgModificarDatos"
+                          widgetVar="dlgModificarDatos"
+                          header="Modificar Datos"
+                          modal="true"
+                          resizable="true">
+                    <h:form id="formModificarDatos">
+                        <p:panelGrid columns="2">
+                        <p:outputLabel id="lblNom" value="Ingrese Nombre a modificar"/>
+                        <p:inputText id="nbrNomModi"
+                                     value="#{usuarioFormBean.usuarioConectado.nombreUsuario}"/>
+                        <p:outputLabel id="lblApe" value="Ingrese Apellido a modificar"/>
+                        <p:inputText id="nbrApeModi"
+                                     value="#{usuarioFormBean.usuarioConectado.apellidoUsuario}"/>
+                        <p:outputLabel id="lblDni" value="Ingrese D.N.I. a modificar"/>
+                        <p:inputText id="nbrDNIModi"
+                                     value="#{usuarioFormBean.usuarioConectado.dniUsuario}"/>
+                        <p:outputLabel id="lblEmail" value="Ingrese Email a modificar"/>
+                        <p:inputText id="nbrEmailModi"
+                                     value="#{usuarioFormBean.usuarioConectado.emailUsuario}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Modificar Usuario"
+                                         update="growlGen"
+                                         actionListener="#{usuarioFormBean.modificarUsuario(usuarioFormBean.usuarioConectado)}"
+                                         oncomplete="PF('dlgModificarDatos').hide()"/>
+                    </h:form>
+                    
+                </p:dialog>
             </ui:insert>
         </div>
         <div id="admin">
@@ -56,7 +85,9 @@
             <ui:insert name="root"></ui:insert>
         </div>
         <div id="content" class="center_content">
-            <ui:insert name="content">Content</ui:insert>
+            <ui:insert name="content">
+                
+            </ui:insert>
         </div>
 
         <div id="bottom">

@@ -23,7 +23,7 @@
                                          var="hel" rows="5">
                                 
                                 <p:column headerText="Helados Disponibles" style="font-size: 20px; font-style: italic;">
-                                    <p:panelGrid columns="2">
+                                    <p:panelGrid id="catalogohela" columns="2">
                                         <h:graphicImage name="#{hel.imagen}" height="350" width="300" />
                                         <p:panel>
                                             <p:outputLabel value="#{hel.nombreHelado}" /> <br/><br/>
@@ -31,6 +31,7 @@
                                             <p:outputLabel value="Cantidad disponibile: #{hel.cantidad}"/><br/><br/>
                                             <p:outputLabel value="Precio $#{hel.precio}"/><br/><br/><br/>
                                             <p:commandButton 
+                                                id="confirmar"
                                                 icon="ui-icon-cart" value="Agregar al Carrito"
                                                 actionListener="#{heladoBean.leer(hel)}"
                                                 action="#{ofertaFormBean.detectarHeladoOferta(hel.codigoHelado)}"
@@ -38,6 +39,7 @@
                                                 resetValues="true"/>
                                         </p:panel>
                                     </p:panelGrid>
+                                    <p:blockUI block="catalogohela" trigger="confirmar" />
                                 </p:column>
                             </p:dataTable>
                         </h:form>
@@ -52,11 +54,12 @@
                                     tiene una oferta disponible <br/>
                                     Desea ir a verla?
                                 </p>
-                                <p:commandButton value="Si" action="pagina_principal"/>
-                                <p:commandButton value="No" oncomplete="PF('dlgOfertaDisponible').hide()"/>
+                                <p:commandButton value="bSi" action="pagina_principal"/>
+                                <p:commandButton value="bNo" oncomplete="PF('dlgOfertaDisponible').hide()"/>
                             </h:form>
-
+                            
                         </p:dialog>
+                        
                         <p:dialog header="Informacion" widgetVar="multiProdDialog" modal="true" 
                                   showEffect="fade" hideEffect="fade" resizable="false" width="450"
                                   closeOnEscape="true" responsive="true">
@@ -70,7 +73,7 @@
                                     <h:outputText value="#{heladoBean.helado.saborHelado}" />
 
                                     <h:outputText value="Precio" />
-                                    <h:outputText value="#{heladoBean.helado.precio}" />
+                                    <h:outputText value="$#{heladoBean.helado.precio}" />
 
                                     <h:outputText value="Cantidad" />
                                     <p:spinner value="#{heladoBean.cantidad}" min="1" max="#{heladoBean.helado.cantidad}"/>
@@ -84,6 +87,8 @@
                                                      icon="ui-icon-closethick"
                                                      />
                                 </h:panelGrid>
+                                <p:blockUI block="pgDialogoHelado" trigger="btnModificar" />
+                                <p:blockUI block="pgDialogoHelado" trigger="btnAtras" />
                             </h:form>
                         </p:dialog>
 

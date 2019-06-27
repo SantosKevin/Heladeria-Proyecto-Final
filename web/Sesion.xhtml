@@ -44,7 +44,7 @@
                              action="#{usuarioFormBean.verificarCredenciales()}"/>
             <p:separator id="separator"/>
         </p:panel>
-
+        <p:blockUI block="pnlSesion" trigger="tbnIngresar" />
     </h:form>
     <h:form id="frmCrear" style="padding-left: 90px">
         <p:panel id="pnlNuevaCuenta" style="background: #013947;">
@@ -53,6 +53,7 @@
                              style="background: #1ab188; color: #ffffff"
                              action="CrearNuevaCuenta.xhtml"/> <!--nos dirige a la pagina para crear una cuenta -->
         </p:panel>
+        <p:blockUI block="pnlNuevaCuenta" trigger="lnkCrear" />
     </h:form>
 </h:body>
 </html>

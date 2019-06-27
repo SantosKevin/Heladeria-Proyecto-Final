@@ -37,7 +37,7 @@
                                     </p:outputLabel>
                                 </p:column> 
                                 <p:column headerText="Total">
-                                    <p:outputLabel value="#{comp.total} "/>
+                                    <p:outputLabel value="$#{comp.total} "/>
                                 </p:column> 
                                 <p:column headerText="Estado">
                                     <p:outputLabel value="#{compraBean.ObtenerEstadoCompra(comp.estado,comp.fechaCompra, comp)} "/>
@@ -57,17 +57,17 @@
                                             <p:outputLabel value="#{hel.saborHelado}"/>
                                         </p:column> 
                                         <p:column headerText="Precio c/u">
-                                            <p:outputLabel value="#{hel.precio}"/>
+                                            <p:outputLabel value="$#{hel.precio}"/>
                                         </p:column> 
                                         
                                         <p:column headerText="Precio de Oferta c/u">
-                                            <p:outputLabel value="#{hel.precioOferta}"/>
+                                            <p:outputLabel value=" $#{hel.precioOferta}"/>
                                         </p:column> 
                                         <p:column headerText="Cantidad" style="text-align: center" >
                                             <p:outputLabel value="#{compraBean.obtenerCantidadComHel(comp.codigoCompra,hel.codigoHelado)}"/>
                                         </p:column>
                                         <p:column headerText="Total" style="text-align: center" >
-                                            <p:outputLabel value="#{compraBean.obtenerTotal(hel,comp)}"/>
+                                            <p:outputLabel value=" $#{compraBean.obtenerTotal(hel,comp)}"/>
                                         </p:column>
                                     </p:dataTable>
                                 </p:rowExpansion>

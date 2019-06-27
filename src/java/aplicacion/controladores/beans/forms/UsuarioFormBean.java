@@ -133,7 +133,12 @@ public class UsuarioFormBean implements Serializable {
             if(this.usuarioConectado.getTipoUsuario().equalsIgnoreCase("administrativo"))
                 redireccion = "pagina_administrador?faces-redirect=true";
             else
-                redireccion = "pagina_root?faces-redirect=true";
+                if (this.usuarioConectado.getTipoUsuario().equals("root")){
+                    redireccion = "pagina_root?faces-redirect=true";
+                }else{
+                    redireccion = "pagina_vendedor?faces-redirect=true";
+                }
+                
         }
         return redireccion;
     }

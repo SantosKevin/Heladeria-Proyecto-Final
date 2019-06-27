@@ -23,68 +23,80 @@
                                                  action="#{vendedorBean.obtenerCompraSegunId()}"
                                                  update="tblCarrito"/>
                             </h:panelGrid>
-                            <p:dataTable id="tblCarrito" emptyMessage="Lista vacia" style="margin-left: 0%; margin-right: 16%"
-                                         value="#{vendedorBean.compras}"
-                                         var="comp" rows="10" paginator="true">
-                                <f:facet name="header">
-                                    Compras
-                                </f:facet>
-                                <p:column style="width:16px">
-                                    <p:rowToggler />
-                                </p:column>
-                                <p:column headerText="Codigo Compra">
-                                    <p:outputLabel value="#{comp.codigoCompra}"/>
-                                </p:column> 
-                                <p:column headerText="Nombre Usuario">
-                                    <p:outputLabel value="#{comp.usuarioCompra.nombreUsuario} #{comp.usuarioCompra.apellidoUsuario} "/>
-                                </p:column> 
-                                <p:column headerText="Fecha">
-                                    <p:outputLabel value="#{comp.fechaCompra}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                                    </p:outputLabel>
-                                </p:column> 
-                                <p:column headerText="Total">
-                                    <p:outputLabel value="#{comp.total} "/>
-                                </p:column> 
-                                <p:column headerText="Estado">
-                                    <p:outputLabel value="#{compraBean.ObtenerEstadoCompra(comp.estado,comp.fechaCompra, comp)} "/>
-                                </p:column> 
-                                <p:rowExpansion>
-                                    <p:dataTable id="tblHelado" emptyMessage="Sin Helados" style="margin-left: 3%"
-                                                 value="#{comp.heladosCompra}"
-                                                 var="hel" >
-                                        <p:column headerText="Imagen" width="20%" style="text-align: center">
-                                            <h:graphicImage name="#{hel.imagen}"
-                                                            width="60%" height="30%"/>
-                                        </p:column>
-                                        <p:column headerText="Nombre">
-                                            <p:outputLabel value="#{hel.nombreHelado}"/>
-                                        </p:column> 
-                                        <p:column headerText="Sabor">
-                                            <p:outputLabel value="#{hel.saborHelado}"/>
-                                        </p:column> 
-                                        <p:column headerText="Precio c/u">
-                                            <p:outputLabel value="#{hel.precio}"/>
-                                        </p:column> 
-                                        <p:column headerText="Precio de Oferta c/u">
-                                            <p:outputLabel value="#{hel.precioOferta}"/>
-                                        </p:column> 
-                                        <p:column headerText="Cantidad" style="text-align: center" >
-                                            <p:outputLabel value="#{compraBean.obtenerCantidadComHel(comp.codigoCompra,hel.codigoHelado)}"/>
-                                        </p:column>
-                                        <p:column headerText="Total" style="text-align: center" >
-                                            <p:outputLabel value="#{compraBean.obtenerCantidadComHel(comp.codigoCompra,hel.codigoHelado) * hel.precio}"/>
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:rowExpansion>
+                            
+                                <p:dataTable id="tblCarrito" emptyMessage="Lista vacia" style="margin-left: 0%; margin-right: 16%"
+                                             value="#{vendedorBean.compras}"
+                                             var="comp" rows="10" paginator="true">
+                                    <f:facet name="header">
+                                        Compras
+                                    </f:facet>
+                                    <p:column style="width:16px">
+                                        <p:rowToggler />
+                                    </p:column>
+                                    <p:column headerText="Codigo Compra">
+                                        <p:outputLabel value="#{comp.codigoCompra}"/>
+                                    </p:column> 
+                                    <p:column headerText="Nombre Usuario">
+                                        <p:outputLabel value="#{comp.usuarioCompra.nombreUsuario} #{comp.usuarioCompra.apellidoUsuario} "/>
+                                    </p:column> 
+                                    <p:column headerText="Fecha">
+                                        <p:outputLabel value="#{comp.fechaCompra}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </p:outputLabel>
+                                    </p:column> 
+                                    <p:column headerText="Total">
+                                        <p:outputLabel value="$#{comp.total} "/>
+                                    </p:column> 
+                                    <p:column headerText="Estado">
+                                        <p:outputLabel value="#{compraBean.ObtenerEstadoCompra(comp.estado,comp.fechaCompra, comp)} "/>
+                                    </p:column> 
+                                    <p:rowExpansion>
+                                        <p:dataTable id="tblHelado" emptyMessage="Sin Helados" style="margin-left: 3%"
+                                                     value="#{comp.heladosCompra}"
+                                                     var="hel" >
+                                            <p:column headerText="Imagen" width="20%" style="text-align: center">
+                                                <h:graphicImage name="#{hel.imagen}"
+                                                                width="60%" height="30%"/>
+                                            </p:column>
+                                            <p:column headerText="Nombre">
+                                                <p:outputLabel value="#{hel.nombreHelado}"/>
+                                            </p:column> 
+                                            <p:column headerText="Sabor">
+                                                <p:outputLabel value="#{hel.saborHelado}"/>
+                                            </p:column> 
+                                            <p:column headerText="Precio c/u">
+                                                <p:outputLabel value="$#{hel.precio}"/>
+                                            </p:column> 
+                                            <p:column headerText="Precio de Oferta c/u">
+                                                <p:outputLabel value="$#{hel.precioOferta}"/>
+                                            </p:column> 
+                                            <p:column headerText="Cantidad" style="text-align: center" >
+                                                <p:outputLabel value="#{compraBean.obtenerCantidadComHel(comp.codigoCompra,hel.codigoHelado)}"/>
+                                            </p:column>
+                                            <p:column headerText="Total" style="text-align: center" >
+                                                <p:outputLabel value="$#{compraBean.obtenerCantidadComHel(comp.codigoCompra,hel.codigoHelado) * hel.precio}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:rowExpansion>
 
-                            </p:dataTable>
-                            <p:commandButton 
-                                icon="ui-icon-circle-check" value="Confirmar Compra" 
-                                style="float: right; margin: 1%; margin-right: 3%"
-                                action="#{vendedorBean.confirmarCompra()}"
-                                ajax="false" update="tblCarrito"
-                                />
+                                </p:dataTable>
+                                <p:commandButton 
+                                    id="botonConf"
+                                    icon="ui-icon-circle-check" value="Confirmar Compra" 
+                                    style="float: right; margin: 1%; margin-right: 3%"
+                                    action="#{vendedorBean.confirmarCompra()}"
+                                    ajax="false" update="tblCarrito"
+                                    />
+                                <p:commandButton 
+                                    id="botonCancelar"
+                                    icon="ui-icon-circle-check" value="Cancelar Compra" 
+                                    style="float: right; margin: 1%; margin-right: 3%"
+                                    action="#{vendedorBean.cancelarCompra()}"
+                                    update="tblCarrito frmMenu:mensajes"
+                                    />
+                                
+                           
+                            
                         </h:form>
                     </ui:define>
                 </ui:composition>

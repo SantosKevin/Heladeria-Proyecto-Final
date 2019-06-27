@@ -17,9 +17,11 @@ import aplicacion.modelo.dominio.Usuario;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -51,7 +53,14 @@ public class VendedorBean {
         codigo = 0;
         compraDAO = new CompraDAOImp();
     }
-
+    public void cancelarCompra(){
+        Compra compra = compras.get(0);
+        compra.setEstado(3);
+        compraDAO.update(compra);
+        
+        FacesMessage msg = new FacesMessage("Mensaje", "Compra Cancelada exitosamente");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
     public void obtenerCompraSegunId(){
         System.out.println(codigo);
         compras = compraDAO.obtenerCompra(codigo);
@@ -70,8 +79,7 @@ public class VendedorBean {
     public void listarArrayHeladoPdf(Compra compra)
             throws JRException, IOException {
         Map<String, Object> parametros = new HashMap<String, Object>();
-        //puedo pasar parametros al report, siempre que el diseño lo soporte
-        //parametros.put("usuario", "pepito");
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         IComHelDAO comHelDAO = new ComHelDAOImp();
         
         List<Helado> helados = new ArrayList<>();
@@ -79,6 +87,10 @@ public class VendedorBean {
             h.setCantidad(comHelDAO.obtenerCantidadComHel(compra.getCodigoCompra(), h.getCodigoHelado()));
             helados.add(h);
         }
+        
+        parametros.put("total", compra.getTotal());
+        parametros.put("nombre", usuario.getApellidoUsuario()+", "+usuario.getNombreUsuario());
+        parametros.put("fecha", new Date());
         
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/helado.jasper"));
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(helados));

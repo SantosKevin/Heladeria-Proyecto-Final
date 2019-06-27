@@ -96,7 +96,7 @@ public class GraficoBean implements Serializable {
      * @param cP contador pendientes
      * @param cC contador cancelados
      */
-    public void graficar(int cV, int cP, int cC, int cA) {
+    public void graficar(int cV, int cP, int cC, int cA) { //cV:contador vendido, cP:contador Pendiente, cC:contador cancelado, cA:contador a retirar
         model = new BarChartModel(); //instanciamos el objeto 
 
         ChartSeries seriesVendido = new BarChartSeries();

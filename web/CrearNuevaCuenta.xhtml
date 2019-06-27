@@ -44,6 +44,7 @@
                                      actionListener="#{usuarioFormBean.crearUsuario()}" 
                                      action="Sesion.xhtml"/>
             </p:panel> <!--en este codigo de arriva llamamos a los respectivos validadores, y creamos un usuario -->
+            <p:blockUI block="pnlCrearSesion" trigger="btnCrear" />
         </h:form>
         <h:form id="VolverSesion" style="padding-left: 90px">
             <p:panel style="background: #013947">

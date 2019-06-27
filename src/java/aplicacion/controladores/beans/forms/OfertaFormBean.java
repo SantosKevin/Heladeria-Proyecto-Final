@@ -13,6 +13,7 @@ import aplicacion.modelo.dominio.Oferta;
 import aplicacion.modelo.util.SaboresYTipos;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -252,13 +253,21 @@ public class OfertaFormBean implements Serializable{
      * si las fechas son correctas, se ejecuta un scrips que muestra un dialog en la vista.
      */
     public void validarFechas(){
-        boolean validarFechas = validacionesOferta.validarFechasOferta(oferta.getFechaInicio(), oferta.getFechaFinal());
-        if(validarFechas){
+        int validarFechas = validacionesOferta.validarFechasOferta(oferta.getFechaInicio(), oferta.getFechaFinal());
+        Date fechaActual = new Date();
+        if(validarFechas == 1){
             PrimeFaces.current().executeScript("PF('dlgAgregarHeladoOferta').show();PF('dlgAgregarOferta').hide()");
-        }
-        else
+        }else{
+            if(validarFechas == 2)
+                 FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "la fecha de la oferta tiene que se mayor que "
+                + fechaActual.getDate()+"/"+(fechaActual.getMonth()+1)+"/"+(fechaActual.getYear()-100)));
+            else
             FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La fecha inicial es mayor que la fecha final"));
+            
+        }
+        
     }
     
     /**

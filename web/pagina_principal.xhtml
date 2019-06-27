@@ -73,7 +73,7 @@
                                     <h:outputText value="Cantidad:" />
                                     <p:spinner value="#{heladoBean.cantidad}" min="1" max="#{heladoBean.helado.cantidad}"/>
 
-                                    <p:commandButton id="btnModificar" value="Aceptar"
+                                    <p:commandButton id="btnAceptar" value="Aceptar"
                                                      icon="ui-icon-check"
                                                      action="#{heladoBean.agregarAlCarrito()}"
                                                      onclick="PF('dlgAgregarOferta').hide()"
@@ -83,6 +83,8 @@
                                                      icon="ui-icon-closethick"
                                                      />
                                 </h:panelGrid>
+                                <p:blockUI block="pgDialogoHelado" trigger="btnAceptar" />
+                                <p:blockUI block="pgDialogoHelado" trigger="btnAtras" />
                             </h:form>
                         </p:dialog>
                         <h:form>

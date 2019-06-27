@@ -26,12 +26,16 @@ public class validacionesOferta implements Serializable{
      * @param fechaFinal fecha final de la oferta
      * @return Verdadero si las fecha estan correctas. Falso si las fechas estan incorrectas
      */
-    public static boolean validarFechasOferta(Date fechaInicial, Date fechaFinal){
-        boolean validar = false;
-        if(fechaInicial != null && fechaFinal != null){
-            if(fechaInicial.compareTo(fechaFinal) <= 0)
-                validar = true;
-        }
+    public static int validarFechasOferta(Date fechaInicial, Date fechaFinal){
+        int validar = 0;
+        Date fechaActual = new Date();
+        if(fechaInicial.compareTo(fechaFinal) < 0 ){
+            if(fechaInicial.compareTo(fechaActual) >= 0)
+                validar = 1;
+            else
+                validar = 2;
+        }else
+            validar = 3;
         return validar;
     }
     /**

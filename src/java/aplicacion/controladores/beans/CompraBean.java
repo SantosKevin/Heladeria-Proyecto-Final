@@ -80,6 +80,8 @@ public class CompraBean {
         if (estado.equals(0)){
             return "A retirar";
         }
+        if (estado.equals(3))
+            return "CANCELADO";
         }
         return "Vendido";  //actualizamos la tabla
     }

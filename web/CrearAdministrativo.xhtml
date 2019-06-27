@@ -45,8 +45,11 @@
                                 <f:facet name="input"><p:inputText id="inpDNI" value="#{admin.dniUsuario}"/></f:facet>
                             </p:cellEditor>
                         </p:column>
-                        <p:column id="clmEmail" headerText="Email">                           
-                            <h:outputText value="#{admin.emailUsuario}"/>
+                        <p:column id="clmEmail" headerText="Email"> 
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText id="txte" value="#{admin.emailUsuario}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="inpEmail" value="#{admin.emailUsuario}"/></f:facet>
+                            </p:cellEditor>
                         </p:column>
                         <p:column id="clmEstado" headerText="Estado">
                             <p:cellEditor>
@@ -131,6 +134,7 @@
                                                  oncomplete="PF('altaAdmin').hide()"/>
 
                             </p:panelGrid>
+                            <p:blockUI block="pnlGCrearSesionAdmin" trigger="btnCrearAdmin" />
                         </p:panel> <!--en este codigo de arriva llamamos a los respectivos validadores, y creamos un usuario -->
                     </h:form>
                 </p:dialog>

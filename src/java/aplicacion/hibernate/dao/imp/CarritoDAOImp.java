@@ -46,21 +46,24 @@ public class CarritoDAOImp extends GenericDAOImp<Carrito, Integer> implements IC
         return helados;
     }
 
+    /**
+     * -
+     * calcula y actualiza el total del carrito
+     *
+     * @param carrito
+     */
     @Override
     public void calcularTotalListaHeladoCarrito(Carrito carrito) {
         double total = 0;
-        IHelCarDAO iHelCarDAO = new HelCarDAOImp();
-        List<HelCar> helCars = new ArrayList<>(iHelCarDAO.obtenerHelCARSegunCarrito(carrito));
+        IHelCarDAO helCarDAO = new HelCarDAOImp();
+        //helados tiene sus precios (precio normal o de oferta)
         List<Helado> helados = new ArrayList<>(carrito.getHelCars());
         for (Helado h : helados) {
-            for (HelCar helCar : helCars) {
-                if (helCar.getHelado().getCodigoHelado().equals(h.getCodigoHelado())) {
-                    if (h.getPrecioOferta() > 0) {
-                        total = total + (helCar.getCantHelado() * h.getPrecioOferta());
-                    }else{
-                        total = total + (helCar.getCantHelado() * h.getPrecio());
-                    }
-                }
+            HelCar helCar = helCarDAO.obtenerHelCar(carrito, h);
+            if (h.getPrecioOferta() > 0) {
+                total = total + (helCar.getCantHelado() * h.getPrecioOferta());
+            } else {
+                total = total + (helCar.getCantHelado() * h.getPrecio());
             }
         }
         carrito.setCarTotal(total);
@@ -73,7 +76,6 @@ public class CarritoDAOImp extends GenericDAOImp<Carrito, Integer> implements IC
      * @param carrito objeto carrito
      *
      */
-    
     @Override
     public void eliminarCarrito(Carrito carrito) {
         Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -82,13 +84,19 @@ public class CarritoDAOImp extends GenericDAOImp<Carrito, Integer> implements IC
         sesion.getTransaction().commit();
         sesion.close();
     }
-    
+
+    /**
+     * permite traer los datos de un carrito segun el usuario que reciba
+     *
+     * @param usuario
+     * @return un carrito
+     */
     @Override
     public Carrito obtenerCarritoSegunUsuario(Usuario usuario) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Carrito.class);
-        criteria.add(Restrictions.eq("usuario", usuario));
-        Carrito carrito = (Carrito) criteria.uniqueResult();
+        criteria.add(Restrictions.eq("usuario", usuario));//eq es igual
+        Carrito carrito = (Carrito) criteria.uniqueResult(); // uniqueResult trae un unico resultado
         session.close();
         return carrito;
     }
@@ -127,7 +135,7 @@ public class CarritoDAOImp extends GenericDAOImp<Carrito, Integer> implements IC
      * calcula el total del carrito
      *
      * @param carritos
-     * @return el total     
+     * @return el total
      *
      */
     @Override

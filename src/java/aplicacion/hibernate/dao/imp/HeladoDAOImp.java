@@ -34,6 +34,7 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
         IHelCarDAO helCarDAO = new HelCarDAOImp();
         ICarritoDAO carritoDAO = new CarritoDAOImp();
         IHeladoDAO heladoDAO = new HeladoDAOImp();
+        
         for (HelCar helCar : helCarDAO.obtenerHelCARSegunCarrito(carritoDAO.obtenerCarritoSegunUsuario(usuario))) {
             Helado helado = heladoDAO.obtenerHeladoSegunIdHelado(helCar.getHelado().getCodigoHelado());
             helado.setCantidad(helado.getCantidad() - helCar.getCantHelado());

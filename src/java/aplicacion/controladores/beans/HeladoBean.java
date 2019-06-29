@@ -55,33 +55,46 @@ public class HeladoBean implements Serializable {
         cantidad = 1;
     }
 
+    /**
+     permite agregar un carrito
+     */
+    
     public void agregarAlCarrito() {
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         List<Helado> helados = new ArrayList<>();
-        IHelCarDAO iHelCarDAOImp = new HelCarDAOImp();
+        IHelCarDAO helCarDAO = new HelCarDAOImp();
+        
         double total = helado.getPrecio() * cantidad;
         if (helado.getPrecioOferta() > 0) {
             total = helado.getPrecioOferta() * cantidad;
         }
+        
         if (carritoDAO.obtenerCarritoSegunUsuario(usuario) == null) {
+            //creacion de un carrito con la agregacion de su cantidad
             helados.add(helado);
-            Carrito carrito = new Carrito(1, usuario, total, new HashSet(helados));
+            Carrito carrito = new Carrito(1, usuario, total, new HashSet(helados)); //HashSet transforma un Set a arraylist
             carritoDAO.create(carrito);
+            //al crear un carrito se guarda la cantidad con el valor null
             HelCar helCar = new HelCar(new HelCarId(carrito.getCarCodigo(), helado.getCodigoHelado()), carrito, helado, cantidad);
-            iHelCarDAOImp.update(helCar);
+            helCarDAO.update(helCar);
         } else {
+            //actualizar el contenido de un carrito con su cantidad
             Carrito carrito = carritoDAO.obtenerCarritoSegunUsuario(usuario);
-            List<HelCar> helCars = iHelCarDAOImp.obtenerHelCARSegunCarrito(carrito);
-            HelCar helCar = iHelCarDAOImp.obtenerHelCar(carrito, helado);
+            List<HelCar> helCars = helCarDAO.obtenerHelCARSegunCarrito(carrito);//trae una lista de HelCars
+            
+            HelCar helCar = helCarDAO.obtenerHelCar(carrito, helado); //trae un objeto especifico de helcar
             if (helCar != null) {
+                //actualiza el elemento de tu helcar
                 helCar.setCantHelado(helCar.getCantHelado() + cantidad);
-                iHelCarDAOImp.update(helCar);
+                helCarDAO.update(helCar);
             } else {
-                helCar = helCars.get(0);
+                //crea o agrega un elemento a la tabla helcar
+                helCar = helCars.get(0); //hace una copia de la primera lista de helcars
+                // actualizamos los valores del objeto helcar 
                 helCar.setId(new HelCarId(helCar.getId().getCarritoCarCodigo(), helado.getCodigoHelado()));
                 helCar.setHelado(helado);
                 helCar.setCantHelado(cantidad);
-                iHelCarDAOImp.create(helCar);
+                helCarDAO.create(helCar);
             }
             carritoDAO.calcularTotalListaHeladoCarrito(carritoDAO.obtenerCarritoSegunUsuario(usuario));
         }
@@ -112,7 +125,6 @@ public class HeladoBean implements Serializable {
     }
 
     public void leer(Helado heladoSeleccion) {
-        System.out.println(heladoSeleccion.getCodigoHelado());
         helado = heladoSeleccion; // copia la referencia 
     }
 

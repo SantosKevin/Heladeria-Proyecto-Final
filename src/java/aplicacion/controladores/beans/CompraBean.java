@@ -5,11 +5,16 @@
  */
 package aplicacion.controladores.beans;
 
+import aplicacion.hibernate.dao.ICarritoDAO;
 import aplicacion.hibernate.dao.IComHelDAO;
 import aplicacion.hibernate.dao.ICompraDAO;
+import aplicacion.hibernate.dao.IHelCarDAO;
+import aplicacion.hibernate.dao.imp.CarritoDAOImp;
 import aplicacion.hibernate.dao.imp.ComHelDAOImp;
 import aplicacion.hibernate.dao.imp.CompraDAOImp;
+import aplicacion.hibernate.dao.imp.HelCarDAOImp;
 import aplicacion.modelo.dominio.Compra;
+import aplicacion.modelo.dominio.HelCar;
 import aplicacion.modelo.dominio.Helado;
 import aplicacion.modelo.dominio.Usuario;
 import java.text.DateFormat;
@@ -32,21 +37,33 @@ import javax.faces.context.FacesContext;
 public class CompraBean {
     private ICompraDAO compraDAO;
     private IComHelDAO comHelDAO;
-
+    private IHelCarDAO helCarDAO;
+    private ICarritoDAO carritoDAO;
     /**
      * Creates a new instance of CompraBean
      */
     public CompraBean() {
         compraDAO = new CompraDAOImp();
         comHelDAO = new ComHelDAOImp();
+        helCarDAO = new HelCarDAOImp();
+        carritoDAO= new CarritoDAOImp();
     }
 
     
-    public int obtenerCantidadComHel(Integer idCompra, Integer idHelado){
-        System.out.println(idCompra);
-        System.out.println(idHelado);
-        System.out.println(comHelDAO.obtenerCantidadComHel(idCompra, idHelado));
-        return comHelDAO.obtenerCantidadComHel(idCompra, idHelado);
+    public Integer obtenerCantidadHeladoDeHelCar(Helado helado) {    
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        HelCar helCar = helCarDAO.obtenerHelCar(carritoDAO.obtenerCarritoSegunUsuario(usuario), helado);
+        return helCar.getCantHelado();
+    }
+    
+    public double obtenerPrecioTotalPorHelado(Helado helado) {
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        HelCar helCar = helCarDAO.obtenerHelCar(carritoDAO.obtenerCarritoSegunUsuario(usuario), helado);
+        if (helado.getPrecioOferta() > 0) {
+            return helCar.getCantHelado() * helado.getPrecioOferta();
+        } else {
+            return helCar.getCantHelado() * helado.getPrecio();
+        }
     }
     
     public List<Compra> obtenerCompras(){
@@ -87,20 +104,35 @@ public class CompraBean {
         return "Vendido";  //actualizamos la tabla
     }
     
-    public Double obtenerTotal(Helado helado, Compra compra){
-        
-        Integer cantidad = obtenerCantidadComHel(compra.getCodigoCompra(), helado.getCodigoHelado());
-        if (helado.getPrecioOferta() > 0){
-            return helado.getPrecioOferta() * cantidad;
-        }else{
-            return helado.getPrecio() * cantidad;
-        }
-    }
-    public ICompraDAO getCompraDAO() {
-        return compraDAO;
-    }
+    
 
     public void setCompraDAO(ICompraDAO compraDAO) {
         this.compraDAO = compraDAO;
     }
+
+    public IComHelDAO getComHelDAO() {
+        return comHelDAO;
+    }
+
+    public void setComHelDAO(IComHelDAO comHelDAO) {
+        this.comHelDAO = comHelDAO;
+    }
+
+    public IHelCarDAO getHelCarDAO() {
+        return helCarDAO;
+    }
+
+    public void setHelCarDAO(IHelCarDAO helCarDAO) {
+        this.helCarDAO = helCarDAO;
+    }
+
+    public ICarritoDAO getCarritoDAO() {
+        return carritoDAO;
+    }
+
+    public void setCarritoDAO(ICarritoDAO carritoDAO) {
+        this.carritoDAO = carritoDAO;
+    }
+    
+    
 }

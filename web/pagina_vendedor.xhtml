@@ -74,7 +74,7 @@
                                                 <p:outputLabel value="#{compraBean.obtenerCantidadComHel(comp.codigoCompra,hel.codigoHelado)}"/>
                                             </p:column>
                                             <p:column headerText="Total" style="text-align: center" >
-                                                <p:outputLabel value="$#{compraBean.obtenerCantidadComHel(comp.codigoCompra,hel.codigoHelado) * hel.precio}"/>
+                                                <p:outputLabel value="$#{compraBean.obtenerPrecioTotalPorHelado(hel)}"/>
                                             </p:column>
                                         </p:dataTable>
                                     </p:rowExpansion>

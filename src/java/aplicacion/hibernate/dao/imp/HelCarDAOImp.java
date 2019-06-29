@@ -66,6 +66,13 @@ public class HelCarDAOImp extends GenericDAOImp<HelCar, Integer> implements IHel
         return helCar;
     }
     
+    //comprobado
+    /**
+     * obtiene una lista de HelCars segun la id del carrito 
+     * 
+     * @param carrito
+     * @return una lista de HelCars
+     */
     @Override
     public List<HelCar> obtenerHelCARSegunCarrito(Carrito carrito) {
         Session session = HibernateUtil.getSessionFactory().openSession();

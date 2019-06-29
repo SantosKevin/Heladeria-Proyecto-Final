@@ -1,24 +1,23 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 20-jun-2019 0:27:22 by Hibernate Tools 4.3.1 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-jun-2019 23:30:49 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="aplicacion.modelo.dominio.Carrito" table="carrito" catalog="heladeria" optimistic-lock="version">
-        <id name="codigo" type="java.lang.Integer">
-            <column name="car_codigo" />
-            <generator class="identity" />
+    <class catalog="heladeria" name="aplicacion.modelo.dominio.Carrito" optimistic-lock="version" table="carrito">
+        <id name="carCodigo" type="java.lang.Integer">
+            <column name="car_codigo"/>
+            <generator class="identity"/>
         </id>
-        <property name="codigoUsuario" type="int">
-            <column name="car_codigo_usuario" not-null="true" />
+        <many-to-one class="aplicacion.modelo.dominio.Usuario" fetch="select" name="usuario">
+            <column name="usuarios_usu_codigo_usuario" not-null="true"/>
+        </many-to-one>
+        <set cascade="all" fetch="join" name="helCars" table="`hel-car`">
+            <key column="carrito_car_codigo"/>
+            <many-to-many class="aplicacion.modelo.dominio.Helado" column="helados_hel_codigo_helado"/>
+        </set>
+        <property name="carTotal" type="double">
+            <column name="car_total" not-null="true" precision="11" scale="0"/>
         </property>
-        <property name="codigoHelado" type="int">
-            <column name="car_codigo_helado" not-null="true" />
-        </property>
-        <property name="cantidad" type="int">
-            <column name="car_cantidad" not-null="true" />
-        </property>
-        <property name="total" type="double">
-            <column name="car_total" not-null="true" />
-        </property>
+        
+        
     </class>
 </hibernate-mapping>

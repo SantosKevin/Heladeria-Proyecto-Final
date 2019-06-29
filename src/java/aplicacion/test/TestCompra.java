@@ -46,8 +46,8 @@ public class TestCompra {
         Set nums = compras.stream().collect(Collectors.toSet());
         compras = new ArrayList<>(nums);
         
-        for(Compra c: compras){
-            System.out.println(c.toString());
-        }
+        compra = compraDAO.obtenerUltimaCompra(usuario);
+        System.out.println(compra.getCodigoCompra());
+        compraDAO.eliminarCompra(compra);
     }
 }

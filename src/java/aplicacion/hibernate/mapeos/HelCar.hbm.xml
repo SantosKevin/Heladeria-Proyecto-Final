@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-jun-2019 23:30:49 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="heladeria" name="aplicacion.modelo.dominio.HelCar" optimistic-lock="version" table="`hel-car`">
+    <composite-id class="aplicacion.modelo.dominio.HelCarId" name="id">
+      <key-property name="carritoCarCodigo" type="int">
+        <column name="carrito_car_codigo"/>
+      </key-property>
+      <key-property name="heladosHelCodigoHelado" type="int">
+        <column name="helados_hel_codigo_helado"/>
+      </key-property>
+    </composite-id>
+    <many-to-one class="aplicacion.modelo.dominio.Carrito" fetch="select" insert="false" name="carrito" update="false">
+      <column name="carrito_car_codigo" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="aplicacion.modelo.dominio.Helado" fetch="select" insert="false" name="helado" update="false">
+      <column name="helados_hel_codigo_helado" not-null="true"/>
+    </many-to-one>
+    <property name="cantHelado" type="int">
+      <column name="cant_helado" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

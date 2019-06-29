@@ -7,12 +7,15 @@ package aplicacion.hibernate.dao.imp;
 
 import aplicacion.hibernate.configuracion.HibernateUtil;
 import aplicacion.hibernate.dao.ICompraDAO;
+import aplicacion.modelo.dominio.Carrito;
 import aplicacion.modelo.dominio.Compra;
+import aplicacion.modelo.dominio.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -79,31 +82,24 @@ public class CompraDAOImp extends GenericDAOImp<Compra, Integer> implements ICom
      * @return Returna una lista con todas las compras segund IdUsuario
      */
     @Override
-    public List<Compra> obtenerComprasSegunIdUsuario(Integer idUsuario) {
-        List<Compra> comprasAux = new ArrayList<>();
-        
+    public Compra obtenerUltimaCompra(Usuario usuario) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Compra.class);
-        List<Compra> compras = criteria.list();
+        criteria.add(Restrictions.eq("codigoCompra", obtenerUltimoCodigodeCompra(usuario)));
+        Compra compra = (Compra) criteria.uniqueResult();
         session.close();
-        
-        //quita valores repetidos segun el id de compra
-        for (Compra c: compras){
-            boolean bandera = true;
-            if (c.getUsuarioCompra().getCodigoUsuario().equals(idUsuario)){
-                for(Compra cAux: comprasAux){
-                if ( cAux.getCodigoCompra().equals(c.getCodigoCompra())){
-                    bandera = false;
-                }
-            }
-            if ( bandera){
-                comprasAux.add(c);
-            }
-            }
-        }
-        return comprasAux;
+        return compra;
     }
     
+    @Override
+    public List<Compra> obtenerCompras(Usuario usuario) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Compra.class);
+        criteria.add(Restrictions.eq("usuarioCompra", usuario));
+        List<Compra> compras = criteria.list();
+        session.close();
+        return compras;
+    }
     /**
      permite obtener el ultimo codigo compra de la tabla Compra en base al Id de
      * Usuario
@@ -111,13 +107,21 @@ public class CompraDAOImp extends GenericDAOImp<Compra, Integer> implements ICom
      * @return un Integer con el ultimo codigo
      **/
     @Override
-    public Integer obtenerUltimoCodigodeCompra(Integer idUsuario) {
-        List<Compra> compras = obtenerComprasSegunIdUsuario(idUsuario);
+    public Integer obtenerUltimoCodigodeCompra(Usuario usuario) {
+        List<Compra> compras = obtenerCompras(usuario);
         Integer codigo = 0;
         for (Compra c: compras){
             codigo = c.getCodigoCompra();
-            System.out.println(c.getCodigoCompra());
         }
         return codigo;
+    }
+    
+    @Override
+    public void eliminarCompra(Compra compra) {
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        sesion.beginTransaction();
+        sesion.delete(compra);
+        sesion.getTransaction().commit();
+        sesion.close();
     }
 }

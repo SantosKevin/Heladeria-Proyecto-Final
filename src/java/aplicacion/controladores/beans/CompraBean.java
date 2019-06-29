@@ -51,8 +51,9 @@ public class CompraBean {
     
     public List<Compra> obtenerCompras(){
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        
         if (usuario.getTipoUsuario().equals("normal")){
-            return compraDAO.obtenerComprasSegunIdUsuario(usuario.getCodigoUsuario());
+            return compraDAO.obtenerCompras(usuario);
         }
         return compraDAO.obtenerCompras();
     }

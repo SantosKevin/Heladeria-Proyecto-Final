@@ -8,17 +8,23 @@ package aplicacion.controladores.beans;
 import aplicacion.hibernate.dao.ICarritoDAO;
 import aplicacion.hibernate.dao.IHeladoDAO;
 import aplicacion.hibernate.dao.imp.CarritoDAOImp;
+import aplicacion.hibernate.dao.imp.HelCarDAOImp;
 import aplicacion.hibernate.dao.imp.HeladoDAOImp;
 import aplicacion.modelo.dominio.Carrito;
+import aplicacion.modelo.dominio.HelCar;
+import aplicacion.modelo.dominio.HelCarId;
 import aplicacion.modelo.dominio.Helado;
 import aplicacion.modelo.dominio.Usuario;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
+import aplicacion.hibernate.dao.IHelCarDAO;
 
 /**
  *
@@ -29,7 +35,8 @@ import org.primefaces.PrimeFaces;
 /**
  * Clase que funciona como beans administrado de HeladoFormBean
  */
-public class HeladoBean implements Serializable{
+public class HeladoBean implements Serializable {
+
     /**
      * Se crea una instancia de tipo heladoDAO
      */
@@ -38,34 +45,45 @@ public class HeladoBean implements Serializable{
     /**
      * Se inicializa el atributo heladoDAO
      */
-    
+
     private Helado helado;
     private Integer cantidad;
-    
+
     public HeladoBean() {
         heladoDAO = new HeladoDAOImp();
         carritoDAO = new CarritoDAOImp();
         cantidad = 1;
     }
-    
-    public void agregarAlCarrito(){
-        System.out.println(this.cantidad);
+
+    public void agregarAlCarrito() {
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        Boolean bandera = true;
-        Carrito carrito = new Carrito(1, usuario.getCodigoUsuario(), helado.getCodigoHelado(), cantidad, cantidad * helado.getPrecioOferta());
-        if (helado.getPrecioOferta().equals(0.0)){
-            carrito.setTotal(cantidad * helado.getPrecio());
+        List<Helado> helados = new ArrayList<>();
+        IHelCarDAO iHelCarDAOImp = new HelCarDAOImp();
+        double total = helado.getPrecio() * cantidad;
+        if (helado.getPrecioOferta() > 0) {
+            total = helado.getPrecioOferta() * cantidad;
         }
- 
-        for (Carrito c: carritoDAO.obtenerCarritoSegunIdUsuario(usuario.getCodigoUsuario())){
-            if (c.getCodigoHelado().equals(carrito.getCodigoHelado())){
-                bandera = false;
-                c.setCantidad(carrito.getCantidad() + c.getCantidad());
-                carritoDAO.update(c);
-            }
-        }
-        if (bandera){
+        if (carritoDAO.obtenerCarritoSegunUsuario(usuario) == null) {
+            helados.add(helado);
+            Carrito carrito = new Carrito(1, usuario, total, new HashSet(helados));
             carritoDAO.create(carrito);
+            HelCar helCar = new HelCar(new HelCarId(carrito.getCarCodigo(), helado.getCodigoHelado()), carrito, helado, cantidad);
+            iHelCarDAOImp.update(helCar);
+        } else {
+            Carrito carrito = carritoDAO.obtenerCarritoSegunUsuario(usuario);
+            List<HelCar> helCars = iHelCarDAOImp.obtenerHelCARSegunCarrito(carrito);
+            HelCar helCar = iHelCarDAOImp.obtenerHelCar(carrito, helado);
+            if (helCar != null) {
+                helCar.setCantHelado(helCar.getCantHelado() + cantidad);
+                iHelCarDAOImp.update(helCar);
+            } else {
+                helCar = helCars.get(0);
+                helCar.setId(new HelCarId(helCar.getId().getCarritoCarCodigo(), helado.getCodigoHelado()));
+                helCar.setHelado(helado);
+                helCar.setCantHelado(cantidad);
+                iHelCarDAOImp.create(helCar);
+            }
+            carritoDAO.calcularTotalListaHeladoCarrito(carritoDAO.obtenerCarritoSegunUsuario(usuario));
         }
         FacesMessage msg = new FacesMessage("Mensaje", "Agregado al Carrito");
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -74,62 +92,71 @@ public class HeladoBean implements Serializable{
 
     /**
      * Metodo que crea un nuevo helado
-     * @param nuevoHelado variable de tipo helado la cual se mapear con la base de datos
+     *
+     * @param nuevoHelado variable de tipo helado la cual se mapear con la base
+     * de datos
      */
-    public void crearHelado(Helado nuevoHelado){
+    public void crearHelado(Helado nuevoHelado) {
         heladoDAO.create(nuevoHelado);
         helado = new Helado();
     }
-    
+
     /**
      * Metodo que elimina un helado
-     * @param Helado variable de tipo helado la cual se elimina de la base de datos
+     *
+     * @param Helado variable de tipo helado la cual se elimina de la base de
+     * datos
      */
-    public void eliminarHelado(Helado Helado){
+    public void eliminarHelado(Helado Helado) {
         heladoDAO.delete(Helado);
     }
-    
-    public void leer(Helado heladoSeleccion){
+
+    public void leer(Helado heladoSeleccion) {
         System.out.println(heladoSeleccion.getCodigoHelado());
-       helado = heladoSeleccion; // copia la referencia 
+        helado = heladoSeleccion; // copia la referencia 
     }
-            
+
     /**
      * Metodo que modifica algunos atributos un helado
-     * @param helado variable de tipo helado la cual se modificara en la base de datos
+     *
+     * @param helado variable de tipo helado la cual se modificara en la base de
+     * datos
      */
-    public void modificarHelado(Helado helado){
+    public void modificarHelado(Helado helado) {
         heladoDAO.update(helado);
     }
-    
-    
+
     /**
      * Metodo para obtener todos los helados de la base de datos
+     *
      * @return lista de helados
      */
-    public List<Helado> obtenerHelados(){
+    public List<Helado> obtenerHelados() {
         return heladoDAO.getAll(Helado.class);
     }
-    
+
     /**
-     * Metodo para obtener todos los helados de la base de datos que su cantidad de stock no sea igual a 0
+     * Metodo para obtener todos los helados de la base de datos que su cantidad
+     * de stock no sea igual a 0
+     *
      * @return lista de helados
      */
-    public List<Helado> obtenerHeladosDisponibles(){
+    public List<Helado> obtenerHeladosDisponibles() {
         return heladoDAO.obtenerHeladosDisponibles();
     }
-    
-    public List<Helado> obtenerHeladosTipo(String tipo){
+
+    public List<Helado> obtenerHeladosTipo(String tipo) {
         return heladoDAO.obtenerHeladosTipo(tipo);
     }
-    
-    public Helado obtenerHeladoUnico(Integer codigoHelado){
+
+    public Helado obtenerHeladoUnico(Integer codigoHelado) {
         return heladoDAO.obtenerUnicoHelado(codigoHelado);
     }
-    public Helado obtenerHeladoUnicoDisponible(Integer codigoHelado){
+
+    public Helado obtenerHeladoUnicoDisponible(Integer codigoHelado) {
         return heladoDAO.obtenerUnicoHeladoDisponible(codigoHelado);
     }
-        
+
     public IHeladoDAO getHeladoDAO() {
         return heladoDAO;
     }
@@ -154,7 +181,4 @@ public class HeladoBean implements Serializable{
         this.cantidad = cantidad;
     }
 
-   
-    
-    
 }

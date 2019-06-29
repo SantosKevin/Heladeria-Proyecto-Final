@@ -58,14 +58,14 @@ public class GraficoBean implements Serializable {
             repetido = false;
             if (usuarios != null) {
                 for (int i = 0; i < usuarios.size(); i++) {
-                    if (carrito.getCodigoUsuario() == usuarios.get(i)) {  //preguntamos que el usuario no este repetido
+                    if (carrito.getUsuario().getCodigoUsuario() == usuarios.get(i)) {  //preguntamos que el usuario no este repetido
                         repetido = true;
                     }
                 }
             }
             if (repetido == false) { //si no lo esta, entonces sumamos 1 al contador Pendientes
                 contPendiente++;
-                usuarios.add(carrito.getCodigoUsuario()); //y agregamos el codigo de usuario a la lista
+                //usuarios.add(carrito.getCodigoUsuario()); //y agregamos el codigo de usuario a la lista
             }
         }
         List<Compra> listaCompra = new ArrayList<Compra>();

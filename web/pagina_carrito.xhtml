@@ -38,48 +38,48 @@
                         <h:form id="form">
                             <p:growl id="mensajes" showDetail="true"/>
                             <p:dataTable id="tblCarrito" emptyMessage="Carrito Vacio" style="margin-left: 14%; margin-right: 14%"
-                                         value="#{carritoBean.obtenerCarritoSegunIdUsuario()}"
-                                         var="car" rows="3" paginator="true">
+                                         value="#{carritoBean.obtenerHeladoDeCarritoSegunUsuario()}"
+                                         var="hel" rows="3" paginator="true">
                                 <f:facet name="header">
                                     Carrito
                                 </f:facet>
                                 <p:column headerText="Imagen" width="20%" style="text-align: center">
-                                    <h:graphicImage name="#{carritoBean.obtenerHelado(car.codigoHelado).imagen}"
+                                    <h:graphicImage name="#{hel.imagen}"
                                                     width="60%" height="30%"/>
                                 </p:column>
                                 <p:column headerText="Nombre">
-                                    <p:outputLabel value="#{carritoBean.obtenerHelado(car.codigoHelado).nombreHelado}"/>
+                                    <p:outputLabel value="#{hel.nombreHelado}"/>
                                 </p:column>
                                 <p:column headerText="Sabor">
-                                    <p:outputLabel value="#{carritoBean.obtenerHelado(car.codigoHelado).saborHelado}"/>
+                                    <p:outputLabel value="#{hel.saborHelado}"/>
                                 </p:column>
                                 <p:column headerText="Precio c/u">
-                                    <p:outputLabel value=" $#{carritoBean.obtenerHelado(car.codigoHelado).precio}"/>
+                                    <p:outputLabel value=" $#{hel.precio}"/>
                                 </p:column>
                                 
                                 <p:column headerText="Precio Oferta">
-                                    <p:outputLabel value=" $#{carritoBean.obtenerHelado(car.codigoHelado).precioOferta}"/>
+                                    <p:outputLabel value=" $#{hel.precioOferta}"/>
                                 </p:column>
                                 <p:column headerText="Cantidad" style="text-align: center" >
-                                    <p:outputLabel value="#{car.cantidad}"/>
+                                    <p:outputLabel value="#{carritoBean.obtenerCantidadHeladoDeHelCar(hel)}"/>
                                 </p:column>
                                 <p:column headerText="Total" style="text-align: center" >
-                                    <p:outputLabel value=" $#{car.total}"/>
+                                    <p:outputLabel value=" $#{carritoBean.obtenerPrecioTotalPorHelado(hel)}"/>
                                 </p:column>
                                 <p:columnGroup type="footer">
                                     <p:row>
                                         <p:column colspan="6" style="text-align:right" footerText="Total:" />
-                                        <p:column colspan="2" footerText=" $#{carritoBean.calcularTotal()}" 
+                                        <p:column colspan="2" footerText=" $#{carritoBean.obtenerTotaldelCarrito()}" 
                                                   style="text-align:left; font-size: 150%"/>
                                     </p:row>
                                 </p:columnGroup>
                                 <p:column headerText="Opciones"  >
-                                    <p:commandButton actionListener="#{carritoBean.leer(car)}"
+                                    <p:commandButton actionListener="#{carritoBean.leer(hel)}"
                                                      oncomplete="PF('dlgModificar').show();" 
                                                      update=":frmDialogoModificar"
                                                      icon="ui-icon-pencil"/>
                                     <p:spacer width="6" height="20" />
-                                    <p:commandButton actionListener="#{carritoBean.leer(car)}"
+                                    <p:commandButton actionListener="#{carritoBean.leer(hel)}"
                                                      oncomplete="PF('dlgEliminar').show();" 
                                                      update="frmDialogo_eliminar:dialogoEliminar"
                                                      icon="ui-icon-trash"/>
@@ -95,19 +95,19 @@
                         <p:dialog id="dialogoModificar" header="Modificar" widgetVar="dlgModificar" modal="true"
                                   responsive="true"  closeOnEscape="true">
                             <h:form id="frmDialogoModificar">
-                                <h:graphicImage url="#{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).imagen}"/><br></br>
+                                <h:graphicImage url="#{carritoBean.helado.imagen}"/><br></br>
                                 <h:panelGrid id="pgDialogoHelado" columns="2" style="text-align: left">
                                     <h:outputText value="Nombre:" />
-                                    <h:outputText value="#{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).nombreHelado}" />
+                                    <h:outputText value="#{carritoBean.helado.nombreHelado}" />
 
                                     <h:outputText value="Sabor:" />
-                                    <h:outputText value="#{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).saborHelado}" />
+                                    <h:outputText value="#{carritoBean.helado.saborHelado}" />
 
                                     <h:outputText value="Precio:" />
-                                    <h:outputText value="$#{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).precio}" />
+                                    <h:outputText value="$#{carritoBean.helado.precio}" />
 
                                     <h:outputText value="Cantidad:" />
-                                    <p:spinner value="#{carritoBean.carrito.cantidad}" min="1" max="#{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).cantidad}"/>
+                                    <p:spinner value="#{carritoBean.cantidad}" min="1" max="#{carritoBean.helado.cantidad}"/>
 
                                     <p:commandButton id="btnModificar" value="Aceptar"
                                                      icon="ui-icon-check"
@@ -126,7 +126,7 @@
                                       resizable="true" responsive="true"
                                       closeOnEscape="true">
                                 <p:outputLabel id="lblPregunta" value="Esta seguro/a de eliminar el Helado: 
-                                               #{carritoBean.obtenerHelado(carritoBean.carrito.codigoHelado).nombreHelado} ???"/>
+                                               #{carritoBean.helado.nombreHelado} ???"/>
                                 <br></br>
                                 <h:panelGrid id="deseaelim" columns="2" style="float: right">
                                     <p:commandButton id="btnSi" value="Si"

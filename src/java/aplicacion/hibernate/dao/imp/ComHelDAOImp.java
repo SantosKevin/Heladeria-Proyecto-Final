@@ -8,16 +8,20 @@ package aplicacion.hibernate.dao.imp;
 import aplicacion.hibernate.configuracion.HibernateUtil;
 import aplicacion.hibernate.dao.ICarritoDAO;
 import aplicacion.hibernate.dao.IComHelDAO;
+import aplicacion.hibernate.dao.IHelCarDAO;
 import aplicacion.modelo.dominio.Carrito;
 import aplicacion.modelo.dominio.ComHel;
 import aplicacion.modelo.dominio.ComHelId;
 import aplicacion.modelo.dominio.Compra;
+import aplicacion.modelo.dominio.HelCar;
 import aplicacion.modelo.dominio.Helado;
+import aplicacion.modelo.dominio.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -27,35 +31,42 @@ public class ComHelDAOImp extends GenericDAOImp<ComHel, Integer> implements ICom
 
     /**
      * actualiza la cantidad de helados que se compraron de la tabla ComHel
+     *
      * @param compra tipo Compra
-     * @param idUsuario Integer
-     **/
+     *
+     *
+     */
     @Override
-    public void actualizarCantidadHeladoComHel(Compra compra, Integer idUsuario) {
+    public void transferirCantidadHelCarAComHel(Compra compra, Usuario usuario) {
+        IHelCarDAO helCarDAO = new HelCarDAOImp();
         ICarritoDAO carritoDAO = new CarritoDAOImp();
-        IComHelDAO comHelDAO = new ComHelDAOImp();
-        for (Helado h : compra.getHeladosCompra()) {
-            for (Carrito c : carritoDAO.obtenerCarritoSegunIdUsuario(idUsuario)) {
-                if (h.getCodigoHelado().equals(c.getCodigoHelado())) {
-                    ComHel comHel = new ComHel();
-                    comHel.setId(new ComHelId(compra.getCodigoCompra(), h.getCodigoHelado()));
-                    comHel.setCompras(compra);
-                    comHel.setHelados(h);
-                    comHel.setCantHelado(c.getCantidad());
-                    comHelDAO.update(comHel);
-                }
-            }
+        for (HelCar helCar : helCarDAO.obtenerHelCARSegunCarrito(carritoDAO.obtenerCarritoSegunUsuario(usuario))) {
+            ComHel comHel = obtenerComHel(compra, helCar.getHelado());
+            comHel.setCantHelado(helCar.getCantHelado());
+            update(comHel);
         }
-        
     }
-    
+
+    @Override
+    public ComHel obtenerComHel(Compra compra, Helado helado) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(ComHel.class);
+        criteria.add(Restrictions.eq("compras", compra));
+        criteria.add(Restrictions.eq("helados", helado));
+        ComHel comHel = (ComHel) criteria.uniqueResult();
+        session.close();
+        return comHel;
+    }
+
     /**
      * permite obtener la cantidad de helado que se compro de la tabla ComHel
      * segun el id de Compra y el id de Helado
+     *
      * @param idCompra
      * @param idHelado
      * @return la cantidad de helado
-     **/
+     *
+     */
     @Override
     public int obtenerCantidadComHel(Integer idCompra, Integer idHelado) {
 
@@ -74,6 +85,5 @@ public class ComHelDAOImp extends GenericDAOImp<ComHel, Integer> implements ICom
         }
         return 0;
     }
-    
-    
+
 }

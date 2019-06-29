@@ -8,18 +8,22 @@ package aplicacion.controladores.beans;
 import aplicacion.hibernate.dao.ICarritoDAO;
 import aplicacion.hibernate.dao.IComHelDAO;
 import aplicacion.hibernate.dao.ICompraDAO;
+import aplicacion.hibernate.dao.IHelCarDAO;
 import aplicacion.hibernate.dao.IHeladoDAO;
 import aplicacion.hibernate.dao.imp.CarritoDAOImp;
 import aplicacion.hibernate.dao.imp.ComHelDAOImp;
 import aplicacion.hibernate.dao.imp.CompraDAOImp;
+import aplicacion.hibernate.dao.imp.HelCarDAOImp;
 import aplicacion.hibernate.dao.imp.HeladoDAOImp;
 import aplicacion.modelo.dominio.Carrito;
 import aplicacion.modelo.dominio.ComHel;
 import aplicacion.modelo.dominio.ComHelId;
 import aplicacion.modelo.dominio.Compra;
+import aplicacion.modelo.dominio.HelCar;
 import aplicacion.modelo.dominio.Helado;
 import aplicacion.modelo.dominio.Usuario;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -52,8 +56,10 @@ public class CarritoBean implements Serializable {
     private IHeladoDAO heladoDAO;
     private ICompraDAO compraDAO;
     private IComHelDAO comHelDAO;
+    private IHelCarDAO helCarDAO;
     private Integer cantidad;
-    private Carrito carrito;
+
+    private Helado helado;
 
     /**
      * Creates a new instance of CarritoBean
@@ -63,50 +69,79 @@ public class CarritoBean implements Serializable {
         heladoDAO = new HeladoDAOImp();
         compraDAO = new CompraDAOImp();
         comHelDAO = new ComHelDAOImp();
-        carrito = new Carrito();
+        helCarDAO = new HelCarDAOImp();
         cantidad = 1;
     }
 
     public void agregarCompra() {
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        List<Helado> listaHelado = carritoDAO.obtenerHeladoSegunIdUsuario(usuario.getCodigoUsuario());
-        System.out.println(listaHelado.size());
+        List<Helado> listaHelado = obtenerHeladoDeCarritoSegunUsuario();
         if (listaHelado.isEmpty()) {
             FacesMessage msg = new FacesMessage("Mensaje", "No puede confirmar la compra si el carrito esta vacio");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } else {
-            Compra compra = new Compra();
-
-            compra.setUsuarioCompra(usuario);
-            compra.setHeladosCompra(new HashSet<>(listaHelado));
-            //Esto seria para hora y fecha pero hibernate no lo realiza: compra.setFechaCompra(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
-            compra.setTotal(carritoDAO.obtenerPrecioTotalCarrito(carritoDAO.obtenerCarritoSegunIdUsuario(usuario.getCodigoUsuario())));
-            compra.setFechaCompra(new Date());
-            compra.setEstado(0);
+            Compra compra = new Compra(1, usuario, new HashSet<>(listaHelado), 0, new Date(), obtenerTotaldelCarrito());
 
             compraDAO.create(compra);
-            comHelDAO.actualizarCantidadHeladoComHel(compra, usuario.getCodigoUsuario());
+            compra = compraDAO.obtenerUltimaCompra(usuario);
+            comHelDAO.transferirCantidadHelCarAComHel(compra, usuario);
+            heladoDAO.actualizarLaCantidadDeHelados();
             enviarEmail(compra);
-            carritoDAO.eliminarCarrito(usuario.getCodigoUsuario());
+
+            Carrito c = carritoDAO.obtenerCarritoSegunUsuario(usuario);
+            Carrito carrito = new Carrito(c.getCarCodigo(), c.getUsuario());
+            carritoDAO.eliminarCarrito(carrito);
             FacesMessage msg = new FacesMessage("Mensaje", "Compra Finalizada exitosamente");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
         PrimeFaces.current().executeScript("PF('dlgPregunta').hide();");
     }
 
-    
-    public double calcularTotal() {
+    public Integer obtenerCantidadHeladoDeHelCar(Helado helado) {
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        return carritoDAO.obtenerPrecioTotalCarrito(carritoDAO.obtenerCarritoSegunIdUsuario(usuario.getCodigoUsuario()));
+        HelCar helCar = helCarDAO.obtenerHelCar(carritoDAO.obtenerCarritoSegunUsuario(usuario), helado);
+        return helCar.getCantHelado();
     }
-    
+
+    public double obtenerPrecioTotalPorHelado(Helado helado) {
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        HelCar helCar = helCarDAO.obtenerHelCar(carritoDAO.obtenerCarritoSegunUsuario(usuario), helado);
+        if (helado.getPrecioOferta() > 0) {
+            return helCar.getCantHelado() * helado.getPrecioOferta();
+        } else {
+            return helCar.getCantHelado() * helado.getPrecio();
+        }
+    }
+
+    public double obtenerTotaldelCarrito() {
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        if (carritoDAO.obtenerCarritoSegunUsuario(usuario) == null) {
+            return 0;
+        }
+        return carritoDAO.obtenerCarritoSegunUsuario(usuario).getCarTotal();
+    }
+
     public void eliminarCarrito() {
-        carritoDAO.eliminarCarrito(carrito);
-        FacesMessage msg = new FacesMessage("Exito", "Eliminacion del carrito exitosa");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        HelCar helCar = helCarDAO.obtenerHelCar(carritoDAO.obtenerCarritoSegunUsuario(usuario), helado);
+        helCarDAO.eliminarCarrito(helCar);
+        carritoDAO.calcularTotalListaHeladoCarrito(carritoDAO.obtenerCarritoSegunUsuario(usuario));
+
+        Carrito carrito = carritoDAO.obtenerCarritoSegunUsuario(usuario);
+        System.out.println(carrito.getHelCars().size());
+        if (carrito.getHelCars().isEmpty()) {
+            Carrito c = new Carrito(carrito.getCarCodigo(), carrito.getUsuario());
+            carritoDAO.eliminarCarrito(c);
+            FacesMessage msg = new FacesMessage("Exito", "Se elimino el carrito completamente");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } else {
+            FacesMessage msg = new FacesMessage("Exito", "Eliminacion Helado del carrito exitosa");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+
         PrimeFaces.current().executeScript("PF('dlgEliminar').hide();");
     }
-    
+
     public void enviarEmail(Compra compra) {
         //el correo email de envio
         // El correo gmail de envío
@@ -146,11 +181,11 @@ public class CarritoBean implements Serializable {
             // Creo la parte del mensaje
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
             mimeBodyPart.setText("Su compra esta en espera para ser retirado "
-                    + "en nuestra sucursal mas cercana "
-                    + "debera ir con su codigo de compra y dni al momento de retirar el pedido.\n"
-                    + "CODIGO DE COMPRA: " + compraDAO.obtenerUltimoCodigodeCompra(compra.getUsuarioCompra().getCodigoUsuario()) + "\n."
+                    + "en nuestra sucursal más cercana "
+                    + "deberá ir con su código de compra y DNI al momento de retirar el pedido.\n"
+                    + "CODIGO DE COMPRA: " + compraDAO.obtenerUltimoCodigodeCompra(compra.getUsuarioCompra()) + "\n."
                     + "\n"
-                    + "MUCHAS GRACIAS POR ELEJIRNOS !!!!!!!!!!!");
+                    + "MUCHAS GRACIAS POR ELEGIRNOS !!!!!!!!!!!");
 
             // Crear el multipart para agregar la parte del mensaje anterior
             Multipart multipart = new MimeMultipart();
@@ -171,30 +206,31 @@ public class CarritoBean implements Serializable {
         System.out.println("Correo enviado");
     }
 
-    public void leer(Carrito carritoSeleccion) {
-        carrito = carritoSeleccion; // copia la referencia 
+    public void leer(Helado heladoSeleccion) {
+        helado = heladoSeleccion; // copia la referencia 
     }
 
     public void modificarCarrito() {
-        Helado helado = heladoDAO.obtenerHeladoSegunIdHelado(carrito.getCodigoHelado());
-        if (helado.getPrecioOferta().equals(0.0)){
-            carrito.setTotal(carrito.getCantidad() * helado.getPrecio());
-        }else{
-            carrito.setTotal(carrito.getCantidad() * helado.getPrecioOferta());
-        }
-        carritoDAO.update(carrito);
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        HelCar helCar = helCarDAO.obtenerHelCar(carritoDAO.obtenerCarritoSegunUsuario(usuario), helado);
+        helCar.setCantHelado(cantidad);
+        helCarDAO.update(helCar);
+        carritoDAO.calcularTotalListaHeladoCarrito(carritoDAO.obtenerCarritoSegunUsuario(usuario));
         FacesMessage msg = new FacesMessage("Exito", "Modificacion del carrito exitosa");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         PrimeFaces.current().executeScript("PF('dlgModificar').hide();");
     }
-    
+
     public List<Carrito> obtenerCarrito() {
         return carritoDAO.getAll(Carrito.class);
     }
 
-    public List<Carrito> obtenerCarritoSegunIdUsuario() {
+    public List<Helado> obtenerHeladoDeCarritoSegunUsuario() {
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        return carritoDAO.obtenerCarritoSegunIdUsuario(usuario.getCodigoUsuario());
+        if (carritoDAO.obtenerCarritoSegunUsuario(usuario) == null) {
+            return new ArrayList<>();
+        }
+        return new ArrayList<>(carritoDAO.obtenerCarritoSegunUsuario(usuario).getHelCars());
     }
 
     public Helado obtenerHelado(Integer idHelado) {
@@ -225,14 +261,6 @@ public class CarritoBean implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public Carrito getCarrito() {
-        return carrito;
-    }
-
-    public void setCarrito(Carrito carrito) {
-        this.carrito = carrito;
-    }
-
     public ICompraDAO getCompraDAO() {
         return compraDAO;
     }
@@ -247,6 +275,22 @@ public class CarritoBean implements Serializable {
 
     public void setComHelDAO(IComHelDAO comHelDAO) {
         this.comHelDAO = comHelDAO;
+    }
+
+    public Helado getHelado() {
+        return helado;
+    }
+
+    public void setHelado(Helado helado) {
+        this.helado = helado;
+    }
+
+    public IHelCarDAO getHelCarDAO() {
+        return helCarDAO;
+    }
+
+    public void setHelCarDAO(IHelCarDAO helCarDAO) {
+        this.helCarDAO = helCarDAO;
     }
 
 }

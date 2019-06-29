@@ -7,12 +7,17 @@ package aplicacion.hibernate.dao;
 
 import aplicacion.modelo.dominio.ComHel;
 import aplicacion.modelo.dominio.Compra;
+import aplicacion.modelo.dominio.Helado;
+import aplicacion.modelo.dominio.Usuario;
 
 /**
  *
  * @author gabri
  */
 public interface IComHelDAO extends IGenericDAO<ComHel, Integer>{
+    ComHel obtenerComHel(Compra compra,Helado helado);
+    void transferirCantidadHelCarAComHel(Compra compra, Usuario usuario);
+    
     int obtenerCantidadComHel(Integer idCompra, Integer idHelado);
-    void actualizarCantidadHeladoComHel(Compra compra, Integer idUsuario);
+   
 }

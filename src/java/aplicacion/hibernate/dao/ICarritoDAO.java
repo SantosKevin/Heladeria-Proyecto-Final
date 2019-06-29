@@ -7,6 +7,7 @@ package aplicacion.hibernate.dao;
 
 import aplicacion.modelo.dominio.Carrito;
 import aplicacion.modelo.dominio.Helado;
+import aplicacion.modelo.dominio.Usuario;
 import java.util.List;
 
 /**
@@ -14,10 +15,13 @@ import java.util.List;
  * @author gabri
  */
 public interface ICarritoDAO extends IGenericDAO<Carrito, Integer>{
-    List<Carrito> obtenerCarritoSegunIdUsuario(Integer idUsuario);
+    Carrito obtenerCarritoSegunUsuario(Usuario usuario);
+    List<Helado> actualizarListaCarrito(Usuario usuario,Helado helado);
+    void calcularTotalListaHeladoCarrito(Carrito carrito);
+    
     List<Helado> obtenerHeladoSegunIdUsuario(Integer idUsuario);
-    void eliminarCarrito(Carrito carrito) ;
-    void eliminarCarrito(Integer idUsuario);
+    void eliminarCarrito(Carrito carrito);
+    
     List<Helado> obtenerHeladoSegunIdUsuarioConCantidadCarrito(Integer idUsuario);
     double obtenerPrecioTotalCarrito(List<Carrito> carritos);
 }

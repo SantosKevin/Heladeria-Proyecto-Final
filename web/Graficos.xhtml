@@ -60,7 +60,7 @@
                                 <p:outputLabel id="lblIngresoDos" value="Ingrese segunda fecha"/>
                                 <p:calendar value="#{graficosFormBean.fechaMayor}"/> 
                             </p:panelGrid>
-                                                       
+
                             <p:commandButton id="cmdGraficoEntreFechas" value="GRAFICAR" actionListener="#{graficosFormBean.graficarEntreDosFechas()}"
                                              update="pnlGeneralGraficoEntreFechas growlGrafico"></p:commandButton>
                             <h:panelGroup id="pnlGeneralGraficoEntreFechas" style="width: 200px;height: 200px">
@@ -70,7 +70,7 @@
                         </p:panelGrid>
                     </p:panel>
                 </h:form>
-
+                
             </ui:define>
 
         </ui:composition>

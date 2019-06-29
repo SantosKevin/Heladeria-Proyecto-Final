@@ -12,21 +12,24 @@
             <p:panel id="pnlCrearSesion" header="Crear nueva cuenta en HeladeriaP.F."><!--todo lo de abajo seria el registro para un usuario nuevo -->
                 <p:panelGrid id="pnlGCrearSesion" columns="2"> 
                     <p:outputLabel id="lblNombre" value="Ingrese Nombre de Usuario"/>
-                    <p:inputText id="txtNombre" value="#{usuarioFormBean.usuario.nombreUsuario}" required="true" placeholder="nombre usuario"/>
+                    <p:inputText id="txtNombre" value="#{usuarioFormBean.usuario.nombreUsuario}" 
+                                 required="true" placeholder="nombre usuario" requiredMessage="Ingrese nombre por favor"/>
                     <p:outputLabel id="lblApellido" value="Ingrese Su Apellido"/>
-                    <p:inputText id="txtApellido" value="#{usuarioFormBean.usuario.apellidoUsuario}" required="true" placeholder="apellido"/>                  
+                    <p:inputText id="txtApellido" value="#{usuarioFormBean.usuario.apellidoUsuario}" 
+                                 required="true" placeholder="apellido" requiredMessage="Ingrese apellido por favor"/>                  
                     <p:outputLabel id="lblDNI" value="Ingrese Su DNI"/>
-                    <p:inputNumber id="nbrDNI" value="#{usuarioFormBean.usuario.dniUsuario}" required="true" 
+                    <p:inputNumber id="nbrDNI" value="#{usuarioFormBean.usuario.dniUsuario}" 
+                                   required="true" requiredMessage="Ingrese DNI por favor"
                                    placeholder="N° DNI" minValue="0" maxValue="99999999" decimalPlaces="0"/>
                     <p:outputLabel id="lblEmail" value="Ingrese email valido"/>
                     <p:inputText id="txtEmail" value="#{usuarioFormBean.usuario.emailUsuario}" required="true" 
-                                 placeholder="usuario@heladeria.com"
+                                 placeholder="usuario@heladeria.com" requiredMessage="Ingrese email por favor"
                                  validator="#{usuarioFormBean.validarEmail}"/>                     
                     <p:outputLabel id="lblContraseña" value="Ingrese su Contraseña"/>                    
                     <p:password id="passContraseña" value="#{usuarioFormBean.usuario.contraseña}" required="true" 
                                 placeholder="contraseña" title="debe tener al menos 1 Mayuscula, letras minusculas, numeros y 1 signo -,_" 
                                 feedback="true" inline="true" strongLabel="Fuerte" promptLabel="Por favor, ingresu su contraseña"
-                                weakLabel="Debil" goodLabel="Buena"
+                                weakLabel="Debil" goodLabel="Buena" requiredMessage="Ingrese contraseña por favor"
                                 validator="#{usuarioFormBean.validarContraseña}"/>
                     <p:commandButton id="btnCrear" value="CREAR" update="growlCrearCuenta frmCrearCuenta"
                                      actionListener="#{usuarioFormBean.crearUsuario()}" 

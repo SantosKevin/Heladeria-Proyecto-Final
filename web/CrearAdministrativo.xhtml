@@ -66,7 +66,8 @@
                                     <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItem itemLabel="administrativo" itemValue="administrativo"/>
                                     <f:selectItem itemLabel="normal" itemValue="normal"/>
-
+                                    <f:selectItem itemLabel="vendedor" itemValue="vendedor"/>
+                                    
                                 </p:selectOneMenu>
                             </f:facet>
                             <h:outputText value="#{admin.tipoUsuario}" />
@@ -89,6 +90,7 @@
                     <p:commandButton value="Agregar Administrativo" id="cmdAgregar"
                                      oncomplete="PF('altaAdmin').show()"
                                      update=":dlgAgregar" icon="ui-icon-plus"/>
+                  
                 </h:form>
                 <p:dialog id="dlgAgregar" modal="true" widgetVar="altaAdmin" resizable="false" header="Agregar Administrativo">
                     <h:form id="frmCrearCuentaAdmin" style="padding-left: 90px;padding-top: 10px;padding-right: 90px;"> <!--aqui le damos estilo -->
@@ -96,22 +98,34 @@
                         <p:panel id="pnlNuevaAdmin" header="Crear nueva cuenta para usuarios administrativos"><!--todo lo de abajo seria el registro para un usuario nuevo -->
                             <p:panelGrid id="pnlGCrearSesionAdmin" columns="2"> 
                                 <p:outputLabel id="lblNombreAdmin" value="Ingrese Nombre de Usuario"/>
-                                <p:inputText id="txtNombreAdmin" value="#{usuarioFormBean.usuario.nombreUsuario}" required="true" placeholder="nombre usuario"/>
+                                <p:inputText id="txtNombreAdmin" value="#{usuarioFormBean.usuario.nombreUsuario}" 
+                                             required="true" placeholder="nombre usuario" requiredMessage="Ingrese nombre por favor"/>
                                 <p:outputLabel id="lblApellidoAdmin" value="Ingrese Su Apellido"/>
-                                <p:inputText id="txtApellidoAdmin" value="#{usuarioFormBean.usuario.apellidoUsuario}" required="true" placeholder="apellido"/>                  
+                                <p:inputText id="txtApellidoAdmin" value="#{usuarioFormBean.usuario.apellidoUsuario}" 
+                                             required="true" placeholder="apellido" requiredMessage="Ingrese apellido por favor"/>                  
                                 <p:outputLabel id="lblDNIAdmin" value="Ingrese Su DNI"/>
-                                <p:inputNumber id="nbrDNIAdmin" value="#{usuarioFormBean.usuario.dniUsuario}" required="true" 
+                                <p:inputNumber id="nbrDNIAdmin" value="#{usuarioFormBean.usuario.dniUsuario}" 
+                                               required="true" requiredMessage="Ingrese DNI por favor"
                                                placeholder="N° DNI" minValue="0" maxValue="99999999" decimalPlaces="0"/>
                                 <p:outputLabel id="lblEmailAdmin" value="Ingrese email valido"/>
                                 <p:inputText id="txtEmailAdmin" value="#{usuarioFormBean.usuario.emailUsuario}" required="true" 
-                                             placeholder="administrador@heladeria.com"
+                                             placeholder="administrador@heladeria.com" requiredMessage="Ingrese email por favor"
                                              validator="#{usuarioFormBean.validarEmail}"/>                     
                                 <p:outputLabel id="lblContraseñaAdmin" value="Ingrese su Contraseña"/>                    
                                 <p:password id="passContraseñaAdmin" value="#{usuarioFormBean.usuario.contraseña}" required="true" 
                                             placeholder="contraseña" title="debe tener al menos 1 Mayuscula, letras minusculas, numeros y 1 signo -,_" 
                                             feedback="true" inline="true" strongLabel="Fuerte" promptLabel="Por favor, ingrese su contraseña"
-                                            weakLabel="Debil" goodLabel="Buena"
+                                            weakLabel="Debil" goodLabel="Buena" requiredMessage="Ingrese contraseña por favor"
                                             validator="#{usuarioFormBean.validarContraseña}"/>
+                                <p:outputLabel  id="lblTipo" value="seleccione el tipo"/>
+                                <p:selectOneMenu id="mnuTipo"
+                                                 value="#{usuarioFormBean.usuario.tipoUsuario}"
+                                             required="true"
+                                             requiredMessage="Ingrese el tipo por favor">
+                                    <f:selectItem itemLabel="administrativo" itemValue="administrativo"/>
+                                    <f:selectItem itemLabel="vendedor" itemValue="vendedor"/>
+
+                                </p:selectOneMenu>
                                 <p:commandButton id="btnCrearAdmin" value="CREAR" update="growlAdmin frmCrearCuentaAdmin frmAdmins"
                                                  actionListener="#{usuarioFormBean.crearUsuarioAdministrativo()}"
                                                  oncomplete="PF('altaAdmin').hide()"/>

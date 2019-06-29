@@ -5,11 +5,13 @@
  */
 package aplicacion.modelo.dominio;
 
+import java.io.Serializable;
+
 /**
  *
  * @author samanta
  */
-public class Carrito {
+public class Carrito implements Serializable{
     private Integer codigo;
     private Integer codigoUsuario;
     private Integer codigoHelado;

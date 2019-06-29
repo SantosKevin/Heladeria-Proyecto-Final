@@ -5,6 +5,7 @@
  */
 package aplicacion.modelo.util;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -20,7 +21,7 @@ import javax.faces.bean.SessionScoped;
 /**
  * Clase que posee los sabores y tipos de manera estatica y constantes es decir, no se van a modificar
  */
-public class SaboresYTipos {
+public class SaboresYTipos implements Serializable{
     
     private final static String[] Sabores;
     private final static String[] Tipos;

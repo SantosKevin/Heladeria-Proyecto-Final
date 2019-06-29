@@ -77,11 +77,10 @@ public class UsuarioFormBean implements Serializable {
      * me permite crear usuarios tipo administrativos, agregando los
      * correspondientes mensajes
      */
-    public void crearUsuarioAdministrativo() {
+    public void crearUsuarioAdministrativo(){
         usuario.setEstado(true);
-        usuario.setTipoUsuario("administrativo");
         usuarioBean.crearUsuario(usuario);
-        usuario = new Usuario();
+        usuario = new Usuario(); //limpiar los campos
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó un nuevo Usuario Administrativo", "A trabajar!"));
 

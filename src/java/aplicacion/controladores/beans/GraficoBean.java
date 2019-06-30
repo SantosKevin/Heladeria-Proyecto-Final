@@ -6,7 +6,6 @@ import aplicacion.hibernate.dao.ICompraDAO;
 import aplicacion.hibernate.dao.imp.CarritoDAOImp;
 import aplicacion.hibernate.dao.imp.CompraDAOImp;
 import aplicacion.modelo.dominio.Compra;
-import aplicacion.modelo.dominio.Helado;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +27,6 @@ import org.primefaces.model.chart.ChartSeries;
 public class GraficoBean implements Serializable {
 
     private BarChartModel model;
-    private BarChartModel sabores;
     private BarChartModel barras;
     private BarChartModel barrasEntreFechas;
     private ICarritoDAO carritoDao;
@@ -52,7 +50,7 @@ public class GraficoBean implements Serializable {
         int contVendido = 0, contCancelado = 0, contPendiente = 0, contAretirar=0;
         boolean repetido = false;
         listaGrafico = carritoDao.getAll(Carrito.class);
-        List<Integer> usuarios = new ArrayList<>(); // para almacenar cada usuario que realizo un pedido
+        List<Integer> usuarios = new ArrayList<>(); // para almacenar el codigo de cada usuario que realizo un pedido
 
         for (Carrito carrito : listaGrafico) {       //para las compras pendientes
             repetido = false;
@@ -306,13 +304,4 @@ public class GraficoBean implements Serializable {
     public void setBarrasEntreFechas(BarChartModel barrasEntreFechas) {
         this.barrasEntreFechas = barrasEntreFechas;
     }
-
-    public BarChartModel getSabores() {
-        return sabores;
-    }
-
-    public void setSabores(BarChartModel sabores) {
-        this.sabores = sabores;
-    }
-
 }

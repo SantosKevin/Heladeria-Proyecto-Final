@@ -9,7 +9,7 @@
     </h:head>
     <h:body>
         <h:form id="frmCrearCuenta" style="padding-left: 90px;padding-top: 50px;"> <!--aqui le damos estilo -->
-            <p:growl id="growlCrearCuenta" showDetail="true"/>
+            <p:growl id="growlCrearCuenta" showDetail="true" sticky="true"/>
             <p:panel id="pnlCrearSesion" style="padding-top: 5%;background: #013947; width: 450px"><!--todo lo de abajo seria el registro para un usuario nuevo -->
                 <p:outputLabel value="Registro de Usuario" style="font-size: 35px; font-weight: bold; color: #ffffff"/>
                     <br/><br/>
@@ -42,15 +42,15 @@
                     <p:commandButton id="btnCrear" value="Crear Cuenta" update="growlCrearCuenta frmCrearCuenta"
                                      style="background: #1ab188; color: #ffffff; width: 410px; height: 50px; font-size: 25px"
                                      actionListener="#{usuarioFormBean.crearUsuario()}" 
-                                     action="Sesion.xhtml"/>
+                                     action="sesion.xhtml"/>
             </p:panel> <!--en este codigo de arriva llamamos a los respectivos validadores, y creamos un usuario -->
-            <p:blockUI block="pnlCrearSesion" trigger="btnCrear" />
+            <p:blockUI block="pnlCrearSesion VolverSesion" trigger="btnCrear" />
         </h:form>
         <h:form id="VolverSesion" style="padding-left: 90px">
             <p:panel style="background: #013947">
                 <p:commandButton id="lnkVolverSesion"
                                  value="Cancelar"
-                                 action="Sesion.xhtml"
+                                 action="sesion.xhtml"
                                  style="background: #ff0001; color: #ffffff; width: 110px;"
                                  update=":VolverSesion"/>
             </p:panel>

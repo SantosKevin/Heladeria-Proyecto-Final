@@ -65,7 +65,10 @@ public class CompraBean {
             return helCar.getCantHelado() * helado.getPrecio();
         }
     }
-    
+    /**
+     * 
+     * @return 
+     */
     public List<Compra> obtenerCompras(){
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         
@@ -74,7 +77,13 @@ public class CompraBean {
         }
         return compraDAO.obtenerCompras();
     }
-    
+    /**
+     * permite cancelar un pedido pasado las 24 hrs
+     * @param estado estado de la compra 
+     * @param fecha fecha de la compra
+     * @param comp objeto compra
+     * @return 
+     */
     public String ObtenerEstadoCompra(Integer estado, Date fecha, Compra comp){
         if(estado != 1){
         //Creamos una instancia de la fecha del momento en que se corre el codigo

@@ -47,8 +47,11 @@
                         </p:column>
                         <p:column id="clmEmail" headerText="Email"> 
                             <p:cellEditor>
-                                <f:facet name="output"><h:outputText id="txte" value="#{admin.emailUsuario}" /></f:facet>
-                                <f:facet name="input"><p:inputText id="inpEmail" value="#{admin.emailUsuario}"/></f:facet>
+                                <f:facet name="output"><h:outputText id="txtEmailModi" value="#{admin.emailUsuario}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="inpEmail" value="#{admin.emailUsuario}"
+                                                 validator="#{usuarioFormBean.validarEmail}"/>
+                                </f:facet>
                             </p:cellEditor>
                         </p:column>
                         <p:column id="clmEstado" headerText="Estado">
@@ -66,7 +69,7 @@
                         <p:column filterBy="#{admin.tipoUsuario}" headerText="Tipo Usuario"  filterMatchMode="exact">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('usuariosTable').filter()" styleClass="custom-filter">
-                                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Elija uno" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItem itemLabel="administrativo" itemValue="administrativo"/>
                                     <f:selectItem itemLabel="normal" itemValue="normal"/>
                                     <f:selectItem itemLabel="vendedor" itemValue="vendedor"/>

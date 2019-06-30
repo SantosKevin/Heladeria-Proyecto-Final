@@ -122,7 +122,7 @@ public class UsuarioFormBean implements Serializable {
     public String desconectar() {
         String redireccion = "";
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        redireccion = "Sesion?faces-redirect=true";
+        redireccion = "sesion?faces-redirect=true";
         return redireccion;
     }
     public String redireccion(){
@@ -133,7 +133,7 @@ public class UsuarioFormBean implements Serializable {
             if(this.usuarioConectado.getTipoUsuario().equalsIgnoreCase("administrativo"))
                 redireccion = "pagina_administrador?faces-redirect=true";
             else
-                if (this.usuarioConectado.getTipoUsuario().equals("root")){
+                if (this.usuarioConectado.getTipoUsuario().equals("administrador")){
                     redireccion = "pagina_root?faces-redirect=true";
                 }else{
                     redireccion = "pagina_vendedor?faces-redirect=true";
@@ -200,10 +200,36 @@ public class UsuarioFormBean implements Serializable {
         boolean emailValido = false;
         Usuario usu = usuarioBean.validarEmailExsitente((String) o);
         emailValido = usuarioBean.validarEmail((String) o);
-        if (usu != null || emailValido == false) {
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error email", "el correo ingresado ya existe o el dominio es incorrecto"));
+        if (usu != null) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error email", "el correo ingresado ya existe"));
+        }else{
+           if(emailValido == false){
+               throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error email", "el dominio es incorrecto"));
+           }
         }
-
+    }
+    /**
+     * validador para que al modificar un email no se repita ninguno
+     * @param fc contexto
+     * @param uic componente
+     * @param o email a cambiar
+     * @throws ValidatorException 
+     */
+    public void cambiarEmail(FacesContext fc, UIComponent uic, Object o) throws ValidatorException {
+       String emailAnterior = this.usuarioConectado.getEmailUsuario();
+        System.out.println("este es el anterios "+ emailAnterior);
+       if(!emailAnterior.equals((String)o)){
+            boolean emailValido = false;
+        Usuario usu = usuarioBean.validarEmailExsitente((String) o);
+        emailValido = usuarioBean.validarEmail((String) o);
+        if (usu != null) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error email", "el correo ingresado ya existe"));
+        }else{
+           if(emailValido == false){
+               throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error email", "el dominio es incorrecto"));
+           }
+        }
+       }
     }
 
     /**

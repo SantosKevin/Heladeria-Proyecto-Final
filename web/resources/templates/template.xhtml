@@ -14,13 +14,13 @@
         <f:event type="preRenderView" listener="#{usuarioFormBean.controlarSesion()}"/>
         <script type="text/javascript">
             window.history.forward();
-            function sinVueltaAtras() {
+            function noPermitirVueltaAtras() {
                 window.history.forward();
             }
         </script>
     </h:head>
 
-    <h:body onload="sinVueltaAtras();"  onunload="">
+    <h:body onload="noPermitirVueltaAtras();"  onunload="">
 
         <div id="top">
             <div id="titulo">
@@ -40,7 +40,7 @@
 
                         <p:menuitem value="Carrito" url="pagina_carrito.xhtml" icon="ui-icon-cart" />
                         <p:menuitem value="Pedidos" url="pagina_compra.xhtml" icon="ui-icon-mail-closed" />
-                        <p:menuitem value="Editar Datos" onclick="PF('dlgModificarDatos').show()"/>
+                        <p:menuitem value="Editar Datos" onclick="PF('dlgModificarDatos').show()" icon="ui-icon-person"/>
                         <f:facet name="options">
                             <p:outputLabel value="Bienvenido ~ #{usuarioFormBean.devolverNombreUsuario()} ~" style="margin-right: 5px;"/>
                             <p:commandButton id="cmdDesc" value="Desconectar" action="#{usuarioFormBean.desconectar}"
@@ -67,7 +67,8 @@
                                      value="#{usuarioFormBean.usuarioConectado.dniUsuario}"/>
                         <p:outputLabel id="lblEmail" value="Ingrese Email a modificar"/>
                         <p:inputText id="nbrEmailModi"
-                                     value="#{usuarioFormBean.usuarioConectado.emailUsuario}"/>
+                                     value="#{usuarioFormBean.usuarioConectado.emailUsuario}" 
+                                     validator="#{usuarioFormBean.cambiarEmail}"/>
                         </p:panelGrid>
                         <p:commandButton value="Modificar Usuario"
                                          update="growlGen"

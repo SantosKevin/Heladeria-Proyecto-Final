@@ -9,6 +9,7 @@ import aplicacion.modelo.dominio.Carrito;
 import aplicacion.modelo.dominio.Compra;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -30,8 +31,6 @@ public class GraficosFormBean implements Serializable {
     private GraficoBean graficoBean;
     private Date fechaMenor;
     private Date fechaMayor;
-    private ICompraDAO compraDao;
-    private ICarritoDAO carritoDao;
 
     /**
      * Creates a new instance of GraficosFormBean
@@ -39,18 +38,17 @@ public class GraficosFormBean implements Serializable {
     public GraficosFormBean() {
         fechaMayor = new Date();
         fechaMenor = new Date();
-        compraDao = new CompraDAOImp();
-        carritoDao = new CarritoDAOImp();
     }
 
     /**
      * grafica las estadisticas generales de las compras
      */
     public void graficarEstadisticaGeneral() {
-        if (compraDao.getAll(Compra.class).isEmpty() && carritoDao.getAll(Carrito.class).isEmpty()) {
+
+        if (graficoBean.getCompraDao().getAll(Compra.class).isEmpty() && graficoBean.getCarritoDao().getAll(Carrito.class).isEmpty()) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Nada para mostrar", "no hay ventas"));
-        }else{
+        } else {
             graficoBean.listar();
             FacesContext facesContext = FacesContext.getCurrentInstance();
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se graficó con exito", "A observar!"));
@@ -62,7 +60,7 @@ public class GraficosFormBean implements Serializable {
      * grafica las estadisticas de confirmado y cancelado por dia
      */
     public void graficarPorDia() {
-        if (compraDao.getAll(Compra.class).isEmpty()) {
+        if (graficoBean.getCompraDao().getAll(Compra.class).isEmpty()) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Nada para mostrar", "no hay ventas"));
         } else {
@@ -78,17 +76,24 @@ public class GraficosFormBean implements Serializable {
      * permite graficar entre dos fechas ingresadas por el administrador
      */
     public void graficarEntreDosFechas() {
-        if (compraDao.getAll(Compra.class).isEmpty()) {
+        List<Compra> listaCompra = graficoBean.getCompraDao().getAll(Compra.class);
+        if (listaCompra.isEmpty()) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Nada para mostrar", "no hay ventas"));
         } else {
-            if (fechaMayor.compareTo(fechaMenor) >= 0) {
-                graficoBean.graficarEntreFechas(fechaMenor, fechaMayor);
+            if (fechaMenor.compareTo(listaCompra.get(0).getFechaCompra()) >= 0
+                    && fechaMayor.compareTo(listaCompra.get(listaCompra.size()-1).getFechaCompra()) <= 0) {
+                if (fechaMayor.compareTo(fechaMenor) >= 0) {
+                    graficoBean.graficarEntreFechas(fechaMenor, fechaMayor);
+                    FacesContext facesContext = FacesContext.getCurrentInstance();
+                    facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se graficó exitosamente", "A observar!"));
+                } else {
+                    FacesContext facesContext = FacesContext.getCurrentInstance();
+                    facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR", "LA SEGUNDA FECHA DEBE SER MAYOR A LA PRIMERA"));
+                }
+            }else{
                 FacesContext facesContext = FacesContext.getCurrentInstance();
-                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se graficó exitosamente", "A observar!"));
-            } else {
-                FacesContext facesContext = FacesContext.getCurrentInstance();
-                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR", "LA SEGUNDA FECHA DEBE SER MAYOR A LA PRIMERA"));         
+                    facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "ERROR", "fechas fuera de rango"));
             }
         }
 
@@ -118,21 +123,4 @@ public class GraficosFormBean implements Serializable {
     public void setFechaMayor(Date fechaMayor) {
         this.fechaMayor = fechaMayor;
     }
-
-    public ICompraDAO getCompraDao() {
-        return compraDao;
-    }
-
-    public void setCompraDao(ICompraDAO compraDao) {
-        this.compraDao = compraDao;
-    }
-
-    public ICarritoDAO getCarritoDao() {
-        return carritoDao;
-    }
-
-    public void setCarritoDao(ICarritoDAO carritoDao) {
-        this.carritoDao = carritoDao;
-    }
-
 }

@@ -81,7 +81,7 @@
                           resizable="false"
                           header="Agregar Nueva Oferta">
                     <h:form id="formAgregarFechaOferta">
-                        <p:panelGrid columns="2">
+                        <p:panelGrid id="pnlGridSiguiente" columns="2">
                             <p:outputLabel value="Agregar Fecha Inicial"/>
                             <p:calendar value="#{ofertaFormBean.oferta.fechaInicio}"
                                         required="true"
@@ -105,6 +105,7 @@
                                              actionListener="#{ofertaFormBean.validarFechas()}"
                                              update="growlOferta"/>
                         </p:panelGrid>
+                        <p:blockUI block="pnlGridSiguiente" trigger="btnSiguiente"/>
                     </h:form>
                 </p:dialog>
                 <p:dialog id="idDlgAgregarHeladoOferta"
@@ -113,7 +114,8 @@
                           resizable="false"
                           header="Agregar Productos">
                     <h:form id="formAgregarHeladoOferta">
-                        <p:panel header="Agregar por Tipo de Helados">
+                        <p:panel id="pnlGeneralOferta">
+                        <p:panel id="pnlAgregarOfertaTipo" header="Agregar por Tipo de Helados">
                             <p:panelGrid columns="3">
                                 <p:outputLabel value="Ingrese el tipo de helados"/>
                                 <p:selectOneMenu value="#{ofertaFormBean.helado.tipoHelado}">
@@ -125,26 +127,29 @@
                                 <p:commandButton id="btnAgregarOfertaTipo"
                                                  value="Agregar Oferta por Tipo"
                                                  update="formTabla growlOferta"
-                                                 onclick="PF('dlgAgregarHeladoOferta').hide()"
                                                  actionListener="#{ofertaFormBean.crearOfertaTipo()}"/>
                             </p:panelGrid>
                         </p:panel>
-                        <p:panel header="Agregar por Codigo de Helado">
+                        <p:panel id="pnlAgregarOfertaCodigo" header="Agregar por Codigo de Helado">
                             <p:panelGrid columns="3">
                                 <p:outputLabel value="Ingrese codigo de helado"/>
                                 <p:inputNumber value="#{ofertaFormBean.helado.codigoHelado}"
                                                decimalPlaces="0"
                                                minValue="0"/>
-                                <p:commandButton value="Agregar Helado"
+                                <p:commandButton id="btnAgregarHeladoCodigo"
+                                                 value="Agregar Helado"
                                                  update="growlOferta"
                                                  actionListener="#{ofertaFormBean.agregarHeladoOferta()}"/>
                             </p:panelGrid>
                             <p:commandButton id="btnAgregarOfertaHelado"
                                              value="Agregar Oferta por Helados"
                                              update="formTabla growlOferta"
-                                             onclick="PF('dlgAgregarHeladoOferta').hide()"
                                              actionListener="#{ofertaFormBean.crearOfertaHelado()}"/>
                         </p:panel>
+                        </p:panel>
+                        <p:blockUI block="pnlGeneralOferta" trigger="btnAgregarOfertaTipo"/>
+                        <p:blockUI block="pnlGeneralOferta" trigger="btnAgregarHeladoCodigo"/>
+                        <p:blockUI block="pnlGeneralOferta" trigger="btnAgregarOfertaHelado"/>
                     </h:form>
                 </p:dialog>
             </ui:define>

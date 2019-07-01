@@ -24,6 +24,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import aplicacion.hibernate.dao.IHelCarDAO;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -99,6 +100,8 @@ public class HeladoBean implements Serializable {
         }
         FacesMessage msg = new FacesMessage("Mensaje", "Agregado al Carrito");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+        PrimeFaces.current().executeScript("PF('multiProdDialog').hide()");
         
     }
 

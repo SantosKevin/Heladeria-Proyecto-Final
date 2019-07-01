@@ -16,6 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
 
 /**
@@ -122,11 +123,13 @@ public class HeladoFormBean implements Serializable {
                 helado.setCantidad(helado.getCantidad() + this.stock);
                 FacesContext.getCurrentInstance().
                         addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "El Stock se ha agregado"));
+                PrimeFaces.current().executeScript("PF('dlgModificarStock').hide()");
             }else{
                 if(helado.getCantidad() >= this.stock){
+                    helado.setCantidad(helado.getCantidad() - this.stock);
                     FacesContext.getCurrentInstance().
                         addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "El Stock se ha decrementado"));
-                    helado.setCantidad(helado.getCantidad() - this.stock);
+                    PrimeFaces.current().executeScript("PF('dlgModificarStock').hide()");
                 }
                 else
                    FacesContext.getCurrentInstance().

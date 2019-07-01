@@ -148,8 +148,6 @@ public class OfertaFormBean implements Serializable{
                 if(heladoAuxiliar == null){
                     o.getHeladosOferta().remove(h);
                 }else{
-                    System.out.println("helado h" + h.toString());
-                    System.out.println("helado auxiliar" + heladoAuxiliar.toString());
                     h.setCantidad(heladoAuxiliar.getCantidad());
                     heladoBean.modificarHelado(h);
                 }
@@ -177,9 +175,10 @@ public class OfertaFormBean implements Serializable{
             oferta.setHeladosOferta(new HashSet<>(listaHeladoRubroAuxiliar));
             ofertaBean.agregarOferta(oferta);
             oferta = new Oferta();
-             generarOfertas();
+            generarOfertas();
             generarOfertasActuales();
             actualizarOfertas();
+            PrimeFaces.current().executeScript("PF('dlgAgregarHeladoOferta').hide()");
         }else{
             FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No hay Helados de tipo : \""+helado.getTipoHelado()+"\" "
@@ -261,6 +260,9 @@ public class OfertaFormBean implements Serializable{
             generarOfertasActuales();
             actualizarOfertas();
             this.listaHelados.clear();
+            PrimeFaces.current().executeScript("PF('dlgAgregarHeladoOferta').hide()");
+            FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "La oferta se ha creado"));
         }else
             FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se puede crear una oferta sin helados"));

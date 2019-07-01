@@ -7,9 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-
         <ui:composition template="./resources/templates/template_base_de_datos.xhtml">
-
             <ui:define name="content">
                 <p:growl id="growlGeneral" showDetail="true"/>
                 <h:form id="formTabla">
@@ -18,6 +16,7 @@
                                      update="formAgregarHelado"
                                      value="Agregar Helado"
                                      onclick="PF('dlgAgregarHelado').show()"/> <p:separator/>
+
                     <p:dataTable id="tblHelado"
                                  widgetVar="wvHelado"
                                  emptyMessage="No hay Helados"
@@ -34,7 +33,7 @@
                         <p:column id="clmCodigoHelado" headerText="Codigo">
                             <p:outputLabel id="lblCodigoHelado" value="#{helado.codigoHelado}"/>
                         </p:column>
-                        
+
                         <p:column id="clmNombreHelado" filterBy="#{helado.nombreHelado}" filterMatchMode="contains" headerText="Nombre">
                             <p:cellEditor>
                                 <f:facet name="output"><p:outputLabel value="#{helado.nombreHelado}"/></f:facet>
@@ -109,8 +108,9 @@
                                              onclick="PF('dlgModificarStock').show()"
                                              value="Modificar Stock"/>
                         </p:column>
-                        
+
                     </p:dataTable>
+
                 </h:form>
                 <p:dialog id="idDlgModificarStock"
                           widgetVar="dlgModificarStock"
@@ -118,29 +118,33 @@
                           modal="true"
                           resizable="true">
                     <h:form id="formModificarStock">
-                        <p:outputLabel id="lblStockModi" value="Ingrese stock a modificar"/><br/>
-                        <p:inputNumber id="nbrStockModi"
-                                       value="#{heladoFormBean.stock}"
-                                       decimalPlaces="0"
-                                       minValue="0"
-                                       required="true"
-                                       requiredMessage="Ingrese la cantidad por favor"/>
-                        
-                        <p> ¿Que desea hacer con esa cantidad? </p>
-                        <p:commandButton value="Agregar"
-                                         onclick="PF('dlgModificarStock').hide()"
-                                         actionListener="#{heladoFormBean.modificarStock(1)}"
-                                         update="growlGeneral formTabla">
-                            <p:confirm header="Confirmacion" message="¿Estas seguro de realizar la accion de AGREGAR STOCK?"/>
-                        </p:commandButton>
-                        <p:commandButton value="Quitar"
-                                         update="growlGeneral formTabla"
-                                         onclick="PF('dlgModificarStock').hide()"
-                                         actionListener="#{heladoFormBean.modificarStock(0)}">
-                            <p:confirm header="Confirmacion" message="¿Estas seguro de realizar la accion de QUITAR STOCK?"/>
-                        </p:commandButton>
+                        <p:panel id="pnlModificarStock">
+                            <p:outputLabel id="lblStockModi" value="Ingrese stock a modificar"/><br/>
+                            <p:inputNumber id="nbrStockModi"
+                                           value="#{heladoFormBean.stock}"
+                                           decimalPlaces="0"
+                                           minValue="0"
+                                           required="true"
+                                           requiredMessage="Ingrese la cantidad por favor"/>
+
+                            <p> ¿Que desea hacer con esa cantidad? </p>
+                            <p:commandButton id="btnAgregarStock"
+                                             value="Agregar"
+                                             actionListener="#{heladoFormBean.modificarStock(1)}"
+                                             update="growlGeneral formTabla">
+                                <p:confirm header="Confirmacion" message="¿Estas seguro de realizar la accion de AGREGAR STOCK?"/>
+                            </p:commandButton>
+                            <p:commandButton id="btnQuitarStock"
+                                             value="Quitar"
+                                             update="growlGeneral formTabla"
+                                             actionListener="#{heladoFormBean.modificarStock(0)}">
+                                <p:confirm header="Confirmacion" message="¿Estas seguro de realizar la accion de QUITAR STOCK?"/>
+                            </p:commandButton>
+                        </p:panel>
+                        <p:blockUI block="pnlModificarStock" trigger="btnAgregarStock"/>
+                        <p:blockUI block="pnlModificarStock" trigger="btnQuitarStock"/>
                     </h:form>
-                    
+
                 </p:dialog>
                 <p:dialog id="idDlgAgregarHelado"
                           widgetVar="dlgAgregarHelado"
@@ -219,10 +223,13 @@
                     </h:form>
                 </p:dialog>
                 <h:form id="formConfirmar">
-                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-cancel" />
-                    </p:confirmDialog> 
+                    <p:panel id="pnlDialogo">
+                        <p:confirmDialog id="confirmDialog" global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton id="btnSi" value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton id="btnNo" value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-cancel" />
+                        </p:confirmDialog> 
+                    </p:panel>
+                    <p:blockUI block="pnlDialogo" trigger="btnSi"/>
                 </h:form>
             </ui:define>
         </ui:composition>

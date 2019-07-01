@@ -23,8 +23,17 @@
     <h:body onload="noPermitirVueltaAtras();"  onunload="">
 
         <div id="top">
-            <div id="titulo">
-                <center><h1>Heladeria F.I. U.N.Ju</h1></center>
+            <div id="titulo"
+                 style="display: inline-block;
+                        position: absolute;
+                        top: -25%;
+                        left: 50%;
+                        color: #ff003c;
+                        font-size: 70px;
+                        text-shadow: 5px 3px 1px #000000;
+                        vertical-align: middle;
+                        margin-left: -750px;">
+                <center><h1>Heladería F.I. U.N.Ju</h1></center>
             </div> 
         </div>
         <div id="menu">
@@ -32,7 +41,7 @@
             <ui:insert name="menu">
                 <p:growl id="growlGen" showDetail="true"/>
                 <h:form id="frmTemp">
-                    <p:menubar>
+                    <p:menubar style="font-size: 17px">
                         <p:menuitem value="Inicio" actionListener="#{ofertaFormBean.actualizarHelados()}" action="#{usuarioFormBean.redireccionar()}" icon="ui-icon-home"/>
                         <p:submenu label="Productos" icon="ui-icon-lightbulb">
                             <p:menuitem value="Helados" url="pagina_catalogo.xhtml" />
@@ -40,7 +49,7 @@
 
                         <p:menuitem value="Carrito" url="pagina_carrito.xhtml" icon="ui-icon-cart" />
                         <p:menuitem value="Pedidos" url="pagina_compra.xhtml" icon="ui-icon-mail-closed" />
-                        <p:menuitem value="Editar Datos" onclick="PF('dlgModificarDatos').show()" icon="ui-icon-person"/>
+                        <p:menuitem value="Mi Perfil" onclick="PF('dlgModificarDatos').show()" icon="ui-icon-person"/>
                         <f:facet name="options">
                             <p:outputLabel value="Bienvenido ~ #{usuarioFormBean.devolverNombreUsuario()} ~" style="margin-right: 5px;"/>
                             <p:commandButton id="cmdDesc" value="Desconectar" action="#{usuarioFormBean.desconectar}"
@@ -51,27 +60,30 @@
                 </h:form>
                 <p:dialog id="dlgModificarDatos"
                           widgetVar="dlgModificarDatos"
-                          header="Modificar Datos"
+                          header="Mis Datos"
                           modal="true"
-                          resizable="true">
+                          resizable="false"
+                          height="220px"
+                          width="450px">
                     <h:form id="formModificarDatos">
-                        <p:panelGrid columns="2">
-                        <p:outputLabel id="lblNom" value="Ingrese Nombre a modificar"/>
+                        <p:panelGrid columns="2" layout="grid">
+                        <p:outputLabel id="lblNom" value="Nombre"/>
                         <p:inputText id="nbrNomModi"
                                      value="#{usuarioFormBean.usuarioConectado.nombreUsuario}"/>
-                        <p:outputLabel id="lblApe" value="Ingrese Apellido a modificar"/>
+                        <p:outputLabel id="lblApe" value="Apellido"/>
                         <p:inputText id="nbrApeModi"
                                      value="#{usuarioFormBean.usuarioConectado.apellidoUsuario}"/>
-                        <p:outputLabel id="lblDni" value="Ingrese D.N.I. a modificar"/>
+                        <p:outputLabel id="lblDni" value="D.N.I."/>
                         <p:inputText id="nbrDNIModi"
                                      value="#{usuarioFormBean.usuarioConectado.dniUsuario}"
                                      validator="#{usuarioFormBean.validarDNI}"/>
-                        <p:outputLabel id="lblEmail" value="Ingrese Email a modificar"/>
+                        <p:outputLabel id="lblEmail" value="Email"/>
                         <p:inputText id="nbrEmailModi"
                                      value="#{usuarioFormBean.usuarioConectado.emailUsuario}" 
                                      validator="#{usuarioFormBean.cambiarEmail}"/>
                         </p:panelGrid>
-                        <p:commandButton value="Modificar Usuario"
+                        <br/>
+                        <p:commandButton value="Guardar Datos"
                                          update="growlGen"
                                          actionListener="#{usuarioFormBean.modificarUsuario(usuarioFormBean.usuarioConectado)}"
                                          oncomplete="PF('dlgModificarDatos').hide()"/>

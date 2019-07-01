@@ -39,6 +39,7 @@
                                     <p:column headerText="Nombre Usuario">
                                         <p:outputLabel value="#{comp.usuarioCompra.nombreUsuario} #{comp.usuarioCompra.apellidoUsuario} "/>
                                     </p:column> 
+                                    
                                     <p:column headerText="Fecha">
                                         <p:outputLabel value="#{comp.fechaCompra}">
                                             <f:convertDateTime pattern="dd/MM/yyyy" />
@@ -72,7 +73,10 @@
                                             </p:column> 
                                             <p:column headerText="Precio de Oferta c/u">
                                                 <p:outputLabel value="$#{hel.precioOferta}"/>
-                                            </p:column> 
+                                            </p:column>
+                                            
+                                            
+                                            
                                             <p:column headerText="Cantidad" style="text-align: center" >
                                                 <p:outputLabel value="#{compraBean.obtenerCantidad(comp.codigoCompra,hel.codigoHelado)}"/>
                                             </p:column>
@@ -85,9 +89,9 @@
                                     icon="ui-icon-circle-check" value="Confirmar Compra" 
                                     style="float: right; margin: 1%; margin-right: 3%"
                                     action="#{vendedorBean.confirmarCompra()}"
-                                    update="tblCarrito frmMenu:mensajes">
-                                <p:confirm header="Confirmacion" message="Confirmar?" 
-                                           icon="ui-icon-alert"/>
+                                    update="tblCarrito frmMenu:mensajes"
+                                    ajax="false">
+                                    
                                 </p:commandButton>
                                 <p:commandButton 
                                     id="botonCancelar"

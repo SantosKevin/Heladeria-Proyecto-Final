@@ -51,7 +51,7 @@
                         <p:menuitem value="Pedidos" url="pagina_compra.xhtml" icon="ui-icon-mail-closed" />
                         <p:menuitem value="Mi Perfil" onclick="PF('dlgModificarDatos').show()" icon="ui-icon-person"/>
                         <f:facet name="options">
-                            <p:outputLabel value="Bienvenido ~ #{usuarioFormBean.devolverNombreUsuario()} ~" style="margin-right: 5px;"/>
+                            <p:outputLabel value="Usuario #{usuarioFormBean.devolverNombreUsuario()} " style="margin-right: 5px;"/>
                             <p:commandButton id="cmdDesc" value="Desconectar" action="#{usuarioFormBean.desconectar}"
                                              icon="ui-icon-power"/>
 
@@ -117,7 +117,5 @@
                 </center>
             </ui:insert>
         </div>
-
     </h:body>
-
 </html>

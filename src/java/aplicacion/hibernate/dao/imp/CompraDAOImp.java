@@ -34,6 +34,7 @@ public class CompraDAOImp extends GenericDAOImp<Compra, Integer> implements ICom
         
         Session session = HibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Compra.class);
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         List<Compra> compras = criteria.list();
         session.close();
         
@@ -57,6 +58,7 @@ public class CompraDAOImp extends GenericDAOImp<Compra, Integer> implements ICom
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Compra.class);
+        
         List<Compra> compras = criteria.list();
         session.close();
 

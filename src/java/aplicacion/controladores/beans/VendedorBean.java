@@ -5,11 +5,9 @@
  */
 package aplicacion.controladores.beans;
 
-import aplicacion.hibernate.dao.ICarritoDAO;
 import aplicacion.hibernate.dao.IComHelDAO;
 import aplicacion.hibernate.dao.ICompraDAO;
 import aplicacion.hibernate.dao.IHeladoDAO;
-import aplicacion.hibernate.dao.imp.CarritoDAOImp;
 import aplicacion.hibernate.dao.imp.ComHelDAOImp;
 import aplicacion.hibernate.dao.imp.CompraDAOImp;
 import aplicacion.hibernate.dao.imp.HeladoDAOImp;
@@ -200,7 +198,5 @@ public class VendedorBean implements Serializable{
 
     public void setComHelDao(IComHelDAO comHelDao) {
         this.comHelDao = comHelDao;
-    }
-    
-    
+    }   
 }

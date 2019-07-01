@@ -202,12 +202,12 @@ public class CarritoBean implements Serializable {
 
             // Creo la parte del mensaje
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
-            mimeBodyPart.setText("Su compra esta en espera para ser retirado "
-                    + "en nuestra sucursal más cercana "
-                    + "deberá ir con su código de compra y DNI al momento de retirar el pedido.\n"
-                    + "CODIGO DE COMPRA: " + compraDAO.obtenerUltimoCodigodeCompra(compra.getUsuarioCompra()) + "\n."
+            mimeBodyPart.setText("Felicitaciones su pedido ha sido ingresado correctamente. "
+                    + "Ya tiene reservado su pedido en Heladeria F.I. U.N.Ju. "
+                    + "Para retirar el producto deberá ir con su D.N.I. y el código de compra.\n"
+                    + "CODIGO DE COMPRA: " + compraDAO.obtenerUltimoCodigodeCompra(compra.getUsuarioCompra()) + ".\n"
                     + "\n"
-                    + "MUCHAS GRACIAS POR ELEGIRNOS !!!!!!!!!!!");
+                    + "GRACIAS POR CONFIAR EN NOSOTROS");
 
             // Crear el multipart para agregar la parte del mensaje anterior
             Multipart multipart = new MimeMultipart();

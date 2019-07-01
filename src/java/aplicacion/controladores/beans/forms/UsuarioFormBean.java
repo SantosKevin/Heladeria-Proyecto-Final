@@ -125,20 +125,20 @@ public class UsuarioFormBean implements Serializable {
         redireccion = "sesion?faces-redirect=true";
         return redireccion;
     }
-    public String redireccion(){
+    public String redireccionar(){
         String redireccion = "";
         if(this.usuarioConectado.getTipoUsuario().equalsIgnoreCase("normal"))
             redireccion = "pagina_principal?faces-redirect=true";
         else{
             if(this.usuarioConectado.getTipoUsuario().equalsIgnoreCase("administrativo"))
                 redireccion = "pagina_administrador?faces-redirect=true";
-            else
+            else{
                 if (this.usuarioConectado.getTipoUsuario().equals("administrador")){
                     redireccion = "pagina_root?faces-redirect=true";
                 }else{
                     redireccion = "pagina_vendedor?faces-redirect=true";
                 }
-                
+            }
         }
         return redireccion;
     }
@@ -281,9 +281,9 @@ public class UsuarioFormBean implements Serializable {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         if (contraseña.equals(this.usuarioConectado.getContraseña())) {
             if(this.paramBaseDeDatos == 1)
-                redireccion = "baseDeDatosHelados?faces-redirect=true";
+                redireccion = "base_de_datos_helados?faces-redirect=true";
             else
-                redireccion = "baseDeDatosOfertas?faces-redirect=true";
+                redireccion = "base_de_datos_ofertas?faces-redirect=true";
         } else {
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No permitido", "contraseña incorrecta"));
         }

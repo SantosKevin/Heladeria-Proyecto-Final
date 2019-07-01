@@ -17,10 +17,15 @@ import javax.faces.bean.SessionScoped;
 /**
  *
  * @author Lucas Choque
+ * 
+ * Clase que fonciona como beans administrado de OfertaFormBean
  */
 @ManagedBean
 @SessionScoped
 public class OfertaBean implements Serializable{
+    /**
+     * Se declara una instancia de IOfertaDAO
+     */
     private IOfertaDAO ofertaDAO;
 
     /**
@@ -53,10 +58,12 @@ public class OfertaBean implements Serializable{
     public List<Helado> obtenerHeladosEnOferta(){
         return ofertaDAO.obtenerHeladosEnOferta();
     }
+    public List<Helado> obtenerHeladosEnOfertaActiva(){
+        return ofertaDAO.obtenerHeladosEnOfertaActiva();
+    }
     public IOfertaDAO getOfertaDAO() {
         return ofertaDAO;
     }
-
     public void setOfertaDAO(IOfertaDAO ofertaDAO) {
         this.ofertaDAO = ofertaDAO;
     }

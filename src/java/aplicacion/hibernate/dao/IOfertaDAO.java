@@ -18,5 +18,6 @@ public interface IOfertaDAO extends IGenericDAO<Oferta, Integer>{
     List<Oferta> obtenerOfertaDistinct();
     List<Oferta> obtenerOfertasActuales();
     List<Helado> obtenerHeladosEnOferta();
+    List<Helado> obtenerHeladosEnOfertaActiva();
     int consultarOferta(Integer codigoOferta);
 }

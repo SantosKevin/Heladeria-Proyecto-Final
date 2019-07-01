@@ -7,7 +7,7 @@ package aplicacion.controladores.beans.forms;
 
 import aplicacion.controladores.beans.HeladoBean;
 import aplicacion.controladores.beans.OfertaBean;
-import aplicacion.controladores.validaciones.validacionesOferta;
+import aplicacion.controladores.validaciones.ValidacionesOferta;
 import aplicacion.modelo.dominio.Helado;
 import aplicacion.modelo.dominio.Oferta;
 import aplicacion.modelo.util.SaboresYTipos;
@@ -69,6 +69,7 @@ public class OfertaFormBean implements Serializable{
         generarOfertasActuales();
         actualizarOfertas();
         actualizarPrecio();
+        actualizarHelados();
         listaHelados = new ArrayList<>();
     }
     /**
@@ -88,7 +89,6 @@ public class OfertaFormBean implements Serializable{
      * Recorre la lista completa de ofertas determinando su estado en Verdadero o Falso
      */
     public void actualizarOfertas(){
-        actualizarPrecio();
         for(Oferta o: listaOfertas){
             if(ofertaBean.consultarOferta(o.getCodigoOferta()) == 0){
                 o.setEstado(true);
@@ -97,14 +97,15 @@ public class OfertaFormBean implements Serializable{
             }
             ofertaBean.modificarOferta(o);
         }
+        
         generarOfertas();
         generarOfertasActuales();
     }
     /**
      * Metodo que actualiza el precio de los productos en oferta
-     * Se recorre todas las ofertas de la base de dato consultado que oferta estan activas, y que ofertas terminaron definitivamente.
+     * Se recorre todas las ofertas de la base de dato consultado que oferta estan activas, y que ofertas terminaron definitivamente
      * En las ofertas que estan activa, se hace un recorrido consultado el tipo de oferta que tiene, para asignarle el precio correspondiente
-     * En las ofertas que estan terminadas, tambien se hace un recorrido, solo que a esos productos se le asinga $0 a sus preciosOFerta
+     * En las ofertas que estan terminadas, tambien se hace un recorrido, solo que a esos productos se le asinga $0 a sus preciosOFerta.
      * 
      */
     public void actualizarPrecio(){
@@ -116,26 +117,44 @@ public class OfertaFormBean implements Serializable{
                     else{
                         if(o.getTipoOferta().equalsIgnoreCase("20% de Descuento"))
                             h.setPrecioOferta(h.getPrecio() - h.getPrecio()*0.2);
-                        else{
-                            if(o.getTipoOferta().equalsIgnoreCase("2x1")){
-                                System.out.println("Cual es la cantidad aquiiuuii" + heladoBean.getCantidad());
-                                if(heladoBean.getCantidad() == 2)
-                                    h.setPrecioOferta(h.getPrecio()/2);
-                                else
-                                    h.setPrecioOferta(0.0);
-                            }
-                        }
                     }
                     heladoBean.modificarHelado(h);
                 }
             }else{
-                if(ofertaBean.consultarOferta(o.getCodigoOferta()) == 1){
-                    for(Helado h : o.getHeladosOferta()){
-                        h.setPrecioOferta(0.0);
-                        heladoBean.modificarHelado(h);
-                    }
+                for(Helado h : o.getHeladosOferta()){
+                    h.setPrecioOferta(0.0);
+                    heladoBean.modificarHelado(h);
                 }
             }
+        }
+        generarOfertas();
+        generarOfertasActuales();
+    }
+    /**
+     * Metodo que actualiza los helados que estan en oferta
+     * Este metodo lo que hace es declara una lista y un objeto de tipo helado para usarse como auxiliares
+     * Se recorre la lista de ofertas, y por cada iteracion se guarda en la lista auxiliar, la lista de helados de X oferta
+     * Se recorre la lista auxiliar de helados, y en la variable heladoAuxiliar se guarda un objeto de tipo helado o null
+     * Si el heladoAuxiliar devuelve null, quiere decir que ya no esta disponible, entonces se elimina de la oferta
+     * Si el heladoAuxiliar no devuelve null, se actualiza el stock
+     */
+    public void actualizarHelados(){
+        List<Helado> listaHeladoAuxiliar = new ArrayList<>();
+        Helado heladoAuxiliar = null;
+        for(Oferta o : listaOfertas){
+            listaHeladoAuxiliar = new ArrayList<>(o.getHeladosOferta());
+            for(Helado h : listaHeladoAuxiliar){
+                heladoAuxiliar = heladoBean.obtenerHeladoUnicoDisponible(h.getCodigoHelado());
+                if(heladoAuxiliar == null){
+                    o.getHeladosOferta().remove(h);
+                }else{
+                    System.out.println("helado h" + h.toString());
+                    System.out.println("helado auxiliar" + heladoAuxiliar.toString());
+                    h.setCantidad(heladoAuxiliar.getCantidad());
+                    heladoBean.modificarHelado(h);
+                }
+            }
+            ofertaBean.modificarOferta(o);
         }
         generarOfertas();
         generarOfertasActuales();
@@ -150,18 +169,17 @@ public class OfertaFormBean implements Serializable{
      */
     public void crearOfertaTipo(){
         List<Helado> listaHeladoRubro = heladoBean.obtenerHeladosTipo(helado.getTipoHelado());
-        List<Helado> listaHeladoAuxiliar = validacionesOferta.eliminarHeladoRepetidoPorTipos(ofertaBean.obtenerHeladosEnOferta(), listaHeladoRubro);
-        if(listaHeladoAuxiliar.size() > 0){
+        List<Helado> listaHeladoRubroAuxiliar = ValidacionesOferta.eliminarHeladoRepetidoPorTipos(ofertaBean.obtenerHeladosEnOferta(), listaHeladoRubro);
+        if(listaHeladoRubroAuxiliar.size() > 0){
             FacesContext.getCurrentInstance().
             addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Atencion", "Existe la posiblidad de que algunos helados"
                     + " hallan sido omitidos por estar en oferta o por no estar disponibles"));
-            oferta.setHeladosOferta(new HashSet<>(listaHeladoAuxiliar));
+            oferta.setHeladosOferta(new HashSet<>(listaHeladoRubroAuxiliar));
             ofertaBean.agregarOferta(oferta);
             oferta = new Oferta();
-            generarOfertas();
+             generarOfertas();
             generarOfertasActuales();
             actualizarOfertas();
-            actualizarPrecio();
         }else{
             FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No hay Helados de tipo : \""+helado.getTipoHelado()+"\" "
@@ -179,9 +197,9 @@ public class OfertaFormBean implements Serializable{
      */
     public void agregarHeladoOferta(){
         Helado heladoAuxiliar = heladoBean.obtenerHeladoUnicoDisponible(helado.getCodigoHelado());
-        boolean validarHeladoRepetido = validacionesOferta.validarHeladoRepetido(listaHelados, helado.getCodigoHelado());
-        boolean validarHeladoRepetidoEnOferta = validacionesOferta.validarHeladoRepetido(ofertaBean.obtenerHeladosEnOferta(), helado.getCodigoHelado());
-        boolean validarCodigoExistente = validacionesOferta.validarCodigoExistente(heladoBean.obtenerHelados(),helado.getCodigoHelado());
+        boolean validarHeladoRepetido = ValidacionesOferta.validarHeladoRepetido(listaHelados, helado.getCodigoHelado());
+        boolean validarHeladoRepetidoEnOferta = ValidacionesOferta.validarHeladoRepetido(ofertaBean.obtenerHeladosEnOferta(), helado.getCodigoHelado());
+        boolean validarCodigoExistente = ValidacionesOferta.validarCodigoExistente(heladoBean.obtenerHelados(),helado.getCodigoHelado());
         if(!validarHeladoRepetido){
             if(validarCodigoExistente){
                 if(!validarHeladoRepetidoEnOferta){
@@ -195,7 +213,7 @@ public class OfertaFormBean implements Serializable{
                     }
                 }else{
                     FacesContext.getCurrentInstance().
-                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Helado que intenta agregar, ya posee una oferta activa"));
+                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Helado que intenta agregar, ya posee una oferta"));
                 }
             }else{
                 FacesContext.getCurrentInstance().
@@ -214,7 +232,7 @@ public class OfertaFormBean implements Serializable{
      */
     public void detectarHeladoOferta(Integer codigoHelado){
         boolean validar = false;
-        for(Helado h: ofertaBean.obtenerHeladosEnOferta()){
+        for(Helado h: ofertaBean.obtenerHeladosEnOfertaActiva()){
             if(h.getCodigoHelado() == codigoHelado)
                 validar = true;
         }
@@ -242,7 +260,6 @@ public class OfertaFormBean implements Serializable{
              generarOfertas();
             generarOfertasActuales();
             actualizarOfertas();
-            actualizarPrecio();
             this.listaHelados.clear();
         }else
             FacesContext.getCurrentInstance().
@@ -253,7 +270,7 @@ public class OfertaFormBean implements Serializable{
      * si las fechas son correctas, se ejecuta un scrips que muestra un dialog en la vista.
      */
     public void validarFechas(){
-        int validarFechas = validacionesOferta.validarFechasOferta(oferta.getFechaInicio(), oferta.getFechaFinal());
+        int validarFechas = ValidacionesOferta.validarFechasOferta(oferta.getFechaInicio(), oferta.getFechaFinal());
         Date fechaActual = new Date();
         if(validarFechas == 1){
             PrimeFaces.current().executeScript("PF('dlgAgregarHeladoOferta').show();PF('dlgAgregarOferta').hide()");
@@ -264,7 +281,7 @@ public class OfertaFormBean implements Serializable{
                 + fechaActual.getDate()+"/"+(fechaActual.getMonth()+1)+"/"+(fechaActual.getYear()-100)));
             else
             FacesContext.getCurrentInstance().
-                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La fecha inicial es mayor que la fecha final"));
+                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La fecha inicial es mayor o igual que la fecha final"));
             
         }
         

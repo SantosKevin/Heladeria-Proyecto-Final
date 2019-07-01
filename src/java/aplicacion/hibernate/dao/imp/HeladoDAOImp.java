@@ -9,8 +9,6 @@ import aplicacion.hibernate.configuracion.HibernateUtil;
 import aplicacion.hibernate.dao.ICarritoDAO;
 import aplicacion.hibernate.dao.IHelCarDAO;
 import aplicacion.hibernate.dao.IHeladoDAO;
-import aplicacion.modelo.dominio.ComHel;
-import aplicacion.modelo.dominio.Compra;
 import aplicacion.modelo.dominio.HelCar;
 import aplicacion.modelo.dominio.Helado;
 import aplicacion.modelo.dominio.Usuario;
@@ -50,7 +48,7 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
     public List<Helado> obtenerHeladosDisponibles() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Helado.class);
-        criteria.add(Restrictions.gt("cantidad", 0));//gt es mayor o igual "0"
+        criteria.add(Restrictions.gt("cantidad", 0));//gt es mayor a "0"
         criteria.add(Restrictions.eq("estado", true));//es igual a "true"
         List<Helado> helados = criteria.list();
         session.close();
@@ -89,11 +87,14 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
     @Override
     public List<Helado> obtenerHeladosTipo(String tipo) {
         List<Helado> listaHeladosTipo = new ArrayList<>();
-        for (Helado h : this.obtenerHeladosDisponibles()) {
-            if (h.getTipoHelado().equalsIgnoreCase(tipo)) {
-                listaHeladosTipo.add(h);
-            }
-        }
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Helado.class);
+        criteria.add(Restrictions.gt("cantidad", 0));//gt es mayor "0"
+        criteria.add(Restrictions.eq("estado", true));//es igual a "true"
+        criteria.add(Restrictions.like("tipoHelado", tipo));
+        if(!criteria.list().isEmpty())
+            listaHeladosTipo = criteria.list();
+        session.close();
         return listaHeladosTipo;
     }
 
@@ -101,7 +102,7 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
      * Metodo que obtiene un helado en singular, Metodo para obtener un solo
      * helado, el helado se obtiene mediante un codigo que es pasado por
      * parametro Se declara un objeto de tipo helado y se recorre la base de
-     * datos de helado, consultando por el codigo
+     * datos de helado, consultando por el codigo sino no puedo modificar el stock, se usa para el stock
      *
      * @param codigoHelado
      * @return
@@ -109,13 +110,13 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
     @Override
     public Helado obtenerUnicoHelado(Integer codigoHelado) {
         Helado heladoUnico = null;
-        for (Helado h : super.getAll(Helado.class)) {
-            if (h.getEstado()) {
-                if (h.getCodigoHelado() == codigoHelado) {
-                    heladoUnico = h;
-                }
-            }
-        }
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Helado.class);
+        criteria.add(Restrictions.like("codigoHelado", codigoHelado));
+        criteria.add(Restrictions.eq("estado", true));
+        if(!criteria.list().isEmpty())
+            heladoUnico = (Helado)criteria.list().get(0);
+        session.close();
         return heladoUnico;
     }
 
@@ -131,11 +132,14 @@ public class HeladoDAOImp extends GenericDAOImp<Helado, Integer> implements IHel
     @Override
     public Helado obtenerUnicoHeladoDisponible(Integer codigoHelado) {
         Helado heladoUnicoDisponible = null;
-        for (Helado h : this.obtenerHeladosDisponibles()) {
-            if (h.getCodigoHelado() == codigoHelado) {
-                heladoUnicoDisponible = h;
-            }
-        }
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Helado.class);
+        criteria.add(Restrictions.gt("cantidad", 0));//gt es mayor a "0"
+        criteria.add(Restrictions.eq("estado", true));//es igual a "true"
+        criteria.add(Restrictions.like("codigoHelado", codigoHelado));
+        if(!criteria.list().isEmpty())
+            heladoUnicoDisponible = (Helado)criteria.list().get(0);
+        session.close();
         return heladoUnicoDisponible;
     }
 }

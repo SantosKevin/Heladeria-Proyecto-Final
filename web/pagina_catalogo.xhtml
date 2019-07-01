@@ -20,7 +20,7 @@
                                          emptyMessage="Lista Vacia"
                                          style="margin-left: 18%; margin-right: 18%"
                                          value="#{heladoBean.obtenerHeladosDisponibles()}"
-                                         var="hel" rows="5">
+                                         var="hel">
                                 
                                 <p:column headerText="Helados Disponibles" style="font-size: 20px; font-style: italic;">
                                     <p:panelGrid id="catalogohela" columns="2">
@@ -54,8 +54,8 @@
                                     tiene una oferta disponible <br/>
                                     Desea ir a verla?
                                 </p>
-                                <p:commandButton value="bSi" action="pagina_principal"/>
-                                <p:commandButton value="bNo" oncomplete="PF('dlgOfertaDisponible').hide()"/>
+                                <p:commandButton value="Si" action="pagina_principal"/>
+                                <p:commandButton value="No" oncomplete="PF('dlgOfertaDisponible').hide()"/>
                             </h:form>
                             
                         </p:dialog>
@@ -81,7 +81,8 @@
                                     <p:commandButton id="btnModificar" value="Aceptar"
                                                      icon="ui-icon-check"
                                                      action="#{heladoBean.agregarAlCarrito()}"
-                                                     update=":form:mensajes"/>
+                                                     update=":form:mensajes"
+                                                     onclick="PF('multiProdDialog').hide()"/>
                                     <p:commandButton id="btnAtras" value="Atras"  
                                                      onclick="PF('multiProdDialog').hide();"
                                                      icon="ui-icon-closethick"

@@ -8,7 +8,7 @@
 
     <body>
 
-        <ui:composition template="./resources/templates/templateBaseDeDatos.xhtml">
+        <ui:composition template="./resources/templates/template_base_de_datos.xhtml">
 
             <ui:define name="content">
                 <p:growl id="growlGeneral" showDetail="true"/>
@@ -20,6 +20,7 @@
                                      onclick="PF('dlgAgregarHelado').show()"/> <p:separator/>
                     <p:dataTable id="tblHelado"
                                  widgetVar="wvHelado"
+                                 emptyMessage="No hay Helados"
                                  var="helado"
                                  editable="true"
                                  value="#{heladoFormBean.listaHelados}">
@@ -39,7 +40,6 @@
                                 <f:facet name="output"><p:outputLabel value="#{helado.nombreHelado}"/></f:facet>
                                 <f:facet name="input"><p:inputText value="#{helado.nombreHelado}"/></f:facet>
                             </p:cellEditor>
-
                         </p:column>
 
                         <p:column id="clmTipoHelado" headerText="Tipo">
@@ -54,7 +54,6 @@
                                     </p:selectOneMenu>
                                 </f:facet>
                             </p:cellEditor>
-
                         </p:column>
 
                         <p:column id="clmSaborHelado" headerText="Sabor">
@@ -69,7 +68,6 @@
                                     </p:selectOneMenu>
                                 </f:facet>
                             </p:cellEditor>
-
                         </p:column>
 
                         <p:column id="clmPrecioHelado" headerText="Precio">
@@ -77,8 +75,6 @@
                                 <f:facet name="output"><p:outputLabel value="$#{helado.precio}"/></f:facet>
                                 <f:facet name="input"><p:inputText value="#{helado.precio}"/></f:facet>
                             </p:cellEditor>
-                            
-
                         </p:column>
 
                         <p:column id="clmStockHelado" headerText="Stock">
@@ -206,7 +202,7 @@
                             <p:outputLabel id="oplVista" value="Ingrese el directorio de imagen"/>
                             <p:inputText id="iptImagen"
                                          required="true"
-                                         requiredMessage="Ingrese la imagen porfavor"
+                                         requiredMessage="Ingrese la imagen por favor"
                                          validatorMessage="Exceso de caracteres al agregar la imagen"
                                          value="#{heladoFormBean.helado.imagen}">
                                 <f:validateLength minimum="1" maximum="30"/>

@@ -23,7 +23,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import org.primefaces.PrimeFaces;
 import aplicacion.hibernate.dao.IHelCarDAO;
 
 /**
@@ -100,7 +99,7 @@ public class HeladoBean implements Serializable {
         }
         FacesMessage msg = new FacesMessage("Mensaje", "Agregado al Carrito");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        PrimeFaces.current().executeScript("PF('multiProdDialog').hide();");
+        
     }
 
     /**
@@ -156,41 +155,31 @@ public class HeladoBean implements Serializable {
     public List<Helado> obtenerHeladosDisponibles() {
         return heladoDAO.obtenerHeladosDisponibles();
     }
-
     public List<Helado> obtenerHeladosTipo(String tipo) {
         return heladoDAO.obtenerHeladosTipo(tipo);
     }
-
     public Helado obtenerHeladoUnico(Integer codigoHelado) {
         return heladoDAO.obtenerUnicoHelado(codigoHelado);
     }
-
     public Helado obtenerHeladoUnicoDisponible(Integer codigoHelado) {
         return heladoDAO.obtenerUnicoHeladoDisponible(codigoHelado);
     }
-
     public IHeladoDAO getHeladoDAO() {
         return heladoDAO;
     }
-
     public void setHeladoDAO(IHeladoDAO heladoDAO) {
         this.heladoDAO = heladoDAO;
     }
-
     public Helado getHelado() {
         return helado;
     }
-
     public void setHelado(Helado helado) {
         this.helado = helado;
     }
-
     public Integer getCantidad() {
         return cantidad;
     }
-
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
-
 }

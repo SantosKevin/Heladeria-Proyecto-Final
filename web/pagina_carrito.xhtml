@@ -32,10 +32,12 @@
                                                      />
                                 </h:panelGrid>    
                             </p:dialog> 
-                            <p:blockUI block="dialogoPregunta" trigger="btnSiPreg" />
-                            <p:blockUI block="dialogoPregunta" trigger="btnNoPreg" />
+                            <p:blockUI block="dialogoPregunta" trigger="btnSiPreg"/>
+                            <p:blockUI block="dialogoPregunta" trigger="btnNoPreg"/>
                         </h:form>
                         <h:form id="form">
+                            <p:commandButton value="Actualizar helados"
+                                             actionListener="#{ofertaFormBean.actualizarHelados()}"/>
                             <p:growl id="mensajes" showDetail="true"/>
                             <p:dataTable id="tblCarrito" emptyMessage="Carrito Vacio" style="margin-left: 14%; margin-right: 14%"
                                          value="#{carritoBean.obtenerHeladoDeCarritoSegunUsuario()}"

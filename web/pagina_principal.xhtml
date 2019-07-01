@@ -28,11 +28,13 @@
                             <p:dataTable id="tblMostrarOfertas"
                                          var="oferta"
                                          value="#{ofertaFormBean.listaOfertasActuales}"
-                                         style="margin-left: 18%; margin-right: 18%" emptyMessage="No hay Ofertas Disponibles">
+                                         style="margin-left: 18%; margin-right: 18%"
+                                         emptyMessage="No hay Ofertas Disponibles">
                                 <p:column headerText="OFERTAAAS!!!">
                                     <p:outputLabel value="Super Oferta #{oferta.tipoOferta}" style="font-size: 25px"/><br/>
                                     <p:dataTable id="tblMostrarHeladosOferta"
                                                  var="helado"
+                                                 emptyMessage="Los helados se agotaron"
                                                  value="#{oferta.heladosOferta}">
                                         <p:column style="font-size: 20px; font-style: italic;">
                                             <p:panelGrid columns="2">

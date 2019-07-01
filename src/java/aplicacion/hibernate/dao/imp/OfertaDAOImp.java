@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -31,10 +32,12 @@ public class OfertaDAOImp extends GenericDAOImp<Oferta, Integer> implements IOfe
     @Override
     public Oferta obtenerUnicaOferta(Integer codigoOferta) {
         Oferta ofertaActual = null;
-        for(Oferta o : super.getAll(Oferta.class)){
-            if(o.getCodigoOferta() == codigoOferta)
-                ofertaActual = o;
-        }
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Oferta.class);
+        criteria.add(Restrictions.like("codigoOferta", codigoOferta));
+        if(!criteria.list().isEmpty())
+            ofertaActual = (Oferta)criteria.list().get(0);
+        session.close();
         return ofertaActual;
     }
     /**
@@ -84,10 +87,13 @@ public class OfertaDAOImp extends GenericDAOImp<Oferta, Integer> implements IOfe
     @Override
     public List<Oferta> obtenerOfertasActuales() {
        List<Oferta> listaOfertasActuales = new ArrayList<>();
-       for(Oferta o : this.obtenerOfertaDistinct()){
-           if(o.isEstado())
-               listaOfertasActuales.add(o);
-       }
+       Session session = HibernateUtil.getSessionFactory().openSession();
+       Criteria criteria = session.createCriteria(Oferta.class);
+       criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+       criteria.add(Restrictions.eq("estado", true));
+       if(!criteria.list().isEmpty())
+           listaOfertasActuales = criteria.list();
+       session.close();
        return listaOfertasActuales;
     }
     /**
@@ -99,11 +105,21 @@ public class OfertaDAOImp extends GenericDAOImp<Oferta, Integer> implements IOfe
     @Override
     public List<Helado> obtenerHeladosEnOferta() {
         List<Helado> heladosEnOferta = new ArrayList<>();
-        for(Oferta o : this.obtenerOfertasActuales()){
+        for(Oferta o : this.obtenerOfertaDistinct()){
             for(Helado h : o.getHeladosOferta()){
                 heladosEnOferta.add(h);
             }
         }
         return heladosEnOferta;
+    }
+    @Override
+    public List<Helado> obtenerHeladosEnOfertaActiva(){
+        List<Helado> heladosEnOfertaActiva = new ArrayList<>();
+        for(Oferta o : this.obtenerOfertasActuales()){
+            for(Helado h: o.getHeladosOferta()){
+                heladosEnOfertaActiva.add(h);
+            }
+        }
+        return heladosEnOfertaActiva;
     }
 }

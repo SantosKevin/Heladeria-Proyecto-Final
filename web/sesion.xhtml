@@ -5,48 +5,57 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Iniciar Sesión</title>
-
+        <script type="text/javascript">
+            window.history.forward();
+            function noPermitirVueltaAtras() {
+                window.history.forward();
+            }
+        </script>
     </h:head>
 
-    <h:body style="background:url(http://all-freepicture.com/wp-content/uploads/2018/12/Cream-Background-Ice-Cream-4K.jpg) no-repeat;
-            position: absolute;
-            background-size: cover;"> <!--aqui le damos formato-->
-        <h:form id="frmSesion" style="padding-left: 90px;padding-top: 50px;">
-            <p:growl id="growlSesion" showDetail="true"/>
-            <p:panel id="pnlSesion" style="padding-top: 5%;background: #013947;">
+<h:body onload="noPermitirVueltaAtras();"  onunload=""
+        style="background:url(http://all-freepicture.com/wp-content/uploads/2018/12/Cream-Background-Ice-Cream-4K.jpg) no-repeat;
+        position: absolute;
+        background-size: cover;"> <!--aqui le damos formato-->
+    <h:form id="frmSesion" style="padding-left: 90px;padding-top: 50px;">
+        <p:growl id="growlSesion" showDetail="true"/>
+        <p:panel id="pnlSesion" style="padding-top: 5%;background: #013947;">
 
-                <p:outputLabel value="Iniciar Sesion" style="font-size: 35px; font-weight: bold; color: #ffffff"/>
-                
-                <br/><br/><br/>
-                <p:inputText id="txtEmailUsuario"
-                             value="#{usuarioFormBean.emailUsu}"
-                             required="true" 
-                             placeholder="Correo Electronico"
-                             requiredMessage="Correo Electronico no ingresado"
-                             style="width: 400px; height: 30px; background: #013947; font-size: 20px; color: #ffffff"/><br/>
-                <br/>
-                <p:password id="passContraseñaSesion" value="#{usuarioFormBean.contraseña}"
-                            required="true"
-                            placeholder="Contraseña"
-                            requiredMessage="Contraseña no ingresada"
-                            style="width: 400px; height: 30px; background: #013947;font-size: 20px; color: #ffffff"/><br/>
-                <br/>
-                <p:commandButton id="tbnIngresar"
-                                 value="Ingresar"
-                                 style="background: #1ab188; color: #ffffff; width: 410px; height: 50px; font-size: 25px"
-                                 update="growlSesion frmSesion"
-                                 action="#{usuarioFormBean.verificarCredenciales()}"/>
-                <p:separator id="separator"/>
-            </p:panel>
+            <p:outputLabel value="Iniciar Sesion" style="font-size: 35px; font-weight: bold; color: #ffffff"/>
 
-        </h:form>
-        <h:form id="frmCrear" style="padding-left: 90px">
-            <p:panel id="pnlNuevaCuenta" style="background: #013947;">
-                <p:commandButton id="lnkCrear"
-                                 value="Registrarse Aqui"
-                                 style="background: #1ab188; color: #ffffff"
-                                 action="crear_nueva_cuenta.xhtml"/> <!--nos dirige a la pagina para crear una cuenta -->
-            </p:panel>
-        </h:form>
-    </h:body>
+            <br/><br/><br/>
+            <p:inputText id="txtEmailUsuario"
+                         value="#{usuarioFormBean.emailUsu}"
+                         required="true" 
+                         placeholder="Correo Electronico"
+                         requiredMessage="Correo Electronico no ingresado"
+                         style="width: 400px; height: 30px; background: #013947; font-size: 20px; color: #ffffff"/><br/>
+            <br/>
+            <p:password id="passContraseñaSesion" value="#{usuarioFormBean.contraseña}"
+                        required="true"
+                        placeholder="Contraseña"
+                        requiredMessage="Contraseña no ingresada"
+                        style="width: 400px; height: 30px; background: #013947;font-size: 20px; color: #ffffff"/><br/>
+            <br/>
+            <p:commandButton id="tbnIngresar"
+                             value="Ingresar"
+                             style="background: #1ab188; color: #ffffff; width: 410px; height: 50px; font-size: 25px"
+                             update="growlSesion frmSesion"
+                             action="#{usuarioFormBean.verificarCredenciales()}"/>
+            <p:separator id="separator"/>
+        </p:panel>
+        <p:blockUI block="pnlSesion frmCrear" trigger="tbnIngresar" animate="true">
+           
+        </p:blockUI>
+    </h:form>
+    <h:form id="frmCrear" style="padding-left: 90px">
+        <p:panel id="pnlNuevaCuenta" style="background: #013947;">
+            <p:commandButton id="lnkCrear"
+                             value="Registrarse Aqui"
+                             style="background: #1ab188; color: #ffffff"
+                             action="crear_nueva_cuenta.xhtml"/> <!--nos dirige a la pagina para crear una cuenta -->
+        </p:panel>
+        <p:blockUI block="pnlNuevaCuenta" trigger="lnkCrear" />
+    </h:form>
+</h:body>
 </html>

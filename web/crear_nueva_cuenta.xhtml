@@ -9,7 +9,7 @@
     </h:head>
     <h:body>
         <h:form id="frmCrearCuenta" style="padding-left: 90px;padding-top: 50px;"> <!--aqui le damos estilo -->
-            <p:growl id="growlCrearCuenta" showDetail="true" sticky="true"/>
+            <p:growl id="growlCrearCuenta" showDetail="true"/>
             <p:panel id="pnlCrearSesion" style="padding-top: 5%;background: #013947; width: 450px"><!--todo lo de abajo seria el registro para un usuario nuevo -->
                 <p:outputLabel value="Registro de Usuario" style="font-size: 35px; font-weight: bold; color: #ffffff"/>
                     <br/><br/>
@@ -24,7 +24,8 @@
                     <p:inputNumber id="nbrDNI" value="#{usuarioFormBean.usuario.dniUsuario}" 
                                    required="true" requiredMessage="Ingrese DNI por favor"
                                    placeholder="DNI*" minValue="0" maxValue="99999999" decimalPlaces="0"
-                                   styleClass="inputPeso" style="font-size: 20px;"/>
+                                   styleClass="inputPeso" style="font-size: 20px;" 
+                                   validator="#{usuarioFormBean.validarDNI}"/>
                     
                     <br/><br/>
                     <p:inputText id="txtEmail" value="#{usuarioFormBean.usuario.emailUsuario}" required="true" 

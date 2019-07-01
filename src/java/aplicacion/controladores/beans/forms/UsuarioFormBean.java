@@ -172,6 +172,24 @@ public class UsuarioFormBean implements Serializable {
     }
 
     /**
+     * permite validar un DNI
+     * @param fc para añadir mensajes
+     * @param uic clase base para todos los componentes de la interfaz de usuario en JavaServer Faces
+     * @param o dni a validar
+     * @throws ValidatorException añade un mensaje en caso de error
+     */
+    public void validarDNI (FacesContext fc, UIComponent uic, Object o) throws ValidatorException{
+       int dni = (int) o, digitos =0;
+       while(dni >0){          
+           dni = dni / 10;
+           digitos ++;
+       }
+        System.out.println("es "+ digitos);
+       if(digitos != 7 && digitos != 8){
+           throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "el DNI debe tener 7 u 8 digitos"));         
+       }
+    }  
+    /**
      * es un validador de contraseña
      *
      * @param fc para añadir mensajes
@@ -298,14 +316,6 @@ public class UsuarioFormBean implements Serializable {
      *
      * @param usuarioModi a modificar
      */
-//    public void onRowEdit(RowEditEvent event) {
-//        Usuario usuarioModificado = (Usuario) event.getObject();
-//        usuarioBean.modificarUsuario(usuarioModificado);
-//        generarUsuario();
-//         FacesContext.getCurrentInstance().
-//            addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "El Usuario se ha modificado"));
-//   
-//    }
     public void modificarUsuario(Usuario usuarioModi) {
         usuarioBean.modificarUsuario(usuarioModi);
         FacesContext.getCurrentInstance().
@@ -324,7 +334,6 @@ public class UsuarioFormBean implements Serializable {
                 addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cancelado", "La modificacion se ha cancelado"));
 
     }
-
     //seccion de getters y setters
     public UsuarioBean getUsuarioBean() {
         return usuarioBean;

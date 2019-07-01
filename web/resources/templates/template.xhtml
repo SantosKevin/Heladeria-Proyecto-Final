@@ -64,7 +64,8 @@
                                      value="#{usuarioFormBean.usuarioConectado.apellidoUsuario}"/>
                         <p:outputLabel id="lblDni" value="Ingrese D.N.I. a modificar"/>
                         <p:inputText id="nbrDNIModi"
-                                     value="#{usuarioFormBean.usuarioConectado.dniUsuario}"/>
+                                     value="#{usuarioFormBean.usuarioConectado.dniUsuario}"
+                                     validator="#{usuarioFormBean.validarDNI}"/>
                         <p:outputLabel id="lblEmail" value="Ingrese Email a modificar"/>
                         <p:inputText id="nbrEmailModi"
                                      value="#{usuarioFormBean.usuarioConectado.emailUsuario}" 

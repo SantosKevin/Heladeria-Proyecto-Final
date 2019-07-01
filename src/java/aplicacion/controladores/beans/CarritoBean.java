@@ -23,6 +23,7 @@ import aplicacion.modelo.dominio.HelCar;
 import aplicacion.modelo.dominio.Helado;
 import aplicacion.modelo.dominio.Usuario;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,6 +35,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -221,7 +223,7 @@ public class CarritoBean implements Serializable {
             transport.close();
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            
         }
         System.out.println("Correo enviado");
     }

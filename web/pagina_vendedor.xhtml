@@ -44,8 +44,11 @@
                                             <f:convertDateTime pattern="dd/MM/yyyy" />
                                         </p:outputLabel>
                                     </p:column> 
+                                    <p:column headerText="DNI del Comprador">
+                                        <p:outputLabel value="#{comp.usuarioCompra.dniUsuario}"/>
+                                    </p:column> 
                                     <p:column headerText="Total">
-                                        <p:outputLabel value="$#{comp.total} "/>
+                                        <p:outputLabel value="$#{comp.total}"/>
                                     </p:column> 
                                     <p:column headerText="Estado">
                                         <p:outputLabel value="#{compraBean.ObtenerEstadoCompra(comp.estado,comp.fechaCompra, comp)} "/>
@@ -71,10 +74,7 @@
                                                 <p:outputLabel value="$#{hel.precioOferta}"/>
                                             </p:column> 
                                             <p:column headerText="Cantidad" style="text-align: center" >
-                                                <p:outputLabel value="#{compraBean.obtenerCantidadComHel(comp.codigoCompra,hel.codigoHelado)}"/>
-                                            </p:column>
-                                            <p:column headerText="Total" style="text-align: center" >
-                                                <p:outputLabel value="$#{compraBean.obtenerPrecioTotalPorHelado(hel)}"/>
+                                                <p:outputLabel value="#{compraBean.obtenerCantidad(comp.codigoCompra,hel.codigoHelado)}"/>
                                             </p:column>
                                         </p:dataTable>
                                     </p:rowExpansion>
@@ -85,19 +85,28 @@
                                     icon="ui-icon-circle-check" value="Confirmar Compra" 
                                     style="float: right; margin: 1%; margin-right: 3%"
                                     action="#{vendedorBean.confirmarCompra()}"
-                                    ajax="false" update="tblCarrito"
-                                    />
+                                    update="tblCarrito frmMenu:mensajes">
+                                <p:confirm header="Confirmacion" message="Confirmar?" 
+                                           icon="ui-icon-alert"/>
+                                </p:commandButton>
                                 <p:commandButton 
                                     id="botonCancelar"
                                     icon="ui-icon-circle-check" value="Cancelar Compra" 
                                     style="float: right; margin: 1%; margin-right: 3%"
                                     action="#{vendedorBean.cancelarCompra()}"
-                                    update="tblCarrito frmMenu:mensajes"
-                                    />
-                                
-                           
-                            
-                        </h:form>
+                                    update="tblCarrito frmMenu:mensajes">
+                                <p:confirm header="Confirmacion" message="Cancelar Compra?" 
+                                           icon="ui-icon-alert"/>
+                                </p:commandButton>
+                       </h:form>
+                         <h:form id="frmConfirmar">
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton id="cmdAceptarBorrado" value="SI" type="button" update="frmMenu"
+                                         styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton id="cmdCancelarBorrado" value="NO" type="button" update="frmMenu"
+                                         styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                    </p:confirmDialog>   
+                </h:form>
                     </ui:define>
                 </ui:composition>
             </div>

@@ -41,18 +41,12 @@
                         </p:column>
                         <p:column id="clmDni" headerText="DNI">
                             <p:cellEditor>
-                                <f:facet name="output"><h:outputText id="txtDNIA" value="#{admin.dniUsuario}" /></f:facet>
-                                <f:facet name="input"><p:inputText id="inpDNI" value="#{admin.dniUsuario}"/></f:facet>
+                                <f:facet name="output"><h:outputText id="txtDNIA" value="#{admin.dniUsuario}"/></f:facet>
+                                <f:facet name="input"><p:inputText id="inpDNI" value="#{admin.dniUsuario}" validator="#{usuarioFormBean.validarDNI}"/></f:facet>
                             </p:cellEditor>
                         </p:column>
                         <p:column id="clmEmail" headerText="Email"> 
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText id="txtEmailModi" value="#{admin.emailUsuario}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:inputText id="inpEmail" value="#{admin.emailUsuario}"
-                                                 validator="#{usuarioFormBean.validarEmail}"/>
-                                </f:facet>
-                            </p:cellEditor>
+                            <h:outputText id="txtEmailModi" value="#{admin.emailUsuario}"/>
                         </p:column>
                         <p:column id="clmEstado" headerText="Estado">
                             <p:cellEditor>
@@ -86,17 +80,16 @@
                                 <p:confirm header="Confirmacion" message="Esta Seguro?" 
                                            icon="pi pi-exclamation-triangle"/>
                             </p:commandButton>
-
-                        </p:column>
+                       </p:column>
                         <p:ajax id="ajxEdit" event="rowEdit" listener="#{usuarioFormBean.modificarUsuario(admin)}" update="growlAdmin tblAdmins"/>
                         <p:ajax id="ajxCancel" event="rowEditCancel" listener="#{usuarioFormBean.onRowCancel}" update="growlAdmin"/>
 
                     </p:dataTable>
+                    
                     <p:separator id="spt"/>
                     <p:commandButton value="Agregar Administrativo" id="cmdAgregar"
                                      oncomplete="PF('altaAdmin').show()"
                                      update=":dlgAgregar" icon="ui-icon-plus"/>
-                  
                 </h:form>
                 <p:dialog id="dlgAgregar" modal="true" widgetVar="altaAdmin" resizable="false" header="Agregar Administrativo">
                     <h:form id="frmCrearCuentaAdmin" style="padding-left: 90px;padding-top: 10px;padding-right: 90px;"> <!--aqui le damos estilo -->
@@ -111,7 +104,7 @@
                                              required="true" placeholder="apellido" requiredMessage="Ingrese apellido por favor"/>                  
                                 <p:outputLabel id="lblDNIAdmin" value="Ingrese Su DNI"/>
                                 <p:inputNumber id="nbrDNIAdmin" value="#{usuarioFormBean.usuario.dniUsuario}" 
-                                               required="true" requiredMessage="Ingrese DNI por favor"
+                                               required="true" requiredMessage="Ingrese DNI por favor" validator="#{usuarioFormBean.validarDNI}"
                                                placeholder="N° DNI" minValue="0" maxValue="99999999" decimalPlaces="0"/>
                                 <p:outputLabel id="lblEmailAdmin" value="Ingrese email valido"/>
                                 <p:inputText id="txtEmailAdmin" value="#{usuarioFormBean.usuario.emailUsuario}" required="true" 
